@@ -23,3 +23,5 @@ password : dongnebug24
 - templates : storage for html file with django templates
     * /templates/ : html files of dongnebug24 which is whole service 
     * /templates/dongnebug : html files of dongnebug web service
+
+testset
