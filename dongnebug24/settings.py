@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'api.apps.ApiConfig',
+    'dongnebug.apps.DongnebugConfig',
 ]
 
 MIDDLEWARE = [
