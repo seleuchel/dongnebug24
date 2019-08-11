@@ -1,9 +1,10 @@
-from django.shortcuts import render
+from api.models import Location
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
-from api.serializers import UserSerializer, GroupSerializer
+from api.serializers import UserSerializer, GroupSerializer, LocationSerializer
 
 # Create your views here.
+
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -12,9 +13,18 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
 
+
 class GroupViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows groups to be viewed or edited.
     """
     queryset = Group.objects.all().order_by('-date_joined')
     serializer_class = GroupSerializer
+
+
+class LocationViewSet(viewsets.ModelViewSet):
+    """
+
+    """
+    queryset = Location.objects.all().order_by('user')
+    serializer_class = LocationSerializer
