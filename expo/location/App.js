@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
-import { Platform, Text, View, Button, StyleSheet,WebView,BackHandler, Alert, TouchableOpacity } from 'react-native';
+import { Platform, Text, View, Button, StyleSheet,WebView, BackHandler, Alert, TouchableOpacity } from 'react-native';
 import Constants from 'expo-constants';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 import MapView, {Marker} from 'react-native-maps';
 import SlidingUpPanel from 'rn-sliding-up-panel';
 import * as TaskManager from 'expo-task-manager';
-import { CreateLocation, UpdateLocation, ReadLocation } from './RequestHttp';
-
-//react-navigation
-import {createStackNavigator, createAppContainer} from "react-navigation";
 
 const LOCATION_TASK_NAME = 'background-location-task';
 var vi = null;
@@ -23,26 +19,7 @@ TaskManager.defineTask(LOCATION_TASK_NAME, ({ data, error }) => {
   }
 });
 
-class MarkerComponent extends Component<props>{
-  constructor(props){
-    super(props)
-    this.state={
-      location: 'test',
-    };
-  }
-
-  componentDidMount(){
-
-  }
-
-
-  render(){
-    console.log(this.state.location)
-    return(<View><Text>test</Text></View>);
-  }
-}
-
-////////////////////////////////////////////////////////
+//location get coords data
 export default class App extends Component<Props>{
   constructor(props){
     super(props);
@@ -54,17 +31,28 @@ export default class App extends Component<Props>{
       latitude:null,
       longitude: null,
       timestamp: null,
-      data: '',
     };
 }
 
-  componentDidMount(){
-    console.log(ReadLocation());
-    this.setState({data : ReadLocation()}); //처음 마운트 했을때 리퀘스트 보냄
-    console.log(this.state.data);
-  }
+//vi는 통째로 받고
+componentDidMount(){
+  setInterval(async () => {
+    await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME,);
+    console.log('--------------------------- DEBUG : GET vi --------------------------- \n', vi);
+    this.setState({location:vi.locations[0]});  //delete please
+    this.setState({
+      latitude : vi.locations[0].coords.latitude,
+      longitude : vi.locations[0].coords.longitude,
+      timestamp : vi.locations[0].timestamp,
+    })
+    console.log('\n--------------------------- DEBUG : get state : lant, lon, timestamp --------------------------- \n',
+      'latitude : ', this.state.latitude,
+      'longitude : ', this.state.longitude,
+      'timestamp : ', this.state.timestamp);
+  }, 5000)
+}
 
-  componentWillUnmount() {
+componentWillUnmount() {
     BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
 }
 
@@ -73,7 +61,7 @@ handleBackButtonClick() {
     return true;
 }
 
-//is this android?
+//컴포넌트가 화면에 나가기 직전에 호출되는 api
 componentWillMount() {
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
 
@@ -87,7 +75,7 @@ componentWillMount() {
       this._getLocationAsync();
     }
   }
-  //is permissions ok?
+
   _getLocationAsync = async () => {
 
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
@@ -97,58 +85,103 @@ componentWillMount() {
       });
     }
 
-    if(vi!=undefined)
+
     this.setState({
-      latitude : vi.latitude,
-      longitude : vi.longitude,
+      location: vi,
+    });//delete please
+
+    this.setState({
+      latitude : vi.locations[0].coords.latitude,
+      longitude : vi.locations[0].coords.longitude,
+      timestamp : vi.locations[0].timestamp,
     });
 
-
-    let j = await ReadLocation();
-    this.setState({ data : j });
-    console.log('this is j : ', this.state.data);
   };
 
+
+//안움직일때 render가 대기 타야 되는데
   render() {
-    if(this.state.data._55!=undefined)
-      console.log(this.state.data) //리스폰스가 오기전까지 언디파인드임 언디파인드이면 오류발생하니까 언디파인드인지 먼저 확인
+    let text = 'Waiting..';
+    let lat = "";
+    let lon = "";
+
+    console.log('\n--------------------------- DEBUG : get this.state.location in render() --------------------------- \n',this.state.location);
+
+    if (this.state.errorMessage) {
+      text = this.state.errorMessage;
+      console.log(text);
+    } else if (this.state.latitude) {
+
+      if( this.state.latitude !=='undefined')//// 여기
+      {
+        console.log('\n>> GET LOCATION!  \n');
+        lat = this.state.latitude;
+        lon = this.state.longitude;
+      //
+    }else{//여기
+      console.log('\n<< LOCATION is NULL !  \n');
+      }
+    }
+    console.log('hello lat',lat);
+
     return (
       <View style={styles.container}>
       <WebView style={styles.web}
-        source = {{ uri : 'https://naver.com'}}
-      />
-      <Text></Text>
+          source = {{ uri : 'https://google.com'}}
+        />
+        <TouchableOpacity style={{backgroundColor:'black',padding:10}} onPress={() => this._panel.show()}>
+          <Text style={{fontSize:20,color:'white', textAlign:'center'}}>'내 위치'</Text>
+        </TouchableOpacity>
+                <SlidingUpPanel ref={c => this._panel = c} >
+                  <View style={{flex:0.7, top:300}}>
+                    <Button title='내 현재 위치' color="black" />
 
-      <MapView
-        style={styles.map}
-        initialRegion={{
-          latitude:35,
-          longitude:127,
-          latitudeDelta: 0.0,
-          longitudeDelta:0.0201,
-        }}/>
+                      <MapView
+                        style={styles.map}
+                        initialRegion = {{
+                          latitude : Number(lat),
+                          longitude : Number(lon),
+                          latitudeDelta : 0.005,
+                          longitudeDelta : 0.005,
+                        }}
+                        region={{
+                          latitude : Number(lat),
+                          longitude : Number(lon),
+                          latitudeDelta : 0.005,
+                          longitudeDelta : 0.005,
+                        }}>
+                      <Marker title="box" pinColor = "blue"
+                      coordinate = {{
+                        latitude: Number(lat),
+                        longitude: Number(lon)
+                      }}/>
+                      </MapView>
+                  </View>
+                </SlidingUpPanel>
       </View>
+//예쁘게 안됨. coordinate
     );
   }
 }
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    top: 60,
-    backgroundColor: 'blue',
+    backgroundColor: 'white',
   },
   paragraph: {
-    margin: 24,
+
     fontSize: 18,
     textAlign: 'center',
   },
   web:{
-    height: "50%",
-    top : 0
+    height: "100%",
+    top : 0,
+    backgroundColor : "white"
   },
   map:{
-    height: "50%",
+    height: "80%",
     left: 0,
     right: 0,
     bottom: 0,
