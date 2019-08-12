@@ -2,22 +2,14 @@ from django.contrib import auth
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
-from django.urls import reverse
-
-
-class User(auth.models.User, auth.models.PermissionsMixin):
-
-    def __str__(self):
-        return "@{}".format(self.username)
 
 
 class Complain(models.Model):
 
-    author = models.ForeignKey(
+    author = models.OneToOneField(
         User,
         on_delete=models.CASCADE,
-        primary_key=True,
-        unique=True  # TODO : 어떤 효과인지 확인해보자
+        primary_key=True
     )
     title = models.TextField()
     content = models.TextField()
