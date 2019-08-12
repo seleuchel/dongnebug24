@@ -8,9 +8,6 @@ import SlidingUpPanel from 'rn-sliding-up-panel';
 import * as TaskManager from 'expo-task-manager';
 import { CreateLocation, UpdateLocation, ReadLocation } from './RequestHttp';
 
-//react-navigation
-import {createStackNavigator, createAppContainer} from "react-navigation";
-
 const LOCATION_TASK_NAME = 'background-location-task';
 var vi = null;
 
@@ -32,8 +29,8 @@ class MarkerComponent extends Component<props>{
   }
 
   componentDidMount(){
-
-  }
+    this.setState(async function() {location : ReadLocation()})
+  };
 
 
   render(){
@@ -42,7 +39,6 @@ class MarkerComponent extends Component<props>{
   }
 }
 
-////////////////////////////////////////////////////////
 export default class App extends Component<Props>{
   constructor(props){
     super(props);
@@ -59,11 +55,26 @@ export default class App extends Component<Props>{
 }
 
   componentDidMount(){
-    console.log(ReadLocation());
-    this.setState({data : ReadLocation()}); //처음 마운트 했을때 리퀘스트 보냄
-    console.log(this.state.data);
-  }
+    //setInterval(function(){SendData()}, 1000)
+    this.setState({data : ReadLocation()}) //처음 마운트 했을때 리퀘스트 보냄
+  /*setInterval(async () => {
+    await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME,);
+    //console.log('--------------------------- DEBUG : GET vi --------------------------- \n', vi);
+    this.setState({location:vi.locations[0]});  //delete please
+    this.setState({
+      latitude : vi.locations[0].coords.latitude,
+      longitude : vi.locations[0].coords.longitude,
+      timestamp : vi.locations[0].timestamp,
+    })
 
+    //here - sendPacket 1
+
+    console.log('\n--------------------------- DEBUG : get state : lant, lon, timestamp --------------------------- \n',
+      'latitude : ', this.state.latitude,
+      'longitude : ', this.state.longitude,
+      'timestamp : ', this.state.timestamp);
+  }, 5000)*/
+  };
   componentWillUnmount() {
     BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
 }
@@ -103,13 +114,24 @@ componentWillMount() {
       longitude : vi.longitude,
     });
 
-
-    let j = await ReadLocation();
-    this.setState({ data : j });
-    console.log('this is j : ', this.state.data);
+    let location = Location.getCurrentPositionAsync({});
+    this.setState({ location });
   };
 
   render() {
+    let text = 'Waiting..';
+    let is_loc = "is location oK?";
+    let street = "";
+
+
+    if (this.state.errorMessage) {
+      text = this.state.errorMessage;
+      is_loc = "no, sir..";
+    } else if (this.state.location) {
+      text = JSON.stringify(this.state.location);
+      is_loc = String(this.state.is_location_on);
+      street = JSON.stringify(this.state.way);
+    }
     if(this.state.data._55!=undefined)
       console.log(this.state.data) //리스폰스가 오기전까지 언디파인드임 언디파인드이면 오류발생하니까 언디파인드인지 먼저 확인
     return (
