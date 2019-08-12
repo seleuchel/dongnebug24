@@ -12,9 +12,8 @@ class Location(models.Model):
         primary_key=True,
     )
 
-    latitude = models.IntegerField(default=0)
-    longitude = models.IntegerField(default=0)
-
+    latitude = models.DecimalField(max_digits=20, decimal_places=17, null=True)
+    longitude = models.DecimalField(max_digits=20, decimal_places=17, null=True)
     def __str__(self):
         return "latitude = "+ str(self.latitude) + " " \
                + "longitude = " + str(self.longitude)
