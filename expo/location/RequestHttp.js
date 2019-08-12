@@ -8,7 +8,7 @@ function ReadLocation(){
     });
 }
 
-//sumin-edit
+//sumin-edit : POST
 function CreateLocation(latitude, longitude){ //위치정보 json으로 받기
   fetch('http://168.131.151.162:8000/api/locations/', {
   method: 'POST',
@@ -23,7 +23,7 @@ function CreateLocation(latitude, longitude){ //위치정보 json으로 받기
 })
 }
 
-//sumin-edit
+//sumin-edit : PUT
 function UpdateLocation(latitude, longitude){
   //귀주 : http://168.131.153.40:8000/location/7/
   //세옥 : http://168.131.151.162:8000/api/locations/1/

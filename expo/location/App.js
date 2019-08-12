@@ -6,7 +6,7 @@ import * as Permissions from 'expo-permissions';
 import MapView, {Marker} from 'react-native-maps';
 import SlidingUpPanel from 'rn-sliding-up-panel';
 import * as TaskManager from 'expo-task-manager';
-import { UpdateLocation } from './RequestHttp';
+import { CreateLocation, UpdateLocation, ReadLocation } from './RequestHttp';
 
 const LOCATION_TASK_NAME = 'background-location-task';
 var vi = null;
@@ -89,11 +89,6 @@ componentWillMount() {
       });
     }
 
-
-    this.setState({
-      location: vi,
-    });//delete please
-
     this.setState({
       latitude : vi.locations[0].coords.latitude,
       longitude : vi.locations[0].coords.longitude,
@@ -123,9 +118,14 @@ componentWillMount() {
         lat = this.state.latitude;
         lon = this.state.longitude;
 
-        //here - sendPacket 2
-       // CreateLocation(lat,lon);
-        UpdateLocation(lat,lon);
+      //here - sendPacket
+      //#CREATE
+      CreateLocation(lat,lon);
+      //#UPDATE
+      //UpdateLocation(lat,lon);
+      //#READ
+      //
+
 
     }else{//여기
       console.log('\n<< LOCATION is NULL !  \n');
