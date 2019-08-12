@@ -1,0 +1,27 @@
+<html>
+  <title> I am client </title>
+  <body>
+  <p id = "timezones"></p>
+  <input type="button" id="execute" value="execute"/>
+
+  <script>
+    document.querySelector('input').addEventListener('click', function(event){
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', './time.php');
+      xhr.onreadystatechange = function(){
+        if(xhr.readyState === 4 && xhr.status === 200){
+          var _tzs = xhr.responseText;
+          var tzs = JSON.parse(_tzs);
+          var _str = '';
+
+          for(var i = 0 ; i < tzs.length; i++){
+            _str += tzs[i];
+          }
+          document.querySelector('#timezones').innerHTML = _str;
+        }
+      }
+      xhr.send();
+    });
+  </script>
+  </body>
+</html>
