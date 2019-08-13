@@ -98,7 +98,6 @@ componentWillMount() {
   BackHandler.removeEventListener('hardwareBackPress');
  }
 
-
   _getLocationAsync = async () => {
 
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
@@ -128,14 +127,6 @@ componentWillMount() {
     }
   }
 
-  onNavigationStateChange(navState){
-    this.setState({
-      canGoBack : !navState.canGoBack
-    });
-  }
-
-
-
 onNavigationStateChange(navState){
   console.log(navState);
   console.log(navState.canGoBack);
@@ -144,10 +135,20 @@ onNavigationStateChange(navState){
   });
 }
 
-onBack() {
-    this.refs[WEBVIEW_REF].goBack();
+  onBack() {
+      this.refs[WEBVIEW_REF].goBack();
+  }
 
-}
+  //귀주 : readLocation
+  ReadLocation(){
+      return fetch('http://168.131.153.40:8000/location/7/', {
+      method: 'GET'
+      })
+      .then((response) => response.json())
+      .catch((error) => {
+         console.error(error);
+      });
+  }
 
   render() {
 
@@ -159,7 +160,6 @@ onBack() {
 
     if (this.state.errorMessage) {
       text = this.state.errorMessage;
-      console.log(text);
     } else if (this.state.latitude) {
 
       if( (this.state.latitude !=='undefined') && (this.state.latitude !== null))//// 여기
