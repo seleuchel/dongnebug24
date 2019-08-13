@@ -15,8 +15,8 @@
     <div id="map"></div>
     <script>
       let url = 'https://storage.googleapis.com/maps-devrel/google.json';
-      var let = '';
-      var lon = '';
+      var leti = '';
+      var loni = '';
 
 
       var M = [];
@@ -59,9 +59,9 @@ async function initMap() {
          response.json().then(function(data) {
            //console.log(data.features);
            for(var i = 0 ; i < 20 ; i++){
-             let = data.features[0].geometry.coordinates[0][i][1];
-             lon = data.features[0].geometry.coordinates[0][i][0];
-             var pos = {lat:let, lng:lon};
+             leti = data.features[0].geometry.coordinates[0][i][1];
+             loni = data.features[0].geometry.coordinates[0][i][0];
+             var pos = {lat:leti, lng:loni};
              console.log(pos);
 
              M[i] = new google.maps.Marker({position: pos, map: map});

@@ -6,6 +6,10 @@ import * as Permissions from 'expo-permissions';
 import MapView, {Marker} from 'react-native-maps';
 import SlidingUpPanel from 'rn-sliding-up-panel';
 import * as TaskManager from 'expo-task-manager';
+import { CreateLocation, UpdateLocation, ReadLocation } from './RequestHttp';
+
+//user component
+import {handleBackButton} from './component/Backbutton';
 
 const LOCATION_TASK_NAME = 'background-location-task';
 var vi = null;
@@ -23,7 +27,6 @@ TaskManager.defineTask(LOCATION_TASK_NAME, ({ data, error }) => {
 export default class App extends Component<Props>{
   constructor(props){
     super(props);
-    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
     this.state = {
       errorMessage: null,
       region: null,
@@ -31,11 +34,17 @@ export default class App extends Component<Props>{
       latitude:null,
       longitude: null,
       timestamp: null,
+
+
     };
 }
 
-//vi는 통째로 받고
+
 componentDidMount(){
+  //listens to hardwareBackPress
+  BackHandler.addEventListener('hardwareBackPress', handleBackButton);
+
+  //get location
   setInterval(async () => {
     await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME,);
     console.log('--------------------------- DEBUG : GET vi --------------------------- \n', vi);
@@ -45,25 +54,26 @@ componentDidMount(){
       longitude : vi.locations[0].coords.longitude,
       timestamp : vi.locations[0].timestamp,
     })
+
+    //here - sendPacket 1
+
     console.log('\n--------------------------- DEBUG : get state : lant, lon, timestamp --------------------------- \n',
       'latitude : ', this.state.latitude,
       'longitude : ', this.state.longitude,
       'timestamp : ', this.state.timestamp);
-  }, 5000)
-}
+  }, 5000);
 
-componentWillUnmount() {
-    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  console.log('readLocation',ReadLocation());
 }
 
 handleBackButtonClick() {
-    this.props.navigation.goBack(null);
     return true;
 }
 
 //컴포넌트가 화면에 나가기 직전에 호출되는 api
 componentWillMount() {
-    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+  //BackH
+    BackHandler.addEventListener('hardwareBackPress', handleBackButton);
 
 
     //is this android?
@@ -74,7 +84,16 @@ componentWillMount() {
     } else {
       this._getLocationAsync();
     }
-  }
+
+}
+componentWillUnmount() {
+  //BackHandler
+  BackHandler.removeEventListener('hardwareBackPress',handleBackButton);
+
+}
+
+//Backhandler
+
 
   _getLocationAsync = async () => {
 
@@ -85,22 +104,19 @@ componentWillMount() {
       });
     }
 
-
-    this.setState({
-      location: vi,
-    });//delete please
-
     this.setState({
       latitude : vi.locations[0].coords.latitude,
       longitude : vi.locations[0].coords.longitude,
       timestamp : vi.locations[0].timestamp,
     });
 
+
   };
 
 
 //안움직일때 render가 대기 타야 되는데
   render() {
+
     let text = 'Waiting..';
     let lat = "";
     let lon = "";
@@ -112,29 +128,45 @@ componentWillMount() {
       console.log(text);
     } else if (this.state.latitude) {
 
-      if( this.state.latitude !=='undefined')//// 여기
+      if( (this.state.latitude !=='undefined') && (this.state.latitude !== null))//// 여기
       {
         console.log('\n>> GET LOCATION!  \n');
         lat = this.state.latitude;
         lon = this.state.longitude;
-      //
+
+      //here - sendPacket
+      //#CREATE
+      //CreateLocation(lat,lon);
+      //#UPDATE
+      //UpdateLocation(lat,lon);
+      //#READ
+      console.log('readLocation',ReadLocation());
+
     }else{//여기
       console.log('\n<< LOCATION is NULL !  \n');
       }
     }
     console.log('hello lat',lat);
+//http://168.131.151.165/p2p/812/content.html
+//mizoo : http://168.131.151.165/p2p/812/content.html
 
+
+//source = {{ uri : 'http://168.131.151.165/maps/linktoread.html'}}
     return (
+
       <View style={styles.container}>
+
       <WebView style={styles.web}
-          source = {{ uri : 'https://google.com'}}
+          source = {{ uri : 'http://168.131.151.165/maps/viv.html'}}
         />
-        <TouchableOpacity style={{backgroundColor:'black',padding:10}} onPress={() => this._panel.show()}>
-          <Text style={{fontSize:20,color:'white', textAlign:'center'}}>'내 위치'</Text>
+        <TouchableOpacity style={{backgroundColor:'#D9EDFD',padding:10}} onPress={() => this._panel.show()}>
+          <Text style={{fontSize:20,color:'black', textAlign:'center'}}>'내 위치'</Text>
         </TouchableOpacity>
                 <SlidingUpPanel ref={c => this._panel = c} >
                   <View style={{flex:0.7, top:300}}>
-                    <Button title='내 현재 위치' color="black" />
+                    <TouchableOpacity style={{backgroundColor:'#D9EDFD',padding:3}} onPress={() => this._panel.hide()}>
+                      <Text style={{fontSize:20,color:'black', textAlign:'center'}}>'내 현재 위치'</Text>
+                    </TouchableOpacity>
 
                       <MapView
                         style={styles.map}
@@ -163,7 +195,6 @@ componentWillMount() {
     );
   }
 }
-
 
 const styles = StyleSheet.create({
   container: {
