@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, Text, View, Button, StyleSheet,WebView, BackHandler, Alert, TouchableOpacity } from 'react-native';
+import { Platform, Text, View, Button, StyleSheet,WebView,WEBVIEW_REF, BackHandler, Alert, TouchableOpacity } from 'react-native';
 import Constants from 'expo-constants';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
@@ -12,10 +12,8 @@ import { CreateLocation, UpdateLocation, ReadLocation } from './RequestHttp';
 import {handleBackButton} from './component/Backbutton';
 
 const LOCATION_TASK_NAME = 'background-location-task';
-var vi = '';
-var uri = "http://naver.com";
+var vi = null;
 
-var wv = new WebView();
 TaskManager.defineTask(LOCATION_TASK_NAME, ({ data, error }) => {
   if (error) {
     return;
@@ -26,11 +24,7 @@ TaskManager.defineTask(LOCATION_TASK_NAME, ({ data, error }) => {
 });
 
 //location get coords data
-  let WEBVIEW_REF = 'webview';
-
 export default class App extends Component<Props>{
-
-
   constructor(props){
     super(props);
     this.state = {
@@ -41,47 +35,37 @@ export default class App extends Component<Props>{
       longitude: null,
       timestamp: null,
       //back
-       canGoBack : false,
     };
 
 }
 
- componentDidMount(){
-//BackHandler : listens to hardwareBackPress
-  BackHandler.addEventListener('hardwareBackPress',async function(){
-      if(this.state.canGoBack){
-        this.onBack();
-        return false;
-      }else{
-        handleBackButton();
-      }
-  }.bind(this));
-
+componentDidMount(){
+  //listens to hardwareBackPress
+  BackHandler.addEventListener('hardwareBackPress', this.webView_with_back);
 
   //get location
   setInterval(async () => {
     await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME,);
     console.log('--------------------------- DEBUG : GET vi --------------------------- \n', vi);
+    this.setState({location:vi.locations[0]});  //delete please
+    this.setState({
+      latitude : vi.locations[0].coords.latitude,
+      longitude : vi.locations[0].coords.longitude,
+      timestamp : vi.locations[0].timestamp,
+    })
 
-      this.setState({
-        latitude : vi.locations[0].coords.latitude,
-        longitude : vi.locations[0].coords.longitude,
-        timestamp : vi.locations[0].timestamp,
-      });
+    //here - sendPacket 1
 
-
-    // console.log('\n--------------------------- DEBUG : get state : lant, lon, timestamp --------------------------- \n',
-    //   'latitude : ', this.state.latitude,
-    //   'longitude : ', this.state.longitude,
-    //   'timestamp : ', this.state.timestamp);
+    console.log('\n--------------------------- DEBUG : get state : lant, lon, timestamp --------------------------- \n',
+      'latitude : ', this.state.latitude,
+      'longitude : ', this.state.longitude,
+      'timestamp : ', this.state.timestamp);
   }, 5000);
 
-
-
   console.log('readLocation',ReadLocation());
- }
+}
 
-//componentWillMount : api called just before the component print the screen
+//컴포넌트가 화면에 나가기 직전에 호출되는 api
 componentWillMount() {
     //is this android?
     if (Platform.OS === 'android' && !Constants.isDevice) {
@@ -93,10 +77,13 @@ componentWillMount() {
     }
 
 }
- componentWillUnmount() {
-//BackHandler : detach to hardwareBackPress
+componentWillUnmount() {
+  //BackHandler
   BackHandler.removeEventListener('hardwareBackPress');
- }
+
+}
+
+//Backhandler
 
 
   _getLocationAsync = async () => {
@@ -117,37 +104,20 @@ componentWillMount() {
 
   };
 
-//BackHandler
-  webView_with_back = () =>{
-    if(this.state.canGoBack){
-      this.props.navigation.goBack(null);
-      console.log('no');
-      return false;
-    }else{
+
+
+
+
+//back Button
+  webView_with_back(){
+
       return handleBackButton();
-    }
-  }
-
-  onNavigationStateChange(navState){
-    this.setState({
-      canGoBack : !navState.canGoBack
-    });
   }
 
 
 
-onNavigationStateChange(navState){
-  console.log(navState);
-  console.log(navState.canGoBack);
-  this.setState({
-    canGoBack: navState.canGoBack
-  });
-}
 
-onBack() {
-    this.refs[WEBVIEW_REF].goBack();
 
-}
 
   render() {
 
@@ -174,7 +144,7 @@ onBack() {
       //#UPDATE
       //UpdateLocation(lat,lon);
       //#READ
-      //console.log('readLocation',ReadLocation());
+      console.log('readLocation',ReadLocation());
 
     }else{//여기
       console.log('\n<< LOCATION is NULL !  \n');
@@ -188,13 +158,12 @@ onBack() {
 //source = {{ uri : 'http://168.131.151.165/maps/linktoread.html'}}
     return (
       <View style={styles.container}>
-        <WebView
-        ref = {WEBVIEW_REF}
-        style={styles.web}
-        onNavigationStateChange=
-        {this.onNavigationStateChange.bind(this)}
-        source = {{uri: 'https://google.com'}}/>
 
+      <WebView
+          style={styles.web}
+          source = {{ uri : 'http://168.131.151.165/maps/viv.html'}}
+
+        />
         <TouchableOpacity style={{backgroundColor:'#D9EDFD',padding:10}} onPress={() => this._panel.show()}>
           <Text style={{fontSize:20,color:'black', textAlign:'center'}}>'내 위치'</Text>
         </TouchableOpacity>
@@ -226,7 +195,8 @@ onBack() {
                       </MapView>
                   </View>
                 </SlidingUpPanel>
-                </View>
+      </View>
+//예쁘게 안됨. coordinate
     );
   }
 }
@@ -242,7 +212,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   web:{
-    height: "50%",
+    height: "100%",
     top : 0,
     backgroundColor : "white"
   },
