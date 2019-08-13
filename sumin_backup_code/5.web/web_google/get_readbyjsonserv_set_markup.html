@@ -15,10 +15,9 @@
     <!--The div element for the map -->
     <div id="map"></div>
     <script>
-    // 귀주 : http://168.131.153.40:8000/location/7/
       let url = 'http://168.131.153.40:8000/location/7/';
-      var let = '';
-      var lon = '';
+      var leti = '';
+      var loni = '';
 
       var M = [];
       var test= '';
@@ -30,7 +29,7 @@ async function initMap() {
   //var demon = ;
   // The map, centered at Uluru
   var map = new google.maps.Map(
-      document.getElementById('map'), {zoom: 6, center: uluru});
+      document.getElementById('map'), {zoom: 1, center: uluru});
   // The marker, positioned at Uluru
   var marker = new google.maps.Marker({position: uluru, map: map});
   //test = new google.maps.Marker({position:{lat:-28.57, lng :119.22 }, map: map});
@@ -67,7 +66,7 @@ async function initMap() {
      .catch(function(err) {
        console.log('Fetch Error :-S', err);
      });
- }, 10000);
+ }, 1000);
 
 }
     </script>
