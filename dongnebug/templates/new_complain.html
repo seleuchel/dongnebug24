@@ -71,47 +71,55 @@
     <div id = "text">
       <br/>
       <br/>
-      <label>글 제목</label>
-      <input class="form-control" type="text" placeholder="제목을 입력하세요. 되도록이면 위치 기반의 제목을 입력해주세요."><br/>
-      <div>
-        <label>현 위치</label>
-        <form>
-          <div class="form-row">
-            <div class="col">
-              <input type="text" class="form-control" placeholder="위치를 찾아보세요.">
-            </div>
-            <div class="col">
-              <img id = search src = "{% static "dongnebug/img/search.png" %}" width="29" height="29" href="#">
-              <img id = placeholder src = "{% static "dongnebug/img/placeholder.png" %}" width="30" height="30" href="#">
-
-            </div>
-          </div>
-        </form>
-        <br>
-        <p align = "middle">
-          <iframe src="https://map.kakao.com" width="100%" height="300"></iframe>
-        </p>
-
-
-      </div>
-      <form class="was-validated">
-          <div  class="mb-3">
-              <label for="validationTextarea">글 내용</label>
-              <textarea class="form-control is-invalid" id="validationTextarea" placeholder="불편한 내용을 입력해주세요." required></textarea>
-          </div>
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          {% for object in form %}
+              <p>{{ object }}</p>
+          {% endfor %}
+          <input id = "submit" type="submit" class="btn btn-primary" >
       </form>
-
-      <label>첨부파일</label>
-      <div class="input-group mb-3">
-        <div class="custom-file">
-          <input type="file" class="custom-file-input" id="inputGroupFile02">
-          <label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">영상이나 이미지 파일을 첨부하세요.</label>
-        </div>
-        <div class="input-group-append">
-          <span class="input-group-text" id="inputGroupFileAddon02">업로드</span>
-        </div>
-      </div>
-      <button id = "submit" type="submit" class="btn btn-primary" >북 올리기</button>
+{#      <label>글 제목</label>#}
+{#      <input class="form-control" type="text" placeholder="제목을 입력하세요. 되도록이면 위치 기반의 제목을 입력해주세요."><br/>#}
+{#      <div>#}
+{#        <label>현 위치</label>#}
+{#        <form>#}
+{#          <div class="form-row">#}
+{#            <div class="col">#}
+{#              <input type="text" class="form-control" placeholder="위치를 찾아보세요.">#}
+{#            </div>#}
+{#            <div class="col">#}
+{#              <img id = search src = "{% static "dongnebug/img/search.png" %}" width="29" height="29" href="#">#}
+{#              <img id = placeholder src = "{% static "dongnebug/img/placeholder.png" %}" width="30" height="30" href="#">#}
+{##}
+{#            </div>#}
+{#          </div>#}
+{#        </form>#}
+{#        <br>#}
+{#        <p align = "middle">#}
+{#          <iframe src="https://map.kakao.com" width="100%" height="300"></iframe>#}
+{#        </p>#}
+{##}
+{##}
+{#      </div>#}
+{#      #}
+{#      <form class="was-validated">#}
+{#          <div  class="mb-3">#}
+{#              <label for="validationTextarea">글 내용</label>#}
+{#              <textarea class="form-control is-invalid" id="validationTextarea" placeholder="불편한 내용을 입력해주세요." required></textarea>#}
+{#          </div>#}
+{#      </form>#}
+{##}
+{#      <label>첨부파일</label>#}
+{#      <div class="input-group mb-3">#}
+{#        <div class="custom-file">#}
+{#          <input type="file" class="custom-file-input" id="inputGroupFile02">#}
+{#          <label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">영상이나 이미지 파일을 첨부하세요.</label>#}
+{#        </div>#}
+{#        <div class="input-group-append">#}
+{#          <span class="input-group-text" id="inputGroupFileAddon02">업로드</span>#}
+{#        </div>#}
+{#      </div>#}
+{#      <button id = "submit" type="submit" class="btn btn-primary" >북 올리기</button>#}
     </div>
     <br>
 {% endblock %}
