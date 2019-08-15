@@ -9,7 +9,6 @@ class Complain(models.Model):
     author = models.OneToOneField(
         User,
         on_delete=models.CASCADE,
-        primary_key=True
     )
     title = models.TextField()
     content = models.TextField()
