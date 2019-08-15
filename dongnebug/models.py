@@ -6,7 +6,7 @@ from django.utils import timezone
 
 class Complain(models.Model):
 
-    author = models.OneToOneField(
+    author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
     )
