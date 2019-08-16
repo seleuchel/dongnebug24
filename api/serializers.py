@@ -2,7 +2,7 @@ from django.contrib.auth.models import User, Group
 from api.models import Location
 from dongnebug.models import Complain
 from rest_framework import serializers
-from scipy.spatial import distance
+# from scipy.spatial import distance
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
