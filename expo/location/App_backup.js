@@ -6,7 +6,7 @@ import * as Permissions from 'expo-permissions';
 import MapView, {Marker} from 'react-native-maps';
 import SlidingUpPanel from 'rn-sliding-up-panel';
 import * as TaskManager from 'expo-task-manager';
-import  BackgroundFetch  from 'react-native-background-fetch';
+import { BackgroundFetch } from 'expo';
 
 //user component
 import {handleBackButton} from './component/Backbutton';
@@ -17,8 +17,6 @@ const LOCATION_TASK_NAME = 'background-my-location-get';
 
 var vi = '';
 var uri = "http://naver.com";
-
-
 
 TaskManager.defineTask(LOCATION_TASK_NAME, ({ data, error }) => {
   if (error) {
@@ -52,7 +50,7 @@ export default class App extends Component<Props>{
 
  componentDidMount(){
 //backgrond
-
+  //BackgroundFetch.registerTaskAsync(LOCATION_TASK_NAME);
 //BackHandler : listens to hardwareBackPress
   BackHandler.addEventListener('hardwareBackPress',async function(){
       if(this.state.canGoBack){
@@ -67,10 +65,9 @@ export default class App extends Component<Props>{
 
   //get location
   setInterval(async () => {
-
     await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME,);
     console.log('--------------------------- DEBUG : GET vi --------------------------- \n', vi);
-    await BackgroundFetch.registerTaskAsync(LOCATION_TASK_NAME);
+
       this.setState({
         latitude : vi.locations[0].coords.latitude,
         longitude : vi.locations[0].coords.longitude,
@@ -156,6 +153,7 @@ onNavigationStateChange(navState){
     let lat = "";
     let lon = "";
 
+
     if (this.state.errorMessage) {
       text = this.state.errorMessage;
     } else if (this.state.latitude) {
@@ -170,7 +168,7 @@ onNavigationStateChange(navState){
       //#CREATE
       //CreateLocation(lat,lon);
       //#UPDATE
-      //UpdateLocation(lat,lon);
+      UpdateLocation(lat,lon);
       //#READ
       //console.log('readLocation',ReadLocation());
 
@@ -180,6 +178,7 @@ onNavigationStateChange(navState){
     }
 //http://168.131.151.165/p2p/812/content.html
 //mizoo : http://168.131.151.165/p2p/812/content.html
+
 
 //source = {{ uri : 'http://168.131.151.165/maps/linktoread.html'}}
     return (
