@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "627456794778",
+    "firebase_url": "https://dongnebug24-2b7c4.firebaseio.com",
+    "project_id": "dongnebug24-2b7c4",
+    "storage_bucket": "dongnebug24-2b7c4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:627456794778:android:a1f6145e311279f2",
+        "android_client_info": {
+          "package_name": "com.dongnebug24.dongnebug24"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "627456794778-864qcsfjcdi2bj4786gpp9hff5t82u9p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.dongnebug24.dongnebug24",
+            "certificate_hash": "768cef6cfd72be03d3c712e25625615bd26ef2cd"
+          }
+        },
+        {
+          "client_id": "627456794778-pj0je83ksr403vvkhti5fhbd5896sl80.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDA43UhrvuE1LtRYbHYwbfoBJ3UPLLPbGc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "627456794778-pj0je83ksr403vvkhti5fhbd5896sl80.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

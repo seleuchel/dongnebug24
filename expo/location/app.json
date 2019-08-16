@@ -27,10 +27,11 @@
       "supportsTablet": true
     },
     "android": {
-      "package": "com.demian.demian",
+      "package": "com.dongnebug24.dongnebug24",
+      "googleServicesFile": "./google-services.json",
       "config" : {
         "googleMaps":{
-          "apiKey":"AIzaSyCh7WAY4iFGD2LBufHnBFuIBSzpIKABqhI"
+          "apiKey":"AIzaSyDA43UhrvuE1LtRYbHYwbfoBJ3UPLLPbGc"
       }
     }
     }
