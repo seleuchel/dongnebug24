@@ -1,6 +1,9 @@
 import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
+import React, { Component } from 'react';
+import {Text} from 'react-native';
 
+//http://168.131.153.40:8000/api/pushtoken/
 const PUSH_ENDPOINT = 'http://168.131.153.40:8000/api/pushtoken/';
 async function registerForPushNotificationsAsync() {
 
@@ -25,7 +28,7 @@ async function registerForPushNotificationsAsync() {
 
   // Get the token that uniquely identifies this device
   let token = await Notifications.getExpoPushTokenAsync();
-  console.log(token);
+  console.log('>>>>>>',token);
 
   // POST the token to your backend server from where you can retrieve it to send push notifications.
   return fetch(PUSH_ENDPOINT, {
@@ -35,10 +38,10 @@ async function registerForPushNotificationsAsync() {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-        'user' : 1,
         'token' : token,
     }),
   });
 }
+
 
 export { registerForPushNotificationsAsync };

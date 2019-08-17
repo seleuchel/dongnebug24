@@ -15,10 +15,10 @@ import { registerForPushNotificationsAsync } from './push_token';
 
 const LOCATION_TASK_NAME = 'background-my-location-get';
 
-var vi = '';
+var vi = {};
 var uri = "http://naver.com";
 
-TaskManager.defineTask(LOCATION_TASK_NAME, ({ data, error }) => {
+TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
   if (error) {
     return;
   }
@@ -31,8 +31,6 @@ TaskManager.defineTask(LOCATION_TASK_NAME, ({ data, error }) => {
   let WEBVIEW_REF = 'webview';
 
 export default class App extends Component<Props>{
-
-
   constructor(props){
     super(props);
     this.state = {
@@ -45,13 +43,14 @@ export default class App extends Component<Props>{
       //back
        canGoBack : false,
     };
-
 }
 
  componentDidMount(){
 //backgrond
   //BackgroundFetch.registerTaskAsync(LOCATION_TASK_NAME);
 //BackHandler : listens to hardwareBackPress
+//처음요청만 보내기
+  registerForPushNotificationsAsync();
   BackHandler.addEventListener('hardwareBackPress',async function(){
       if(this.state.canGoBack){
         this.onBack();
@@ -66,24 +65,20 @@ export default class App extends Component<Props>{
   //get location
   setInterval(async () => {
     await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME,);
-    console.log('--------------------------- DEBUG : GET vi --------------------------- \n', vi);
 
-      this.setState({
+      console.log('--------------------------- DEBUG : GET vi --------------------------- \n', vi);
+     this.setState({
         latitude : vi.locations[0].coords.latitude,
         longitude : vi.locations[0].coords.longitude,
         timestamp : vi.locations[0].timestamp,
       });
 
-
-    console.log('\n---000------------------------ DEBUG : get state : lant, lon, timestamp --------------------------- \n',
-      'latitude : ', this.state.latitude,
-      'longitude : ', this.state.longitude,
-      'timestamp : ', this.state.timestamp);
+    // console.log('\n--------------------------- DEBUG : get state : lant, lon, timestamp --------------------------- \n',
+    //   'latitude : ', this.state.latitude,
+    //   'longitude : ', this.state.longitude,
+    //   'timestamp : ', this.state.timestamp);
   }, 5000);
 
-
-
-  console.log('readLocation',ReadLocation());
  }
 
 //componentWillMount : api called just before the component print the screen
@@ -123,10 +118,8 @@ componentWillMount() {
       return handleBackButton();
     }
   }
-
+// show the site in the browser (navigate.canGoBack)
 onNavigationStateChange(navState){
-  console.log(navState);
-  console.log(navState.canGoBack);
   this.setState({
     canGoBack: navState.canGoBack
   });
@@ -164,14 +157,16 @@ onNavigationStateChange(navState){
         lat = this.state.latitude;
         lon = this.state.longitude;
 
-      //here - sendPacket
+      //SEND : here - sendPacket
       //#CREATE
       //CreateLocation(lat,lon);
       //#UPDATE
       //UpdateLocation(lat,lon);
       //#READ
+
       //console.log('readLocation',ReadLocation());
-      registerForPushNotificationsAsync();
+      //#reginster PUSH token to rest api server
+
 
 
     }else{//여기
@@ -182,7 +177,6 @@ onNavigationStateChange(navState){
 //mizoo : http://168.131.151.165/p2p/812/content.html
 
 
-//source = {{ uri : 'http://168.131.151.165/maps/linktoread.html'}}
     return (
       <View style={styles.container}>
         <WebView
