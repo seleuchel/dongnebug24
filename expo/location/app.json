@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "location",
+    "name": "동네북24",
     "slug": "location",
     "privacy": "public",
     "sdkVersion": "34.0.0",
@@ -16,6 +16,10 @@
       "image": "./assets/drum_1.png",
       "resizeMode": "contain",
       "backgroundColor": "#D9EDFD"
+    },
+    "notification":{
+      "icon" : "./assets/drum.png",
+      "color" : "#D9EDFD",
     },
     "updates": {
       "fallbackToCacheTimeout": 0

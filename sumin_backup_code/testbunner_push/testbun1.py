@@ -53,6 +53,6 @@ def send_push_message(token, message, extra=None):
             })
         raise self.retry(exc=exc)
 
-send_push_message('ExponentPushToken[p9co3AC5Y4MG4j5Ia-Y6d9]', '안녕?')
+send_push_message('ExponentPushToken[p9co3AC5Y4MG4j5Ia-Y6d9]', '내 주변에 동네북이 발견되었습니다!')
 #아주 잘 동작합니다!!
 #앱이 종료되어도 옴
