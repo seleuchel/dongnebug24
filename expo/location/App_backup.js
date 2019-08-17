@@ -7,20 +7,16 @@ import MapView, {Marker} from 'react-native-maps';
 import SlidingUpPanel from 'rn-sliding-up-panel';
 import * as TaskManager from 'expo-task-manager';
 import { BackgroundFetch } from 'expo';
-import { Notifications } from 'expo';
-
 
 //user component
 import {handleBackButton} from './component/Backbutton';
 import { CreateLocation, CreatePushToken, UpdateLocation, ReadLocation } from './RequestHttp';
-//import { registerForPushNotificationsAsync } from './push_token';
+import { registerForPushNotificationsAsync } from './push_token';
 
 const LOCATION_TASK_NAME = 'background-my-location-get';
 
 var vi = {};
 var uri = "http://naver.com";
-
-  const PUSH_ENDPOINT = 'http://168.131.153.40:8000/api/pushtoken/';
 
 TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
   if (error) {
@@ -53,6 +49,8 @@ export default class App extends Component<Props>{
 //backgrond
   //BackgroundFetch.registerTaskAsync(LOCATION_TASK_NAME);
 //BackHandler : listens to hardwareBackPress
+//처음요청만 보내기
+  registerForPushNotificationsAsync();
   BackHandler.addEventListener('hardwareBackPress',async function(){
       if(this.state.canGoBack){
         this.onBack();
@@ -110,9 +108,6 @@ componentWillMount() {
     }
   };
 
-
-
-
 //BackHandler
   webView_with_back = () =>{
     if(this.state.canGoBack){
@@ -166,50 +161,12 @@ onNavigationStateChange(navState){
       //#CREATE
       //CreateLocation(lat,lon);
       //#UPDATE
-      //UpdateLocation(lat,lon);
+      UpdateLocation(lat,lon);
       //#READ
+
       //console.log('readLocation',ReadLocation());
       //#reginster PUSH token to rest api server
-      async function registerForPushNotificationsAsync() {
 
-        const { status: existingStatus } = await Permissions.getAsync(
-          Permissions.NOTIFICATIONS
-        );
-        let finalStatus = existingStatus;
-
-        // only ask if permissions have not already been determined, because
-        // iOS won't necessarily prompt the user a second time.
-        if (existingStatus !== 'granted') {
-          // Android remote notification permissions are granted during the app
-          // install, so this will only ask on iOS
-          const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
-          finalStatus = status;
-        }
-
-        // Stop here if the user did not grant permissions
-        if (finalStatus !== 'granted') {
-          return;
-        }
-
-        // Get the token that uniquely identifies this device
-        let token = await Notifications.getExpoPushTokenAsync();
-        console.log('>>>>>>>',token);
-
-        // POST the token to your backend server from where you can retrieve it to send push notifications.
-        return fetch(PUSH_ENDPOINT, {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-              'user' : 1,
-              'token' : token,
-          }),
-        });
-      }
-
-      registerForPushNotificationsAsync();
 
 
     }else{//여기

@@ -23,27 +23,12 @@ function CreateLocation(latitude, longitude){ //위치정보 json으로 받기
 })
 }
 
-function CreatePushToken(token){ //위치정보 json으로 받기
-  fetch('http://168.131.153.40:8000/api/pushtoken/', {
-  method: 'POST',
-  headers: {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({
-    'User': 'is119',
-    'Token': token,
-  })
-})
-}
-
-
 
 //sumin-edit : PUT
 function UpdateLocation(latitude, longitude){
   //귀주 : http://168.131.153.40:8000/api/locations/
   //세옥 : http://168.131.151.162:8000/api/locations/1/
-  fetch('http://168.131.153.40:8000/api/locations/1/', { // URL인자값 더하기
+  fetch('http://168.131.153.40:8000/api/locations/73/', { // URL인자값 더하기
   method: 'PUT',
   headers: {
     'Accept': 'application/json',
@@ -66,4 +51,4 @@ function DeleteLocation(){
 })
 }
 
-export { ReadLocation, CreatePushToken, CreateLocation, UpdateLocation, DeleteLocation };
+export { ReadLocation, CreateLocation, UpdateLocation, DeleteLocation };

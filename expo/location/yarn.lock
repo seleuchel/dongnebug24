@@ -897,6 +897,13 @@
     xcode "^2.0.0"
     xmldoc "^0.4.0"
 
+"@react-native-community/push-notification-ios@^1.0.1":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@react-native-community/push-notification-ios/-/push-notification-ios-1.0.2.tgz#541bc8ce088d726c4a98fff0e261b4d0f555cacf"
+  integrity sha512-9lWaw+zBGvT8Yw9HZmiLkYbnmF5AzrWexYh2qmRt/shpfZawCTPmPBrq09N7JhiPV4g/gEbeLXlndxl1JQeB0g==
+  dependencies:
+    invariant "^2.2.4"
+
 "@types/fbemitter@^2.0.32":
   version "2.0.32"
   resolved "https://registry.yarnpkg.com/@types/fbemitter/-/fbemitter-2.0.32.tgz#8ed204da0f54e9c8eaec31b1eec91e25132d082c"
@@ -1963,6 +1970,13 @@ expo-asset@~6.0.0:
     path-browserify "^1.0.0"
     url-parse "^1.4.4"
 
+expo-background-fetch@~6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/expo-background-fetch/-/expo-background-fetch-6.0.0.tgz#4a1d8ffeea73e5ff8113a8c8c57d689a6ddfb6c6"
+  integrity sha512-30JAE+MC/f1Gzfg9Zs40rHas0DCF0aTiF9V/YCRuPo2a08HE1CfEmMeEibuxKiYlAZp8C8Z35/UEcSY1UJHfFg==
+  dependencies:
+    expo-task-manager "~6.0.0"
+
 expo-constants@~6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/expo-constants/-/expo-constants-6.0.0.tgz#ff4598985ba006e24949be3f05be7429e5bedacf"
@@ -2015,7 +2029,7 @@ expo-sqlite@~6.0.0:
     "@types/websql" "^0.0.27"
     lodash "^4.17.11"
 
-expo-task-manager@~6.0.0:
+expo-task-manager@^6.0.0, expo-task-manager@~6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/expo-task-manager/-/expo-task-manager-6.0.0.tgz#acab77771ccdfaa7318df446542263e50aef46e2"
   integrity sha512-7+zwpoSRrt1NnWqetnq51gSpFhecYafIONJyI6WebHqVvPuWNcBwp3+96nhFoKLnuBQdf0CTw3iJbbj2ujvf5A==
@@ -2136,6 +2150,11 @@ fancy-log@^1.3.2:
     color-support "^1.1.3"
     parse-node-version "^1.0.0"
     time-stamp "^1.0.0"
+
+fast-plist@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/fast-plist/-/fast-plist-0.1.2.tgz#a45aff345196006d406ca6cdcd05f69051ef35b8"
+  integrity sha1-pFr/NFGWAG1AbKbNzQX2kFHvNbg=
 
 fb-watchman@^2.0.0:
   version "2.0.0"
@@ -4158,6 +4177,15 @@ react-lifecycles-compat@2.0.0:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-2.0.0.tgz#71d9c4cde47114c4102454f76da055c2bc48c948"
   integrity sha512-txfpPCQYiazVdcbMRhatqWKcAxJweUu2wDXvts5/7Wyp6+Y9cHojqXHsLPEckzutfHlxZhG8Oiundbmp8Fd6eQ==
 
+react-native-background-fetch@^2.6.1:
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/react-native-background-fetch/-/react-native-background-fetch-2.7.0.tgz#33748dea9c0c4e1a387fb2d2ac7b48e8f4596ece"
+  integrity sha512-FZIMIsqwng21wQ91ve+iJEMADb6PEnzcmjJyo1DyIot+WhNShyFDE2Tmzg7/coZm28d7YIixCb9vbd0K/wPbNQ==
+  dependencies:
+    fast-plist "^0.1.2"
+    plist "^3.0.1"
+    xcode "^2.0.0"
+
 react-native-background-task@^0.2.1:
   version "0.2.1"
   resolved "https://registry.yarnpkg.com/react-native-background-task/-/react-native-background-task-0.2.1.tgz#9d110ed14b245e0d8b9ec8114ce24b33ddda65de"
@@ -4197,6 +4225,13 @@ react-native-platform-touchable@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/react-native-platform-touchable/-/react-native-platform-touchable-1.1.1.tgz#fde4acc65eea585d28b164d0c3716a42129a68e4"
   integrity sha1-/eSsxl7qWF0osWTQw3FqQhKaaOQ=
+
+react-native-push-notification@^3.1.9:
+  version "3.1.9"
+  resolved "https://registry.yarnpkg.com/react-native-push-notification/-/react-native-push-notification-3.1.9.tgz#760ee06e743fef74fc9fcb672dac40794fdc4c47"
+  integrity sha512-YpEg9AYBjNgJtHRgHKR0xPB7kk3Gj0uSjUxd0feOIvd7wrfR+zeiBM4NZonGmjlAG6thaE37dfAG5qcsONFM7w==
+  dependencies:
+    "@react-native-community/push-notification-ios" "^1.0.1"
 
 react-native-reanimated@~1.1.0:
   version "1.1.0"

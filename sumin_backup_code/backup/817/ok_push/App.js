@@ -161,7 +161,7 @@ onNavigationStateChange(navState){
       //#CREATE
       //CreateLocation(lat,lon);
       //#UPDATE
-      UpdateLocation(lat,lon);
+      //UpdateLocation(lat,lon);
       //#READ
 
       //console.log('readLocation',ReadLocation());

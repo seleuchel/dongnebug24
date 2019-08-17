@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{%  load static %}
+{% block style_block %}
+    <title>uploaded buk</title>
+{% endblock %}
+
+{% block body_block %}
+    <nav class="navbar navbar-light" style="background-color: #D9EDFD;">
+      <a href="{% url 'dongnebug:homepage' %}"><img src = "{% static "img/back.png" %}" width="30" height="30"></a>
+      <!-- Navbar content -->
+      <div id = logo>
+        <img src = "{% static "img/buk.png" %}" width="30" height="30">
+        <a id ="logotext" class="navbar-brand" href="#" >올린 북</a>
+      </div>
+      <a href = "{% url 'dongnebug:newcomplain' %}"><img src = "{% static "img/newpost.png" %}" width="30" height="30"></a>
+
+    </nav>
+
+    <!-- 내용 입력 -->
+    <div id = "upload_kknocked_contents"><!--테이블 -->
+      <hr>
+      <a href ="{% url 'dongnebug:content' %}">
+        <div id = "upload_contents-1">
+          <div class="media">
+            <!-- 이미지 삽입 -->
+            <img src="{% static "img/나무.png" %}" class="mr-3" width ="70" height = "70">
+            <div class="media-body" >
+              <div id ="uploadbuk_knocked_name">산학협력관 3호관</div>
+              <div id ="content-reaction">
+                <img src ="{% static "img/drum2.png" %}" width = "17" height = "17">
+                10
+                <img src = "{% static "img/comment.png" %}" width = "15" height ="15">
+                3
+              </div>
+            </div>
+              <img id ="doong" src ="{% static "img/둥.png" %}" class="mr-3" width="50" height ="50">
+          </div>
+        </div>
+      </a>
+      <hr>
+      <a href ="{% url 'dongnebug:content' %}">
+        <div id = "upload_contents-2">
+          <div class="media">
+            <!-- 이미지 삽입 -->
+            <img src="{% static "img/1.png" %}" class="mr-3" width ="70" height = "70">
+            <div class="media-body" >
+              <div id ="uploadbuk_knocked_name">북구청 앞 사거리</div>
+              <div id ="content-reaction">
+                <img src ="{% static "img/drum2.png" %}" width = "17" height = "17">
+                10
+                <img src = "{% static "img/comment.png" %}" width = "15" height ="15">
+                3
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </a>
+      <hr>
+    </div>
+ {% endblock %}
