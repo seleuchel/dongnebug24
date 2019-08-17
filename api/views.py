@@ -26,5 +26,5 @@ class LocationViewSet(viewsets.ModelViewSet):
     """
 
     """
-    queryset = Location.objects.all().order_by('id')
+    queryset = Location.objects.all().order_by('user_id')
     serializer_class = LocationSerializer

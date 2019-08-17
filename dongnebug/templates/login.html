@@ -9,7 +9,28 @@
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="Submit">
+        <input type="hidden" name="next" value="{{ next }}" />
     </form>
+
+    {% load socialaccount %}
+
+    <h1>hello world</h1>
+
+    <a href="'/accounts/signup">회원가입</a>
+    <br>
+
+    {% if user.is_authenticated %}
+    <a href="/logout">로그아웃</a>
+    <br>
+    {{ user.username }}님이 로그인 중
+    {% else %}
+
+        <a href="{% provider_login_url 'kakao' %}">카카오 로그인</a>
+        <a href="{% provider_login_url 'google' %}">구글 로그인</a>
+        <a href="{% provider_login_url 'naver' %}">네이버 로그인</a>
+        로그인 해야됨
+    {% endif %}
+
 {#  {% if form.errors %}#}
 {#<p>Your username and password didn't match. Please try again.</p>#}
 {#{% endif %}#}
