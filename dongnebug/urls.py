@@ -15,9 +15,9 @@ Including another URLconf
 """
 
 from django.urls import path
-from django.contrib.auth.views import LogoutView, LogoutView
+from django.contrib.auth.views import LoginView, LogoutView
 from .views import ContentView, HomepageView, NewComplainView, SearchView, UploadBukView, KnockedBukView
-from .views import ShowComplainView, RegisterView, IndexView, CreateComplainView
+from .views import ShowComplainView, RegisterView, IndexView
 app_name = 'dongnebug'
 
 urlpatterns = [
@@ -27,10 +27,9 @@ urlpatterns = [
     path('newcomplain/', NewComplainView.as_view(), name='newcomplain'),
     path('search/', SearchView.as_view(), name='search'),
     path('uploadbuk/', UploadBukView.as_view(), name='uploadbuk'),
-    path('showcomplain/', ShowComplainView.as_view(), name='showcomplain')
+    path('showcomplain/', ShowComplainView.as_view(), name='showcomplain'),
     path('', LoginView.as_view(template_name='login.html'), name='login'),
     path('index/', IndexView.as_view(), name='index'),
     path('signup/', RegisterView.as_view(), name='signup'),
     path('logout/', LogoutView.as_view(), name='logout'),
-    path('create/', CreateComplainView.as_view(), name='create_complain'),
 ]

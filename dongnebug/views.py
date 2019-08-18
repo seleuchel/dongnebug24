@@ -164,11 +164,5 @@ class RegisterView(CreateView):
 class IndexView(TemplateView):
     template_name = 'index.html'
 
-
-class CreateComplainView(CreateView):
-    form_class = forms.ComplainForm
-    template_name = 'new_complain.html'
-
-
-    def get_absolute_url(self):
-        return reverse('dongnebug:index')
+class LoginView(CreateView):
+    template_name='login.html'

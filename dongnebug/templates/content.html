@@ -1,96 +1,11 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
-    <title>새민원</title>
-    <style media="screen">
-
-      html, body{
-        height : 100%;
-        margin : 0;
-        padding : 0;
-      }
-      #upbar{
-        position: relative;
-        z-index: 1;
-      }
-
-      #logo {
-        margin: auto;
-      }
-      #logotext {
-        font-weight : bold;
-        font-family : 'Nanum Gothic', sans-serif;
-      }
-      *html #text {
-        height: 100%;
-      }
-      #text {
-        margin : 20px;
-        font-family :'Nanum Gothic', sans-serif;
-      }
-      #footer {
-        left: 0;
-        bottom: 0;
-        width: 100%;
-        padding: 30px 0;
-        text-align: center;
-        background-color: #D9EDFD;
-      }
-
-      #camera{
-        margin : 0px 0px 0px 20px;
-        float : left;
-      }
-      #video{
-        margin : 0px 0px 0px 20px;
-        float : left;
-      }
-      #woman{
-        margin : 0px 20px 0px 0px;
-        float : right;
-      }
-      #search{
-        margin : 0px 0px 0px 10px;
-        float : left;
-      }
-      #submit{
-        float : right;
-        margin: 0px 0px 20px 0px
-      }
-      #placeholder{
-        float : left;
-        margin : 0px 0px 5px 5px;
-      }
-      #content-name{
-        font-size : x-large;
-        font-weight : bold;
-      }
-      #user{
-        margin : 0px 5px 0px 0px;
-      }
-      #chat{
-        margin : 0px 0px 0px 5px;
-      }
-      #conmment-content {
-        display : table-cell;
-        vertical-align : middle;
-      }
-      #share {
-        float : right;
-      }
-    </style>
+{% extends 'base.html' %}
+{%  load static %}
+<title>content</title>
     <script type="text/javascript">
       var state = 0;
       function ChangeImage(){
         if(state == 0){
-          document.img1.src = "img/drum2.png"
+          document.img1.src = "img/buk.png"
           state = 1;
         }else {
           document.img1.src ="img/drum1.png"
@@ -99,119 +14,91 @@
       }
     </script>
 
-  </head>
-  <body>
-    <div class = "fixed-top">
-    <nav id = "upbar" class="navbar navbar-light" style="background-color: #D9EDFD;">
-      <a href="index.html"><img src = "img/back.png" width="30" height="30"></a>
-      <!-- Navbar content -->
-      <div id = logo>
-        <img id ="drum" src = "img/drum2.png" width="30" height="30">
-        <a id ="logotext" class="navbar-brand" href="#" >동네북24</a>
-      </div>
-    </nav>
-    </div>
+
+{% block body_block %}
+
 
     <div id = "text">
       <br/>
       <br/>
 
+      <!-- 내용 출력 -->
       <!-- 제목 받아오기 -->
-      <div id = "content-name">서울 시청 앞 로타리</div>
+      <div id = "content-title">{{complain.title}}</div>
       <hr>
 
       <!-- 사진이나 영상 받아오기 -->
-      <div id = "content-img"><img src = "img/나무.png" width = "100%" height = "300"></div>
+      <div id = "content-img"><img src = "{% static "img/나무.png" %}" width = "100%" height = "300"></div>
       <hr>
 
       <!-- 사람 아이콘 받아오기 -->
-      <div id = "content-userinfo"><img id = "user" src = "img/user.png" width="30" height="30">
-      <!-- 사람 닉네임 받아오기 -->
-      컴공의 누군가
+      <div id = "content-userinfo">
+        <img id = "user" src = "{% static "img/user.png" %}" width="35" height="35">
+        <span id ="date_time">
+        8/16 18:16
+        </span>
+        <!-- 사람 닉네임 받아오기 -->
+        <span id ="content-username">{{complain.author}}</span>
       </div>
       <br/>
       <!-- 글 내용 받아오기 -->
 
-      <div id = "text-content">
-        어젯 밤에 친 번개 탓인지 나무 한그루가 쓰러져서 통행을 막고 있습니다. 통행에 많이 불편하니 빠르게 조치 취해주시길 바랍니다. 최대한 빨리요오오오오오ㅗ오올나ㅓㅇ러ㅏㄴㅇ롼어
+      <div id = "content-text">
+        {{complain.content}}
       </div>
+
+
+      <br/>
       <br/>
       <!-- 북 아이콘 & onclick() = 다른 이미지로 대체 + 북 친 갯수 plus 1-->
       <div id = "reaction">
-        <img  src = "img/drum1.png" name = "img1" width="29" height="29" onclick ="ChangeImage()">
+        <img  src = "{% static "img/drum1.png" %}" name = "img1" width="23" height="23" onclick ="ChangeImage()">
         30
-        <img id = "chat" src = "img/chat.png" width = "27" height="27">
+        <img id = "chat" src = "{% static "img/comment.png" %}" width = "20" height="20">
         3
-        <img id = "share" src = "img/share.png" width ="28" heigth = "28">
+        <img id = "share" src = "{% static "img/share.png" %}" width ="20" heigth = "20">
       </div>
       <hr>
 
       <!-- 댓글 보여주기 -->
-      <table class="table table-borderless">
-        <thead>
-        </thead>
-        <tbody>
-          <tr >
-            <td width = "80"><img src = "img/user.png" width="50" height="50"></td>
-            <td rowspan="2" id = "comment-content">진짜 불편해보여요 ㅠㅠ 북 치고 갑니당 ㅎㅎ</td>
-          </tr>
-          <tr >
-            <td  id = "comment-userid" >공대생2</td>
-          </tr>
-        </tbody>
-      </table>
-      <hr>
-      <table class="table table-borderless">
-        <thead>
-        </thead>
-        <tbody>
-          <tr >
-            <td width = "80"><img src = "img/user.png" width="50" height="50"></td>
-            <td rowspan="2" id = "comment-content">저기 유동인구도 많은뎅,,, 해결이 시급해보이네용</td>
-          </tr>
-          <tr >
-            <td  id = "comment-userid" >공대생3</td>
-          </tr>
-        </tbody>
-      </table>
-      <hr>
-      <table class="table table-borderless">
-        <thead>
-        </thead>
-        <tbody>
-          <tr >
-
-            <td width = "80"><img src = "img/user.png" width="50" height="50"></td>
-            <td rowspan="2" id = "comment-content">헐 대박</td>
-          </tr>
-          <tr >
-            <td  id = "comment-userid" >공대생1</td>
-          </tr>
-        </tbody>
-      </table>
-      <!-- 댓글 달기 기능 -->
-      <div id ="comment-input">
-        <div class="input-group" >
-          <img src = "img/user.png" width = "30" height = "30">
-          <textarea class="form-control" aria-label="With textarea" placeholder="댓글을 입력하세요..."></textarea>
+{% for comment in comments %}
+      <div id = "contents">
+        <div id = "contents-1">
+            <div class="media">
+                <!-- 이미지 삽입 -->
+              <img id ="comment-userimage" src="{% static "img/user.png" %}" class="mr-3" width ="30" height = "30">
+              <div id ="conmment-username">
+                {{comment.user}}
+                <div id ="comment-date_time" >{{comment.pub_date}}</div>
+              </div>
+            </div>
+          <div id ="comment-content">{{comment.content}}</div>
+          <hr>
         </div>
+      </div>
+{% endfor %}
+    </div>
+
+      <!-- 댓글 달기 기능 -->
+    <form action="/GetCommentForm/" method="post">
+      <div id ="comment-window" class = "fixed-bottom">
+           <div class="input-group mb-3">
+            
+              {% csrf_token %}
+             <input type="text" class="form-control" placeholder="댓글을 입력하세요..." aria-describedby="button-addon2">
+             <div class="input-group-append">
+               <button class="btn btn-outline-secondary" type="submit" id="button-addon2">등록</button>
+             </div>
+             
+           </div>
       </div>
       <br>
       <br/>
     </div>
-    <div id =footer class = "fixed-bottom">
-<!--      <img id = "menu" src = "img/woman.png" width = "30" height = "30"> -->
-    </div>
+    </form>
+
+
 
     <!-- Optional JavaScript -->
-    <script>
-      $('#menu').click(function(){
-          $('.ui.sidebar').sidebar('setting', 'transition', 'overlay').sidebar('toggle');
-      })
-    </script>
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-  </body>
-</html>
+
+ {% endblock %}
