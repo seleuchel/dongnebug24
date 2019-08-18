@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Platform, Text, View, Button, StyleSheet,WebView, BackHandler, Alert, TouchableOpacity, Image } from 'react-native';
+import { Platform, Text, View, Button, StyleSheet,WebView, BackHandler, Alert, TouchableOpacity, Image,Clipboard } from 'react-native';
 import Constants from 'expo-constants';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
@@ -142,8 +142,16 @@ onNavigationStateChange(navState){
       });
   }
 
-  render() {
+  copyOk(){
+    if(this.state.token === '불러오는 중이에요~'){
+      alert('잠시만 기다려주세요!');
+    }else{
+      alert('토큰이 복사되었어요!');
+      Clipboard.setString(this.state.token);
+    }
+  }
 
+  render() {
     let text = 'Waiting..';
     let lat = "";
     let lon = "";
@@ -165,6 +173,7 @@ onNavigationStateChange(navState){
       //#UPDATE
       //UpdateLocation(lat,lon);
       //#READ
+
       //console.log('readLocation',ReadLocation());
       //#reginster PUSH token to rest api server
 
@@ -197,7 +206,7 @@ onNavigationStateChange(navState){
           <View style={{top:600}}>
             <TouchableOpacity style={styles.tokenbuttonOn} onPress={() => this._panel.show()}>
               <Text style={{fontSize:20,color:'black', textAlign:'center', marginBottom:5}} >내 토큰</Text>
-              <TouchableOpacity style={styles.tokenbox} color="black">
+              <TouchableOpacity style={styles.tokenbox} onPress={() => this.copyOk()} color="black">
                <Text style={{fontSize:16,color:'black', textAlign:'center', top:13}} >{this.state.token}</Text>
             </TouchableOpacity>
                </TouchableOpacity>
@@ -208,13 +217,16 @@ onNavigationStateChange(navState){
   }
 }
 
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#D9EDFD',
   },
   web:{
-    top : 24,
+    flex: 0.97,
+    top : 25,
     backgroundColor : "white"
   },
   image:{
