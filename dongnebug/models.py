@@ -12,8 +12,8 @@ class Complain(models.Model):
     )
     title = models.TextField()
     content = models.TextField()
-    latitude = models.IntegerField(default=0)
-    longitude = models.IntegerField(default=0)
+    latitude = models.DecimalField(max_digits=20, decimal_places=17, null=True)
+    longitude = models.DecimalField(max_digits=20, decimal_places=17, null=True)
     num_of_sympathies = models.IntegerField(default=0)
     num_of_comments = models.IntegerField(default=0)
     is_complete = models.BooleanField(default=False)
@@ -22,7 +22,7 @@ class Complain(models.Model):
 
     def __str__(self):
     #TODO : Check for security issue which is information leak
-        return '__all__'
+        return self.title
 
 
 class Favorite(models.Model):

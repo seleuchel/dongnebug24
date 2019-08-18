@@ -1,9 +1,9 @@
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.contrib.auth.models import User
-from .models import Complain
+from .models import Complain, Favorite, ComplainImage, Comment, Sympathy
 
-
+"""
 class RegisterForm(UserCreationForm):
     email = forms.EmailField(required=True, widget=forms.EmailInput(
         attrs={
@@ -49,18 +49,39 @@ class RegisterForm(UserCreationForm):
     class Meta:
         model = User
         fields = ("username", "email", "password1", "password2",)
+        """
 
-class ComplainForm(forms.ModelForm):
+class GetCommentForm(forms.ModelForm):
+    class Meta:
+        model=Comment
+        fields=('user', 'complain', 'content', 'pub_date')
+
+class ContentForm(forms.ModelForm):
     class Meta:
         model = Complain
         fields = ("author", "title", "content")
-        # TODO : Add latitude, longitude, images, videos
+class HomepageForm(forms.ModelForm):
+    class Meta:
+        model = Complain
+        fields = ("author", "title", "content")
+class NewComplainForm(forms.ModelForm):
+    class Meta:
+        model = Complain
+        fields = ("author", "title", "content")
+class SearchForm(forms.ModelForm):
+    class Meta:
+        model = Complain
+        fields = ("author", "title", "content")
+class UploadBukForm(forms.ModelForm):
+    class Meta:
+        model = Complain
+        fields = ("author", "title", "content")
+class KnockedBukForm(forms.ModelForm):
+    class Meta:
+        model = Complain
+        fields = ("author", "title", "content")
 
-
-
-
-# class AccountForm(forms.ModelForm):
-#     class Meta:
-#         model = User
-#         fields = ('username', 'password')
-
+class RegisterForm(forms.ModelForm):
+    class Meta:
+        model = Complain
+        fields = ("author", "title", "content")

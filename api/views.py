@@ -1,7 +1,8 @@
-from api.models import Location
+from api.models import Locations, PushToken
+from dongnebug.models import Complain
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
-from api.serializers import UserSerializer, GroupSerializer, LocationSerializer
+from api.serializers import UserSerializer, GroupSerializer, LocationsSerializer, PushTokenSerializer
 
 # Create your views here.
 
@@ -21,10 +22,25 @@ class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all().order_by('-date_joined')
     serializer_class = GroupSerializer
 
+class LocationsViewSet(viewsets.ModelViewSet):
 
-class LocationViewSet(viewsets.ModelViewSet):
-    """
+#    def getComplains():
+#        near_complains = []
+#        user_latitude=Location.objects.filter(pk=2).values('latitude').first()['latitude']
+#        user_longitude=Location.objects.filter(pk=2).values('longitude').first()['longitude']
+#        complains = Complain.objects.all()
+#        for complain in complains:
+#            dist = distance.euclidean((float(complain.latitude), float(complain.longitude)), (float(user_latitude), float(user_longitude)),5)
 
-    """
-    queryset = Location.objects.all().order_by('user_id')
-    serializer_class = LocationSerializer
+#            if dist < 0.05:
+#                self.near_complains.append(complain)
+#        return near_complains
+
+#    queryset = Complain.objects.filter(pk__in=getComplains())
+
+    queryset=Locations.objects.all()
+    serializer_class = LocationsSerializer
+
+class PushTokenViewSet(viewsets.ModelViewSet):
+    queryset = PushToken.objects.all()
+    serializer_class = PushTokenSerializer
