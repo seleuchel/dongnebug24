@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{%  load static %}
+{% block style_block %}
+
+    <title>동네북24</title>
+    <style media="screen">
+
+    </style>
+{% endblock %}
+
+{% block body_block %}
+    <div class="fixed-top">
+      <nav class="navbar navbar-light" style="background-color: #D9EDFD;">
+        <!-- Navbar content -->
+          <a href="{% url "dongnebug:homepage" %}"><img src = "{% static "img/back.png" %}" width="30" height="30"></a>
+          <div id ="logo">
+            <img src = "{% static "img/buk.png" %}" width="30" height="30">
+            <a id ="logotext" class="navbar-brand" href="#" >북 검색
+            </a>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <div id = "search-contents">
+      <div id ="text">
+        <div id ="search_window" class="ui icon input">
+          <input type="text" placeholder="검색어를 입력하세요...">
+          <i class="search icon"></i>
+        </div>
+      </div>
+      <hr>
+
+      <!-- 북 검색 내용 예시 -->
+      <a href ="{% url "dongnebug:content" 1 %}">
+        <div id = "upload_contents-1">
+          <div class="media">
+            <!-- 이미지 삽입 -->
+            <img src="{% static "img/나무.png" %}" class="mr-3" width ="50" height = "50">
+            <div class="media-body" >
+              <div id ="search_name">산학협력관 3호관</div>
+              <div id ="search-content-reaction">
+                <img src ="{% static "img/buk.png" %}" width = "17" height = "17">
+                10
+                <img src = "{% static "img/comment.png" %}" width = "15" height ="15">
+                3
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+      <hr>
+      <a href ="{% url "dongnebug:content" 1 %}">
+        <div id = "upload_contents-1">
+          <div class="media">
+            <!-- 이미지 삽입 -->
+            <img src="img/3.png" class="mr-3" width ="50" height = "50">
+            <div class="media-body" >
+              <div id ="search_name">북구청 앞 사거리</div>
+              <div id ="search-content-reaction">
+                <img src ="{% static "img/buk.png" %}" width = "17" height = "17">
+                10
+                <img src = "{% static "img/comment.png" %}" width = "15" height ="15">
+                3
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+      <hr>
+    </div>
+ {% endblock %}
