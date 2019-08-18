@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #floating-panel {
+        position: absolute;
+        top: 10px;
+        left: 25%;
+        z-index: 5;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        line-height: 30px;
+        padding-left: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+
+      var map;
+      var markers = [];
+
+      function initMap() {
+        //사용자의 현재위치로 값을 바꿔주세요
+        var initlocation = {lat: 36.386966, lng: 127.991686};
+
+        map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 17,
+          center: initlocation,
+        });
+
+        // This event listener will call addMarker() when the map is clicked.
+        map.addListener('click', function(event) {
+          addMarker(event.latLng);
+        });
+
+        // Adds a marker at the center of the map.
+        addMarker(initlocation);
+      }
+
+      // Adds a marker to the map and push to the array.
+      function addMarker(location) {
+        deleteMarkers();
+        var marker = new google.maps.Marker({
+          position: location,
+          map: map
+        });
+        var lat = marker.getPosition().lat();
+        var lng = marker.getPosition().lng();
+        markers.push(marker);
+        console.log('lat :', lat, 'lng :', lng);
+      }
+
+      // Sets the map on all markers in the array.
+      function setMapOnAll(map) {
+        for (var i = 0; i < markers.length; i++) {
+          markers[i].setMap(map);
+        }
+      }
+
+      function clearMarkers() {
+        setMapOnAll(null);
+      }
+
+      function deleteMarkers() {
+        clearMarkers();
+        markers = [];
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDA43UhrvuE1LtRYbHYwbfoBJ3UPLLPbGc&callback=initMap">
+    </script>
+  </body>
+</html>

@@ -18,6 +18,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-34.0.0.tar.gz",
     "react-native-background-fetch": "^2.6.1",
     "react-native-background-task": "^0.2.1",
+    "react-native-bottom-drawer": "^1.0.2",
     "react-native-gesture-handler": "~1.3.0",
     "react-native-maps": "^0.24.2",
     "react-native-navigation": "^2.26.5",

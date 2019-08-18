@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Platform, Text, View, Button, StyleSheet,WebView, BackHandler, Alert, TouchableOpacity, Image } from 'react-native';
+import { Platform, Text, View, Button, StyleSheet,WebView, BackHandler, Alert, TouchableOpacity } from 'react-native';
 import Constants from 'expo-constants';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
 import MapView, {Marker} from 'react-native-maps';
 import SlidingUpPanel from 'rn-sliding-up-panel';
 import * as TaskManager from 'expo-task-manager';
+import * as BackgroundFetch from 'expo-background-fetch';
 
 //user component
 import {handleBackButton} from './component/Backbutton';
@@ -143,7 +144,7 @@ onNavigationStateChange(navState){
   }
 
   render() {
-
+    console.log(BackgroundFetch.getStatusAsync());
     let text = 'Waiting..';
     let lat = "";
     let lon = "";
@@ -165,6 +166,7 @@ onNavigationStateChange(navState){
       //#UPDATE
       //UpdateLocation(lat,lon);
       //#READ
+
       //console.log('readLocation',ReadLocation());
       //#reginster PUSH token to rest api server
 
@@ -176,7 +178,7 @@ onNavigationStateChange(navState){
     }
 //http://168.131.151.165/p2p/812/content.html
 //mizoo : http://168.131.151.165/p2p/812/content.html
-//http://168.131.153.40:8000/homepage/
+
 
     return (
       <View style={styles.container}>
@@ -187,22 +189,19 @@ onNavigationStateChange(navState){
         {this.onNavigationStateChange.bind(this)}
         source = {{uri: 'http://168.131.153.40:8000/homepage/'}}/>
 
-        <TouchableOpacity  style={styles.tokenbuttonOff} onPress={() => this._panel.show()}>
-          <Image
-            style = {styles.image}
-            source={require('./assets/drum.png')}
-          />
-        </TouchableOpacity>
-        <SlidingUpPanel ref={c => this._panel = c}>
-          <View style={{top:600}}>
-            <TouchableOpacity style={styles.tokenbuttonOn} onPress={() => this._panel.show()}>
-              <Text style={{fontSize:20,color:'black', textAlign:'center', marginBottom:5}} >내 토큰</Text>
-              <TouchableOpacity style={styles.tokenbox} color="black">
-               <Text style={{fontSize:16,color:'black', textAlign:'center', top:13}} >{this.state.token}</Text>
-            </TouchableOpacity>
-               </TouchableOpacity>
-          </View>
-        </SlidingUpPanel>
+                <TouchableOpacity  style={styles.tokenbuttonOff} onPress={() => this._panel.show()}>
+                  <Text style={{fontSize:20,color:'black', textAlign:'center'}}>내 토큰</Text>
+                </TouchableOpacity>
+                        <SlidingUpPanel ref={c => this._panel = c}>
+                          <View style={{flex:1, top:600}}>
+                            <TouchableOpacity style={styles.tokenbuttonOn} onPress={() => this._panel.hide()}>
+                              <Text style={{fontSize:20,color:'black', textAlign:'center', marginBottom:5}} >내 토큰</Text>
+                              <TouchableOpacity style={styles.tokenbox} color="black">
+                               <Text style={{fontSize:16,color:'black', textAlign:'center', top:13}} >{this.state.token}</Text>
+                            </TouchableOpacity>
+                               </TouchableOpacity>
+                          </View>
+                        </SlidingUpPanel>
                 </View>
     );
   }
@@ -211,24 +210,26 @@ onNavigationStateChange(navState){
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#D9EDFD',
+    backgroundColor: 'white',
+  },
+  paragraph: {
+
+    fontSize: 18,
+    textAlign: 'center',
   },
   web:{
+    height: "70%",
     top : 24,
     backgroundColor : "white"
   },
-  image:{
-    width : 40,
-    height: 40
-  },
   tokenbuttonOff:{
-    position:'absolute',
-    bottom:5,
     borderRadius:15,
     marginRight:5,
     marginLeft:5,
     backgroundColor:'#D9EDFD',
     padding:10,
+    height:120,
+    top:70
   },
   tokenbuttonOn:{
     borderRadius:15,
@@ -236,7 +237,7 @@ const styles = StyleSheet.create({
     marginLeft:5,
     backgroundColor:'#D9EDFD',
     padding:10,
-    height:200
+    height:120
   },
   tokenbox:{
     marginRight:0,
@@ -254,4 +255,3 @@ const styles = StyleSheet.create({
   backgroundColor: '#ccc'
 }
 });
-//
