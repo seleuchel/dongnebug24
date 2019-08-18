@@ -215,7 +215,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#D9EDFD',
   },
   web:{
-    top : 24,
+    flex: 0.97,
+    top : 25,
     backgroundColor : "white"
   },
   image:{
