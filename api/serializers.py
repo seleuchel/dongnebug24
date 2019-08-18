@@ -23,4 +23,3 @@ class PushTokenSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = PushToken
         fields = ['token']
-

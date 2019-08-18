@@ -80,8 +80,3 @@ class KnockedBukForm(forms.ModelForm):
     class Meta:
         model = Complain
         fields = ("author", "title", "content")
-# class AccountForm(forms.ModelForm):
-#     class Meta:
-#         model = User
-#         fields = ('username', 'password')
-

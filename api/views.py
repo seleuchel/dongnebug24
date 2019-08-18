@@ -22,7 +22,6 @@ class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all().order_by('-date_joined')
     serializer_class = GroupSerializer
 
-
 class LocationsViewSet(viewsets.ModelViewSet):
 
 #    def getComplains():

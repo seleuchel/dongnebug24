@@ -30,7 +30,8 @@ urlpatterns = [
     # path('', dongnebug_views.LoginView.as_view(), name='login'),
     # path('', LoginView.as_view(template_name='templates/dongnebug/login.html')),
     path('', include('dongnebug.urls')),
-    path('api/', include(router.urls) ),
+    path('api/', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('admin/', admin.site.urls),
+    path('accounts/',  include('allauth.urls')),
 ]
