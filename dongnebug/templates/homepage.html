@@ -63,121 +63,34 @@
     <!-- 내용 입력 -->
     <div id = "homepage-contents">
       <hr>
-      <a href ="content.html">
-        <div id = "contents-1">
-          <div class="media">
-            <!-- 이미지 삽입 -->
-            <img src="img/나무.png" class="mr-3" width ="70" height = "70">
-            <div class="media-body">
-              <!-- 글 제목 -->
-              <h4 id = "homepage-content_name">전대 산학협력관 3호관</h4>
-              <!-- 본문 내용-->
-              <span id = "index_content">하수구가 빠져 있습니다 ㅠㅠ 너무 위험해보여요.</span>
+
+        {%  for complain in complains %}
+            <a href ="{{ complain.get_absolute_url }}">
+            <!-- 누르면 해당 민원의 detailview로 넘어가게 -->
+            <div id = "contents-1">
+              <div class="media">
+                <!-- 이미지 삽입 -->
+                <img src="{% static 'img/나무.png' %}" class="mr-3" width ="70" height = "70">
+                <div class="media-body">
+                  <!-- 글 제목 -->
+                  <h4 id = "homepage-content_name">{{ complain.title }}</h4>
+                  <!-- 본문 내용-->
+                  <span id = "index_content">{{ complain.content }}</span>
+                </div>
+              </div>
+              <!-- 공감 부분 보이기  -->
+              <div id ="content-reaction">
+                <img src ="{% static 'img/buk.png' %}" width = "17" height = "17">
+                {{ complain.num_of_sympathies }}
+                <img src = "{% static 'img/comment.png' %}" width = "15" height ="15">
+                {{ complain.num_of_comments }}
+                <div id ="homepage-content-date_time">{{ complain.pub_date }}</div>
+              </div>
             </div>
-          </div>
-          <!-- 공감 부분 보이기  -->
-          <div id ="content-reaction">
-            <img src ="img/buk.png" width = "17" height = "17">
-            10
-            <img src = "img/comment.png" width = "15" height ="15">
-            3
-            <div id ="homepage-content-date_time">18:53</div>
-          </div>
-        </div>
-      </a>
-      <hr>
-      <a href ="content.html">
-        <div id = "contents-1">
-          <div class="media">
-            <!-- 이미지 삽입 -->
-            <img src="img/1.png" class="mr-3" width ="70" height = "70">
-            <div class="media-body">
-              <!-- 글 제목 -->
-              <h4 id = "homepage-content_name">북구청 사거리 앞</h4>
-              <!-- 본문 내용-->
-              <span id = "index_content">횡단보도 신호등 작동이 이상합니다 !!</span>
-            </div>
-          </div>
-          <!-- 공감 부분 보여드리기  -->
-          <div id ="content-reaction">
-            <img src ="img/buk.png" width = "15" height = "15">
-            10
-            <img src = "img/comment.png" width = "15" height ="15">
-            3
-            <div id ="homepage-content-date_time">17:23</div>
-          </div>
-        </div>
-      </a>
-      <hr>
-      <a href ="content.html">
-        <div id = "contents-1">
-          <div class="media">
-            <!-- 이미지 삽입 -->
-            <img src="img/2.png" class="mr-3" width ="70" height = "70">
-            <div class="media-body">
-              <!-- 글 제목 -->
-              <h4 id = "homepage-content_name">북구 우리 마트 앞</h4>
-              <!-- 본문 내용-->
-              <span id = "index_content">어젯 밤에 지나가다가 발견한건데요 ~ 마트 앞에 방지턱...</span>
-            </div>
-          </div>
-          <!-- 공감 부분 보여드리기  -->
-          <div id ="content-reaction">
-            <img src ="img/buk.png" width = "15" height = "15">
-            10
-            <img src = "img/comment.png" width = "15" height ="15">
-            3
-            <div id ="homepage-content-date_time">13:45</div>
-          </div>
-        </div>
-      </a>
-      <hr>
-      <a href ="content.html">
-        <div id = "contents-1">
-          <div class="media">
-            <!-- 이미지 삽입 -->
-            <img src="img/4.png" class="mr-3" width ="70" height = "70">
-            <div class="media-body">
-              <!-- 글 제목 -->
-              <h4 id = "homepage-content_name">일곡동 맥도날드 앞</h4>
-              <!-- 본문 내용-->
-              <span id = "index_content">글내용 뭐쓰지 귀찮아,,</span>
-            </div>
-          </div>
-          <!-- 공감 부분 보여드리기  -->
-          <div id ="content-reaction">
-            <img src ="img/buk.png" width = "15" height = "15">
-            10
-            <img src = "img/comment.png" width = "15" height ="15">
-            3
-            <div id ="homepage-content-date_time">13:11</div>
-          </div>
-        </div>
-      </a>
-      <hr>
-      <a href ="content.html">
-        <div id = "contents-1">
-          <div class="media">
-            <!-- 이미지 삽입 -->
-            <img src="img/3.png" class="mr-3" width ="70" height = "70">
-            <div class="media-body">
-              <!-- 글 제목 -->
-              <h4 id ="homepage-content_name">양림교회 사거리</h4>
-              <!-- 본문 내용-->
-              <span id = "index_content">글내용 뭐쓰지 귀찮아,,</span>
-            </div>
-          </div>
-          <!-- 공감 부분 보여드리기  -->
-          <div id ="content-reaction">
-            <img src ="img/buk.png" width = "15" height = "15">
-            10
-            <img src = "img/comment.png" width = "15" height ="15">
-            3
-            <div id ="homepage-content-date_time">12:36</div>
-          </div>
-        </div>
-      </a>
-      <hr>
+          </a>
+          <hr>
+        {% endfor %}
+
 
     </div>
 
