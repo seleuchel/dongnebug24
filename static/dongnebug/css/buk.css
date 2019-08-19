@@ -8,9 +8,6 @@ a:hover { color: black; text-decoration: none;}
   background-color: #D9EDFD
 }
 
-#logo {
-  margin: auto;
-}
 #logotext {
   font-weight : bold;
   font-family : 'Nanum Gothic', sans-serif;
@@ -19,7 +16,6 @@ a:hover { color: black; text-decoration: none;}
   height: 100%;
 }
 #text {
-  margin : 40px;
   font-family :'Nanum Gothic', sans-serif;
 }
 #search{
@@ -97,7 +93,7 @@ a:hover { color: black; text-decoration: none;}
 
 
 #homepage-contents {
-  margin:20px;
+  margin:40px 20px 20px 20px;
   font-family :'Nanum Gothic', sans-serif;
 }
 #menu {
@@ -169,7 +165,7 @@ a:hover { color: black; text-decoration: none;}
   font-size: small;
 }
 #upload_kknocked_contents {
-  margin:40px;
+  margin:40px 20px 20px 20px;
 }
 #doong {
   float : right;
@@ -181,10 +177,12 @@ a:hover { color: black; text-decoration: none;}
   padding : 0px 0px 22px 0px;
 }
 
-
+#mlogo{
+  margin : auto;
+}
 
 #main-contents{
-  margin:20px;
+  margin:70px 20px 20px 20px;
   font-family :'Nanum Gothic', sans-serif;
 }
 #main-text{
@@ -225,3 +223,17 @@ a:hover { color: black; text-decoration: none;}
   text-align: center;
   padding-left: 20px;
 }
+
+#userimage{
+  text-align :center;
+}
+#currentID{
+  text-align : center;
+  font-size : large;
+  font-weight : bold;
+}
+edit-bar{
+     font-family :'Nanum Gothic', sans-serif;
+        font-weight : bold;
+}
+
