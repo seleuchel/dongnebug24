@@ -1,0 +1,52 @@
+{% include "base.html" %}
+{% load static %}
+{% block head_block %}
+    <style>
+      #mainpage-logo{
+        margin : auto;
+        padding-left : 30px;
+      }
+    </style>
+    <title>search</title>
+{% endblock %}
+{% block body_block %}
+    <!-- 내용 입력 -->
+    <div id = "main-contents">
+      <div class="ui small message">
+        <div id = "main-text">
+          내 주변의 민원을 확인하고, 공감하고, <br/>새로운 북을 올려보세요!
+        </div>
+      </div>
+
+      <hr>
+
+      <!-- 지도 들어갈 자리 -->
+      <p id ="maps" align = "middle">
+        <iframe src="https://map.kakao.com" width="100%" height="250" frameborder=0 framespacing=0 marginheight=0 marginwidth=0 scrolling=no vspace=0></iframe>
+      </p>
+      <hr>
+      <div id ="main-icon">
+        <a href ="homepage.html">
+          <div id ="main-gpsbuk" >
+            <img src ="{% static 'img/gpsbuk.png' %}" width ="50" height="50"><br/><br/>
+            주변 북
+          </div>
+        </a>
+        <a href ="search.html">
+          <div id = "main-search">
+            <img src ="{% static 'img/searchbuk.png' %}" width ="50" height ="50"><br/><br/>
+            북 검색
+          </div>
+        </a>
+        <a href ="{% url 'dongnebug:complain_new' %}">
+          <div id = "main-newbuk">
+            <img src ="{% static 'img/newbuk.png' %}" width ="50" height="50"><br/><br/>
+            북 추가
+          </div>
+        </a>
+
+      </div>
+
+    </div>
+{% endblock %}
+

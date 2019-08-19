@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
+    <script src="semantic/semantic.js"></script>
+    <link rel="stylesheet" type="text/css" href="semantic/semantic.css">
+    <link rel="stylesheet" type="text/css" href="buk.css">
+
+    <title>새민원</title>
+
+  </head>
+  <body>
+    <div class = "fixed-top">
+    <nav id = "upbar" class="navbar navbar-light" style="background-color: #D9EDFD;">
+      <a href="homepage.html"><img src = "img/back.png" width="30" height="30"></a>
+      <!-- Navbar content -->
+      <div id = logo>
+        <img src = "img/buk.png" width="30" height="30">
+        <a id ="logotext" class="navbar-brand" href="#" >새 민원</a>
+      </div>
+      <a href="#"><img src = "img/send.png" width="30" height="30" ></a>
+      <!--<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>-->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Features</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Pricing</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Disabled</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
+
+    <div id = "text">
+      <br/>
+      <br/>
+      <label>글 제목</label>
+      <input class="form-control" type="text" placeholder="제목을 입력하세요."><br/>
+      <div>
+        <label>현 위치</label>
+        <form>
+          <div class="form-row">
+            <div class="col">
+              <input type="text" class="form-control" placeholder="위치를 찾아보세요.">
+            </div>
+            <div class="col">
+              <img id = search src = "img/search3.png" width="25" height="25" href="#">
+              <img id = placeholder src = "img/placeholder2.png" width="25" height="25" href="#">
+
+            </div>
+          </div>
+        </form>
+        <br>
+        <!-- 지도 -->
+        <p align = "middle">
+          <iframe src="https://map.kakao.com" width="100%" height="300"></iframe>
+        </p>
+      </div>
+
+      <label>글 내용</label>
+      <div class="input-group" >
+        <textarea class="form-control" aria-label="With textarea" placeholder="내용을 입력하세요..."></textarea>
+      </div>
+      <br/>
+      <label>첨부파일</label>
+      <div class="input-group mb-3">
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" id="inputGroupFile02">
+          <label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02"> 파일을 첨부하세요.</label>
+        </div>
+        <div class="input-group-append">
+          <span class="input-group-text" id="inputGroupFileAddon02">업로드</span>
+        </div>
+      </div>
+    </div>
+    <br>
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  </body>
+</html>
