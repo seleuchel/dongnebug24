@@ -36,7 +36,7 @@ class CommentCreateView(CreateView):
 
     def form_valid(self, form):
         form.instance.user_id = self.request.user.id
-        form.instance.complaine_id = self.request.
+        form.instance.complaine_id = self.request.pk
         return super(CommentCreateView, self).form_valid(form)
 
 

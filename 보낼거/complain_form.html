@@ -3,58 +3,50 @@
 
 {% block style_block %}
 
+<!-- Edit by sumin start -->
+<head>
+  <link rel="stylesheet" href="{% static 'css/buk.css' %}">
+</head>
+<!-- Edit by sumin end -->
+
     <title>content</title>
     <script type="text/javascript">
-      //var state = 0;
-     // function ChangeImage(){
-      //  if(state == 0){
-      //    document.img1.src = "img/buk.png"
-      //    state = 1;
-      //  }else {
-      //    document.img1.src ="img/drum1.png"
-       //   state = 0;
-      //  }
-     // }
+      var state = 0;
+      function ChangeImage(){
+        if(state == 0){
+          document.img1.src = "img/buk.png"
+          state = 1;
+        }else {
+          document.img1.src ="img/drum1.png"
+          state = 0;
+        }
+      }
     </script>
 
 {% endblock %}
 
-{% block body_block %}
-   <div class = "fixed-top">
-    <nav id = "upbar" class="navbar navbar-light" style="background-color: #D9EDFD;">
-      <a href="homepage.html"><img src = "{% static 'img/back.png' %}" width="30" height="30"></a>
-      <!-- Navbar content -->
-      <div id = logo>
-        <img src = "{% static 'img/buk.png' %}" width="30" height="30">
-        <a id ="logotext" class="navbar-brand" href="#" >새 민원</a>
-      </div>
-      <a href="#"><img src = "{% static 'img/send.png' %}" width="30" height="30" ></a>
-      </nav>
-  </div>
-
-                                                                                           sr
-
 <!-- Edit by sumin start -->
-<form action="" method="post" enctype="multipart/form-data">
+{% block body_block %}
+    <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
 
         <div >
           </br></br>
-          <label >글 제목</label>
+          <label id='logotext'>글 제목</label>
             </br>
               {{ form.title }}
             </br></br>
 
         <div>
-          <label >현 위치</label>
+          <label id='logotext'>현 위치</label>
           </br>
             <div class="form-row">
               <div class="col">
                 {{form.latitude}}{{form.longitude}}
               </div>
               <div class="col">
-                <img id = search src = "{% static 'img/search3.png' %}" width="25" height="25" href="#">
-                <img id = placeholder src = "{% static 'img/placeholder2.png' %}" width="25" height="25" href="#">
+                <img id = search src = "img/search3.png" width="25" height="25" href="#">
+                <img id = placeholder src = "img/placeholder2.png" width="25" height="25" href="#">
               </div>
             </div>
               </br>
@@ -65,14 +57,14 @@
             </div>
           </br>
 
-          <label >글 내용</label>
+          <label id='logotext'>글 내용</label>
             </br>
             <div class="input-group" >
               {{form.content}}
             </div>
             </br>
 
-          <label>첨부파일</label>
+          <label id='logotext'>첨부파일</label>
             </br>
             <div class="input-group mb-3">
               <div class="custom-file">
@@ -86,4 +78,6 @@
         </br>
         </div>
     </form>
+
 {% endblock %}
+<!-- Edit by sumin end -->

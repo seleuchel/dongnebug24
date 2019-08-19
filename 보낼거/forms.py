@@ -1,18 +1,20 @@
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.contrib.auth.models import User
-from .models import Complain, Favorite, Comment, Sympathy
+from .models import Complain, Favorite, ComplainImage, Comment, Sympathy
 
 class CommentForm(forms.ModelForm):
     class Meta:
-        model = Comment
-        fields = ('content',)
+        model=Comment
+        fields=('user', 'complain', 'content', 'pub_date')
+
 
 
 class SearchForm(forms.ModelForm):
     class Meta:
         model = Complain
         fields = ("author", "title", "content")
+
 
 
 #<!-- Edit by sumin start -->
@@ -30,6 +32,7 @@ class ComplainForm(forms.ModelForm):
         widgets = {
             'title': forms.TextInput(
                 attrs={
+                    'size' : '20',
                     'class' : 'form-control',
                     'placeholder' : "위치를 찾아보세요."
                 }
@@ -44,7 +47,6 @@ class ComplainForm(forms.ModelForm):
             ),
             'latitude' : forms.NumberInput(
                 attrs={
-                    'size' : '10',
                     'class' : 'form-control',
                     'placeholder' : "위도"
                 }
@@ -59,3 +61,4 @@ class ComplainForm(forms.ModelForm):
         }
         
 #<!-- Edit by sumin end -->
+
