@@ -2,6 +2,7 @@ from django.contrib import auth
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
+from django.urls import reverse
 
 
 class Complain(models.Model):
@@ -23,6 +24,10 @@ class Complain(models.Model):
     def __str__(self):
     #TODO : Check for security issue which is information leak
         return self.title
+
+    def get_absolute_url(self):
+        return reverse('dongnebug:complain_detail', args=[self.id])
+
 
 
 class Favorite(models.Model):
