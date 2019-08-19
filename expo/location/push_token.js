@@ -18,7 +18,6 @@ function encrypt_su(data){
   return ciphertext;
 }
 
-
 async function registerForPushNotificationsAsync() {
 
   const { status: existingStatus } = await Permissions.getAsync(
@@ -42,11 +41,9 @@ async function registerForPushNotificationsAsync() {
 
   // Get the token that uniquely identifies this device
   let token = await Notifications.getExpoPushTokenAsync();
-  let v = encrypt_su(token);
-  console.log('Encrypt >>>>>>',v);
 
   // POST the token to your backend server from where you can retrieve it to send push notifications.
-  return v;
+  return encrypt_su(token);
 }
 
 export {encrypt_su, registerForPushNotificationsAsync };

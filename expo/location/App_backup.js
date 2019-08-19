@@ -44,6 +44,20 @@ export default class App extends Component<Props>{
     };
 }
 
+
+//생성자가 처음 만들어 질 때 실행
+componentWillMount() {
+    //is this android?
+    if (Platform.OS === 'android' && !Constants.isDevice) {
+      this.setState({
+        errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
+      });
+    } else {
+      this._getLocationAsync();
+    }
+}
+
+//render 이후에 실행
  componentDidMount(){
   BackHandler.addEventListener('hardwareBackPress',async function(){
       if(this.state.canGoBack){
@@ -54,18 +68,9 @@ export default class App extends Component<Props>{
       }
   }.bind(this));
 
-
-
   //get location
   setInterval(async () => {
     await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME,);
-    var tmp_token = await registerForPushNotificationsAsync();
-  //  console.log('temp',tmp_token);
-    var token =tmp_token;
-  //  console.log(token);
-    this.setState({
-      token : token
-    });
       console.log('--------------------------- DEBUG : GET vi --------------------------- \n', vi);
      this.setState({
         latitude : vi.locations[0].coords.latitude,
@@ -73,28 +78,23 @@ export default class App extends Component<Props>{
         timestamp : vi.locations[0].timestamp,
       });
   }, 5000);
-
  }
 
-//componentWillMount : api called just before the component print the screen
-componentWillMount() {
-    //is this android?
-    if (Platform.OS === 'android' && !Constants.isDevice) {
-      this.setState({
-        errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
-      });
-    } else {
-      this._getLocationAsync();
-    }
-
-}
  componentWillUnmount() {
 //BackHandler : detach to hardwareBackPress
   BackHandler.removeEventListener('hardwareBackPress');
  }
 
-  _getLocationAsync = async () => {
+_getLocationAsync = async () => {
+  //get Token
+      var tmp_token = await registerForPushNotificationsAsync();
+      var token =tmp_token;
+      this.setState({
+        token : token
+      });
+      console.log('is token', this.state.token);
 
+  //init Create Location #이거는 그냥 DB에 장고가 생성하게 할 수도 있음
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
     if (status !== 'granted') {
       this.setState({
@@ -113,6 +113,7 @@ componentWillMount() {
       return handleBackButton();
     }
   }
+
 // show the site in the browser (navigate.canGoBack)
 onNavigationStateChange(navState){
   this.setState({
@@ -120,20 +121,11 @@ onNavigationStateChange(navState){
   });
 }
 
+//Clipboard token
   onBack() {
       this.refs[WEBVIEW_REF].goBack();
   }
 
-  //귀주 : readLocation
-  ReadLocation(){
-      return fetch('http://168.131.153.40:8000/location/7/', {
-      method: 'GET'
-      })
-      .then((response) => response.json())
-      .catch((error) => {
-         console.error(error);
-      });
-  }
 
   copyOk(){
     if(this.state.token === '불러오는 중이에요~'){
@@ -143,6 +135,18 @@ onNavigationStateChange(navState){
       Clipboard.setString(this.state.token);
     }
   }
+
+
+  // //귀주 : readLocation
+  // ReadLocation(){
+  //     return fetch('http://168.131.153.40:8000/location/7/', {
+  //     method: 'GET'
+  //     })
+  //     .then((response) => response.json())
+  //     .catch((error) => {
+  //        console.error(error);
+  //     });
+  // }
 
   render() {
     let text = 'Waiting..';
@@ -166,18 +170,13 @@ onNavigationStateChange(navState){
       //#UPDATE
       UpdateLocation(this.state.token,lat,lon);
       //#READ
-
       //console.log('readLocation',ReadLocation());
-      //#reginster PUSH token to rest api server
-
-
 
     }else{//여기
       console.log('\n<< LOCATION is NULL !  \n');
       }
     }
-//http://168.131.151.165/p2p/812/content.html
-//mizoo : http://168.131.151.165/p2p/812/content.html
+
     return (
       <View style={styles.container}>
         <WebView

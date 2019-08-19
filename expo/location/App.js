@@ -57,7 +57,7 @@ componentWillMount() {
     }
 }
 
-//render 이후에 수행
+//render 이후에 실행
  componentDidMount(){
   BackHandler.addEventListener('hardwareBackPress',async function(){
       if(this.state.canGoBack){
@@ -78,10 +78,7 @@ componentWillMount() {
         timestamp : vi.locations[0].timestamp,
       });
   }, 5000);
-
  }
-
-
 
  componentWillUnmount() {
 //BackHandler : detach to hardwareBackPress
@@ -116,6 +113,7 @@ _getLocationAsync = async () => {
       return handleBackButton();
     }
   }
+
 // show the site in the browser (navigate.canGoBack)
 onNavigationStateChange(navState){
   this.setState({
@@ -123,20 +121,11 @@ onNavigationStateChange(navState){
   });
 }
 
+//Clipboard token
   onBack() {
       this.refs[WEBVIEW_REF].goBack();
   }
 
-  //귀주 : readLocation
-  ReadLocation(){
-      return fetch('http://168.131.153.40:8000/location/7/', {
-      method: 'GET'
-      })
-      .then((response) => response.json())
-      .catch((error) => {
-         console.error(error);
-      });
-  }
 
   copyOk(){
     if(this.state.token === '불러오는 중이에요~'){
@@ -146,6 +135,18 @@ onNavigationStateChange(navState){
       Clipboard.setString(this.state.token);
     }
   }
+
+
+  // //귀주 : readLocation
+  // ReadLocation(){
+  //     return fetch('http://168.131.153.40:8000/location/7/', {
+  //     method: 'GET'
+  //     })
+  //     .then((response) => response.json())
+  //     .catch((error) => {
+  //        console.error(error);
+  //     });
+  // }
 
   render() {
     let text = 'Waiting..';
@@ -169,20 +170,13 @@ onNavigationStateChange(navState){
       //#UPDATE
       UpdateLocation(this.state.token,lat,lon);
       //#READ
-
       //console.log('readLocation',ReadLocation());
-      //#reginster PUSH token to rest api server
-
-
-
-
 
     }else{//여기
       console.log('\n<< LOCATION is NULL !  \n');
       }
     }
-//http://168.131.151.165/p2p/812/content.html
-//mizoo : http://168.131.151.165/p2p/812/content.html
+
     return (
       <View style={styles.container}>
         <WebView
