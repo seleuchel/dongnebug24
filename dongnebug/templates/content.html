@@ -57,6 +57,7 @@
 
       <!-- 댓글 보여주기 -->
 
+
       <div id = "contents">
         <div id = "contents-1">
             <div class="media">
@@ -99,8 +100,7 @@
     </div>
 
       <!-- 댓글 달기 기능 -->
-
-      <div id ="comment-window" class = "fixed-bottom">
+     <div id ="comment-window" class = "fixed-bottom">
            <div class="input-group mb-3">
              <input type="text" class="form-control" placeholder="댓글을 입력하세요..." aria-describedby="button-addon2">
              <div class="input-group-append">
@@ -108,11 +108,12 @@
              </div>
            </div>
       </div>
-    <form action="{% url "dongnebug:create_comment" %}" method="post">
+    <form action="{% url "dongnebug:complain_detail" pk=complain.pk %}" method="post">
         {% csrf_token %}
-        {{ form }}
-        <input type="submit" value="Comment" class="btn btn-outline-primary">
+        <input type="text" name="content" placeholder="Write your comments">
+        <input type="submit" value="Comment" value="Write">
     </form>
+
 
       <br>
       <br/>

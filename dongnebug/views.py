@@ -18,6 +18,15 @@ class ComplainDetailView(DetailView):
     model = Complain
     template_name = 'content.html'
 
+    def post(self):
+        comment_form = CommentForm(self.request.POST)
+        comment_form.instance.user_id = self.request.user_id
+        comment_form.instance.complain_id = self.request.complain.id
+        if comment_form.is_valid():
+            comment_form.save()
+
+
+
 
 class ComplainCreateView(CreateView):
     model = Complain
@@ -36,7 +45,7 @@ class CommentCreateView(CreateView):
 
     def form_valid(self, form):
         form.instance.user_id = self.request.user.id
-        form.instance.complaine_id = self.request.
+        form.instance.complaine_id = self.request.complain.id
         return super(CommentCreateView, self).form_valid(form)
 
 
@@ -153,5 +162,7 @@ class IndexView(TemplateView):
     template_name = 'mainpage.html'
 
 
-class ProfileView(TemplateView):
+class ProfileView(UpdateView):
     template_name = 'profile_edit.html'
+    form_class = User
+

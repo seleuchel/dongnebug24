@@ -3,6 +3,7 @@ import os
 from random import *
 from bs4 import BeautifulSoup
 import urllib.request
+import uuid
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dongnebug24.settings')
 
@@ -31,7 +32,7 @@ def add_User(N=20):
 
 def add_Complain(N=20):
     for entry in range(N):
-        file = fake.file_name(category='imagefile', extension='jpg')
+        file = str(uuid.uuid4()) + '.jpg'
         ### crawling code ####
         base_url = "http://10000img.com/"
         url = "http://10000img.com/ran.php"
@@ -119,10 +120,8 @@ if __name__ == "__main__":
     print("db_fake_data_generator.py를 열고, 함수를 하나하나씩 실행하세요. 주석을 제거해야 할겁니다.")
     print("populating script!")
     # add_User()
-    add_Complain()
+    # add_Complain()
     # update_Complain()
-    # add_Complain_Image()
-    # update_Complain_Image()
     # add_Comment()
     # update_Comment()
     # add_Favorite()
