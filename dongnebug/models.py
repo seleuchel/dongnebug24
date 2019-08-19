@@ -59,8 +59,10 @@ class Comment(models.Model):
     pub_date = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-    #TODO : Check for security issue which is information leak
-        return '__all__'
+        return (self.author.username if self.author else "무명") + "의 댓글"
+
+    def get_absolute_url(self):
+        return reverse('dongnebug:complain_detail', args=[self.id])
 
 
 class Sympathy(models.Model):
