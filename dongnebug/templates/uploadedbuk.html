@@ -2,22 +2,11 @@
 {% load static %}
 {% block head_block %}
 
-    <title>knocked buk</title>
+    <title>uploaded buk</title>
+
 {% endblock %}
-{% block body_block %}
-    <nav class="navbar navbar-light" style="background-color: #D9EDFD;">
-      <a href="homepage.html"><img src = "{% static 'img/back.png' %}" width="30" height="30"></a>
-      <!-- Navbar content -->
-      <div id = logo>
-        <img src = "{% static 'img/buk.png' %}" width="30" height="30">
-        <a id ="logotext" class="navbar-brand" href="#" >두드린 북</a>
-      </div>
-      <a href = "newcomplain.html"><img src = "{% static 'img/newpost.png' %}" width="30" height="30"></a>
-
-    </nav>
-
-    <!-- 내용 입력 -->
-    <div id = "upload_kknocked_contents">
+<!-- 내용 입력 -->
+    <div id = "upload_kknocked_contents"><!--테이블 -->
       <hr>
       <a href ="content.html">
         <div id = "upload_contents-1">
@@ -58,4 +47,6 @@
       </a>
       <hr>
     </div>
+{% block body_block %}
+
 {% endblock %}
