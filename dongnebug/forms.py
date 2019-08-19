@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.contrib.auth.models import User
-from .models import Complain, Favorite, ComplainImage, Comment, Sympathy
+from .models import Complain, Favorite, Comment, Sympathy
 
 class CommentForm(forms.ModelForm):
     class Meta:
@@ -40,7 +40,7 @@ class ComplainForm(forms.ModelForm):
 
     class Meta:
         model = Complain
-        fields = ('title', 'content', 'latitude', 'longitude')
+        fields = ('title', 'content', 'file', 'latitude', 'longitude')
         widgets = {
             'title': forms.TextInput(
                 attrs={
