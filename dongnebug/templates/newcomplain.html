@@ -1,51 +1,21 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap" rel="stylesheet">
-    <script src="semantic/semantic.js"></script>
-    <link rel="stylesheet" type="text/css" href="semantic/semantic.css">
-    <link rel="stylesheet" type="text/css" href="buk.css">
-
+{% extends 'base.html' %}
+{%  load static %}
+{% block style_block %}
     <title>새민원</title>
+{% endblock %}
 
-  </head>
-  <body>
+{% block body_block %}
     <div class = "fixed-top">
     <nav id = "upbar" class="navbar navbar-light" style="background-color: #D9EDFD;">
-      <a href="homepage.html"><img src = "img/back.png" width="30" height="30"></a>
+      <a href="{% url "dongnebug:homepage" %}"><img src = "{% static "img/back.png" %}" width="30" height="30"></a>
       <!-- Navbar content -->
       <div id = logo>
-        <img src = "img/buk.png" width="30" height="30">
+        <img src = "{% static "img/buk.png" %}" width="30" height="30">
         <a id ="logotext" class="navbar-brand" href="#" >새 민원</a>
       </div>
-      <a href="#"><img src = "img/send.png" width="30" height="30" ></a>
-      <!--<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>-->
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Features</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Pricing</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link disabled" href="#">Disabled</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-  </div>
+      <a href="#"><img src = "{% static "img/send.png" %}" width="30" height="30" ></a>
+    
+    </div>
 
     <div id = "text">
       <br/>
@@ -60,8 +30,8 @@
               <input type="text" class="form-control" placeholder="위치를 찾아보세요.">
             </div>
             <div class="col">
-              <img id = search src = "img/search3.png" width="25" height="25" href="#">
-              <img id = placeholder src = "img/placeholder2.png" width="25" height="25" href="#">
+              <img id = search src = "{% static "img/search3.png" %}" width="25" height="25" href="#">
+              <img id = placeholder src = "{% static "img/placeholder2.png" %}" width="25" height="25" href="#">
 
             </div>
           </div>
@@ -90,13 +60,4 @@
       </div>
     </div>
     <br>
-
-
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-  </body>
-</html>
+ {% endblock %}
