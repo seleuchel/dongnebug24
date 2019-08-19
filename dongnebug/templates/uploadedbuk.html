@@ -1,0 +1,36 @@
+{% include "base.html" %}
+{% load static %}
+{% block head_block %}
+
+    <title>uploaded buk</title>
+
+{% endblock %}
+<!-- 내용 입력 -->
+    <div id = "upload_kknocked_contents"><!--테이블 -->
+      <hr>
+        {% for complain in complains %}
+            <a href ="{{ complain.get_absolute_url }}">
+            <div id = "upload_contents-1">
+              <div class="media">
+                <!-- 이미지 삽입 -->
+                <img src="{% static 'img/나무.png' %}" class="mr-3" width ="70" height = "70">
+                <div class="media-body" >
+                  <div id ="uploadbuk_knocked_name">{{ complain.title }}</div>
+                  <div id ="content-reaction">
+                    <img src ="{% static 'img/drum2.png' %}" width = "17" height = "17">
+                        {{ complain.num_of_sympathies }}
+                    <img src = "{% static 'img/comment.png' %}" width = "15" height ="15">
+                        {{ complain.num_of_comments }}
+                  </div>
+                </div>
+                  <img id ="doong" src ="{% static 'img/둥.png' %}" class="mr-3" width="50" height ="50">
+              </div>
+            </div>
+          </a>
+          <hr>
+        {% endfor %}
+
+    </div>
+{% block body_block %}
+
+{% endblock %}

@@ -36,20 +36,15 @@ class CommentCreateView(CreateView):
     success_url = 'index/'
 
 
-class HomepageView(TemplateView):
-    template_name='homepage.html'
+# complain list view
+class ComplainListView(ListView):
+    template_name = 'homepage.html'
+    model = Complain
+
     def get_context_data(self, **kwargs):
-        context=super().get_context_data(**kwargs)
-        complain=list(Complain.objects.filter().values())
-        favorite=list(Favorite.objects.filter().values())
-        image=list(ComplainImage.objects.filter().values())
-        comment=list(Comment.objects.filter().values())
-        sympathy=list(Sympathy.objects.filter().values())
-        context['complains']=complain
-        context['comments']=comment
-        context['image']=image
-        context['favorite']=favorite
-        context['sympathy']=sympathy
+        context = super().get_context_data(**kwargs)
+        complain = list(Complain.objects.all())
+        context['complains'] = complain
         return context
 
 class KnockedBukView(TemplateView):
@@ -102,20 +97,17 @@ class SearchView(TemplateView):
         context['sympathy']=sympathy
         return context
 
-class UploadBukView(TemplateView):
-    template_name='uploadbuk.html'
+
+
+class UploadedComplainListView(ListView):
+
+    template_name = 'uploadedbuk.html'
+    model = Complain
+
     def get_context_data(self, **kwargs):
-        context=super().get_context_data(**kwargs)
-        complain=list(Complain.objects.filter())
-        favorite=list(Favorite.objects.filter())
-        image=list(ComplainImage.objects.filter())
-        comment=list(Comment.objects.filter())
-        sympathy=list(Sympathy.objects.filter())
-        context['complain']=complain
-        context['comments']=comment
-        context['image']=image
-        context['favorite']=favorite
-        context['sympathy']=sympathy
+        context = super().get_context_data(**kwargs)
+        complains = list(Complain.objects.filter(is_complete=1))
+        context['complains'] = complains
         return context
 
 
