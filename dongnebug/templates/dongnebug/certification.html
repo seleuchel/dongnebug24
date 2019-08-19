@@ -1,5 +1,3 @@
-{% load static %}
-{% load socialaccount %}
 <!doctype html>
 <html lang="en">
   <head>
@@ -18,13 +16,15 @@
     <style media="screen">
       body{
         background : #D9EDFD;
+        font-family :'Nanum Gothic', sans-serif;
+        margin : 20px;
       }
-      #login-logo{
+      #certificate-logo{
         text-align : center;
         font-family :'Nanum Gothic', sans-serif;
         font-size : x-large;
         font-weight : bold;
-        padding-top : 130px;
+        padding-top : 100px;
         margin-bottom : 60px;
       }
       #loginbutton{
@@ -39,19 +39,42 @@
     </style>
   </head>
   <body>
-    <div id ="login-logo">
-      <img src ="{% static 'img/buk.png' %}" width ="100" heigth ="100"><br/>
+    <div id ="certificate-logo">
+      <img src ="img/buk.png" width ="100" heigth ="100"><br/>
       동네북24
 
     </div>
       <br/>
       <br/>
-    <div id ="loginbutton">
-        <a href="{% provider_login_url 'kakao' %}"><img src ="{% static 'img/kakao.png' %}" width="225" height="" style ="margin-bottom : 5px;"></a><br/>
-        <a href="{% provider_login_url 'naver' %}"><img src ="{% static 'img/naver.png' %}" width="225" height="" style ="margin-bottom : 2px;"></a><br/>
-        <a href="{% provider_login_url 'google' %}"><img src ="{% static 'img/google.png' %}" width="232" height=""></a>
+    <form>
+      <div class="ui form">
+        <div class="field">
+          <div class="twelve wide field">
+          <label>왼쪽 하단의 토큰 값을 입력해주세요.</label>
+          <input type="text" width ="80%"><button class="compact ui button" style="padding-left:8px; padding-right:8px;">
+          확인
+          </button>
+          </div>
+        </div>
+      </div>
+    </form>
 
-    </div>
+    <br/>
+    <form>
+      <div class="ui form">
+        <div class="field">
+          <a>
+          <div class="twelve wide field">
+          <label>인증 키를 입력해주세요.</label>
+          <input type="text" width ="80%">
+          </div>
+          </a>
+          <button class="compact ui button" style="padding-left:8px; padding-right:8px;">
+          확인
+          </button>
+        </div>
+      </div>
+    </form>
     <div id ="probulpeon">
       @probulpyeonreo
     </div>

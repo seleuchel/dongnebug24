@@ -1,5 +1,3 @@
-{% load static %}
-{% load socialaccount %}
 <!doctype html>
 <html lang="en">
   <head>
@@ -40,16 +38,16 @@
   </head>
   <body>
     <div id ="login-logo">
-      <img src ="{% static 'img/buk.png' %}" width ="100" heigth ="100"><br/>
+      <img src ="img/buk.png" width ="100" heigth ="100"><br/>
       동네북24
 
     </div>
       <br/>
       <br/>
     <div id ="loginbutton">
-        <a href="{% provider_login_url 'kakao' %}"><img src ="{% static 'img/kakao.png' %}" width="225" height="" style ="margin-bottom : 5px;"></a><br/>
-        <a href="{% provider_login_url 'naver' %}"><img src ="{% static 'img/naver.png' %}" width="225" height="" style ="margin-bottom : 2px;"></a><br/>
-        <a href="{% provider_login_url 'google' %}"><img src ="{% static 'img/google.png' %}" width="232" height=""></a>
+      <img src ="img/kakao.png" width="225" height="" style ="margin-bottom : 5px;"><br/>
+      <img src ="img/naver.png" width="225" height="" style ="margin-bottom : 2px;"><br/>
+      <img src ="img/google.png" width="232" height="">
 
     </div>
     <div id ="probulpeon">

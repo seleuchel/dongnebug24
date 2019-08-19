@@ -26,9 +26,9 @@ urlpatterns = [
     path('homepage/', HomepageView.as_view(), name='homepage'),
     path('knockedbuk/', KnockedBukView.as_view(), name='knockedbuk'),
     path('search/', SearchView.as_view(), name='search'),
-    path('uploadedcomplain/', UploadBukView.as_view(), name='uploadedbuk'),
+    path('uploadbuk/', UploadBukView.as_view(), name='uploadbuk'),
     path('', LoginView.as_view(template_name='loegin.html'), name='login'),
     path('index/', IndexView.as_view(), name='index'),
+    path('signup/', RegisterView.as_view(), name='signup'),
     path('logout/', LogoutView.as_view(), name='logout'),
-    path('profile/', ProfileView.as_view(), name='update_profile')
     ]

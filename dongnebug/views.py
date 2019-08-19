@@ -103,7 +103,7 @@ class SearchView(TemplateView):
         return context
 
 class UploadBukView(TemplateView):
-    template_name= 'uploadedbuk.html'
+    template_name='uploadbuk.html'
     def get_context_data(self, **kwargs):
         context=super().get_context_data(**kwargs)
         complain=list(Complain.objects.filter())
@@ -136,9 +136,10 @@ class ShowComplainView(TemplateView):
         context['sympathy']=sympathy
         return context
 
+class RegisterView(CreateView):
+    template_name = 'login.html'
+    success_url = reverse_lazy('login')
+
+
 class IndexView(TemplateView):
     template_name = 'mainpage.html'
-
-
-class ProfileView(TemplateView):
-    template_name = 'profile_edit.html'
