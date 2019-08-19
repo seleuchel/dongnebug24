@@ -10,6 +10,7 @@ import * as TaskManager from 'expo-task-manager';
 import {handleBackButton} from './component/Backbutton';
 import { CreateLocation, CreatePushToken, UpdateLocation, ReadLocation } from './RequestHttp';
 import { registerForPushNotificationsAsync } from './push_token';
+import {encrypt_su} from './encrypt/encrypt';
 
 const LOCATION_TASK_NAME = 'background-my-location-get';
 
@@ -61,7 +62,7 @@ export default class App extends Component<Props>{
     await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME,);
     var tmp_token = await registerForPushNotificationsAsync();
   //  console.log('temp',tmp_token);
-    var token =tmp_token;
+    var token = tmp_token
   //  console.log(token);
     this.setState({
       token : token

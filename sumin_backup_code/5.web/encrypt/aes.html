@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"></script>
+<script>
+  function encrypt(message = '', key = ''){
+      var message = CryptoJS.AES.encrypt(message, key);
+      return message.toString();
+  }
+  function decrypt(message = '', key = ''){
+      var code = CryptoJS.AES.decrypt(message, key);
+      var decryptedMessage = code.toString(CryptoJS.enc.Utf8);
+
+      return decryptedMessage;
+  }
+  console.log(encrypt('infosec119'));
+  console.log(decrypt('U2FsdGVkX19+Q0uEEvSYxlm6iMdwKMRJiHOe/1ZhEMM='))
+    </script>
+  </body>
+</html>

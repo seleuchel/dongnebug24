@@ -9,8 +9,9 @@ function ReadLocation(){
 }
 
 //sumin-edit : POST
+//http://168.131.153.40:8000/api/locations/
 function CreateLocation(latitude, longitude){ //위치정보 json으로 받기
-  fetch('http://168.131.153.40:8000/api/locations/', {
+  fetch('http://168.131.151.165/', {
   method: 'POST',
   headers: {
     'Accept': 'application/json',
