@@ -3,10 +3,10 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
 from django.urls import reverse
-from random import choice
-import string
+
 
 class Complain(models.Model):
+
     author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -18,7 +18,6 @@ class Complain(models.Model):
     num_of_sympathies = models.IntegerField(default=0)
     num_of_comments = models.IntegerField(default=0)
     is_complete = models.BooleanField(default=False)
-    file = models.FileField(upload_to = './')
     pub_date = models.DateTimeField(default=timezone.now)
     #TODO : Add Video attribute
 
@@ -51,7 +50,7 @@ class ComplainImage(models.Model):
         Complain,
         on_delete=models.CASCADE
     )
-    
+    image = models.ImageField(blank=True)
 
     def __str__(self):
     #TODO : Check for security issue which is information leak

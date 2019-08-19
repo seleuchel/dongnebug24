@@ -25,6 +25,7 @@ urlpatterns = [
     path('content/<int:pk>/comment/', CommentCreateView.as_view(), name='create_comment'),
     path('homepage/', HomepageView.as_view(), name='homepage'),
     path('knockedbuk/', KnockedBukView.as_view(), name='knockedbuk'),
+    path('newcomplain/', NewComplainView.as_view(), name='newcomplain'),
     path('search/', SearchView.as_view(), name='search'),
     path('uploadbuk/', UploadBukView.as_view(), name='uploadbuk'),
     path('', LoginView.as_view(template_name='loegin.html'), name='login'),

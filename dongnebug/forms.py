@@ -40,7 +40,7 @@ class ComplainForm(forms.ModelForm):
 
     class Meta:
         model = Complain
-        fields = ('title', 'content', 'file','latitude', 'longitude')
+        fields = ('title', 'content', 'latitude', 'longitude')
         widgets = {
             'title': forms.TextInput(
                 attrs={
