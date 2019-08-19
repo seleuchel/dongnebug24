@@ -3,14 +3,11 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Locations(models.Model):
-    '''
-    authorid = models.ForeignKey(
+
+    author = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
     )
-    '''
-    # author대신 토큰?
-    
     latitude = models.DecimalField(max_digits=20, decimal_places=17, null=True)
     longitude = models.DecimalField(max_digits=20, decimal_places=17, null=True)
 
