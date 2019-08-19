@@ -3,7 +3,6 @@ import { Platform, Text, View, Button, StyleSheet,WebView, BackHandler, Alert, T
 import Constants from 'expo-constants';
 import * as Location from 'expo-location';
 import * as Permissions from 'expo-permissions';
-import MapView, {Marker} from 'react-native-maps';
 import SlidingUpPanel from 'rn-sliding-up-panel';
 import * as TaskManager from 'expo-task-manager';
 
@@ -46,11 +45,6 @@ export default class App extends Component<Props>{
 }
 
  componentDidMount(){
-//backgrond
-  //BackgroundFetch.registerTaskAsync(LOCATION_TASK_NAME);
-//BackHandler : listens to hardwareBackPress
-//처음요청만 보내기
-
   BackHandler.addEventListener('hardwareBackPress',async function(){
       if(this.state.canGoBack){
         this.onBack();
@@ -65,8 +59,12 @@ export default class App extends Component<Props>{
   //get location
   setInterval(async () => {
     await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME,);
+    var tmp_token = await registerForPushNotificationsAsync();
+  //  console.log('temp',tmp_token);
+    var token =tmp_token;
+  //  console.log(token);
     this.setState({
-      token : await registerForPushNotificationsAsync()
+      token : token
     });
       console.log('--------------------------- DEBUG : GET vi --------------------------- \n', vi);
      this.setState({
@@ -74,11 +72,6 @@ export default class App extends Component<Props>{
         longitude : vi.locations[0].coords.longitude,
         timestamp : vi.locations[0].timestamp,
       });
-
-    // console.log('\n--------------------------- DEBUG : get state : lant, lon, timestamp --------------------------- \n',
-    //   'latitude : ', this.state.latitude,
-    //   'longitude : ', this.state.longitude,
-    //   'timestamp : ', this.state.timestamp);
   }, 5000);
 
  }
@@ -171,7 +164,7 @@ onNavigationStateChange(navState){
       //#CREATE
       //CreateLocation(lat,lon);
       //#UPDATE
-      //UpdateLocation(lat,lon);
+      UpdateLocation(this.state.token,lat,lon);
       //#READ
 
       //console.log('readLocation',ReadLocation());
@@ -185,8 +178,6 @@ onNavigationStateChange(navState){
     }
 //http://168.131.151.165/p2p/812/content.html
 //mizoo : http://168.131.151.165/p2p/812/content.html
-//http://168.131.153.40:8000/homepage/
-
     return (
       <View style={styles.container}>
         <WebView

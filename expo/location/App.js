@@ -44,6 +44,20 @@ export default class App extends Component<Props>{
     };
 }
 
+
+//생성자가 처음 만들어 질 때 실행
+componentWillMount() {
+    //is this android?
+    if (Platform.OS === 'android' && !Constants.isDevice) {
+      this.setState({
+        errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
+      });
+    } else {
+      this._getLocationAsync();
+    }
+}
+
+//render 이후에 수행
  componentDidMount(){
   BackHandler.addEventListener('hardwareBackPress',async function(){
       if(this.state.canGoBack){
@@ -54,18 +68,9 @@ export default class App extends Component<Props>{
       }
   }.bind(this));
 
-
-
   //get location
   setInterval(async () => {
     await Location.startLocationUpdatesAsync(LOCATION_TASK_NAME,);
-    var tmp_token = await registerForPushNotificationsAsync();
-  //  console.log('temp',tmp_token);
-    var token =tmp_token;
-  //  console.log(token);
-    this.setState({
-      token : token
-    });
       console.log('--------------------------- DEBUG : GET vi --------------------------- \n', vi);
      this.setState({
         latitude : vi.locations[0].coords.latitude,
@@ -76,25 +81,23 @@ export default class App extends Component<Props>{
 
  }
 
-//componentWillMount : api called just before the component print the screen
-componentWillMount() {
-    //is this android?
-    if (Platform.OS === 'android' && !Constants.isDevice) {
-      this.setState({
-        errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',
-      });
-    } else {
-      this._getLocationAsync();
-    }
 
-}
+
  componentWillUnmount() {
 //BackHandler : detach to hardwareBackPress
   BackHandler.removeEventListener('hardwareBackPress');
  }
 
-  _getLocationAsync = async () => {
+_getLocationAsync = async () => {
+  //get Token
+      var tmp_token = await registerForPushNotificationsAsync();
+      var token =tmp_token;
+      this.setState({
+        token : token
+      });
+      console.log('is token', this.state.token);
 
+  //init Create Location #이거는 그냥 DB에 장고가 생성하게 할 수도 있음
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
     if (status !== 'granted') {
       this.setState({
@@ -162,13 +165,15 @@ onNavigationStateChange(navState){
 
       //SEND : here - sendPacket
       //#CREATE
-      CreateLocation(lat,lon);
+      //CreateLocation(lat,lon);
       //#UPDATE
-      //UpdateLocation(lat,lon);
+      UpdateLocation(this.state.token,lat,lon);
       //#READ
 
       //console.log('readLocation',ReadLocation());
       //#reginster PUSH token to rest api server
+
+
 
 
 

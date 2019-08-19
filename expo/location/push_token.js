@@ -8,11 +8,13 @@ import key from "./key/key.json";
 //http://168.131.153.40:8000/api/pushtoken/
 function encrypt_su(data){
   let ciphertext = CryptoJS.AES.encrypt(data,key["key"]).toString();
-  console.log(ciphertext);
-// //DEBUG
-    let bytes  = CryptoJS.AES.decrypt(ciphertext, key["key"]);
-    let originalText = bytes.toString(CryptoJS.enc.Utf8);
-    console.log('orl',originalText);
+  console.log('[DEBUG] ciphertext : ',ciphertext);
+
+  //DEBUG : decrypt
+  let bytes  = CryptoJS.AES.decrypt(ciphertext, key["key"]);
+  let originalText = bytes.toString(CryptoJS.enc.Utf8);
+  console.log('[DEBUG] originalText : ',originalText);
+
   return ciphertext;
 }
 
@@ -47,18 +49,4 @@ async function registerForPushNotificationsAsync() {
   return v;
 }
 
-
 export {encrypt_su, registerForPushNotificationsAsync };
-
-
-//
-// fetch(PUSH_ENDPOINT, {
-//   method: 'POST',
-//   headers: {
-//     'Accept': 'application/json',
-//     'Content-Type': 'application/json',
-//   },
-//   body: JSON.stringify({
-//       'token' : token,
-//   }),
-// });
