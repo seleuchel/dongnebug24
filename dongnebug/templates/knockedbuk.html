@@ -4,57 +4,47 @@
 
     <title>knocked buk</title>
 {% endblock %}
+
 {% block body_block %}
     <nav class="navbar navbar-light" style="background-color: #D9EDFD;">
-      <a href="homepage.html"><img src = "{% static 'img/back.png' %}" width="30" height="30"></a>
-      <!-- Navbar content -->
-      <div id = logo>
-        <img src = "{% static 'img/buk.png' %}" width="30" height="30">
-        <a id ="logotext" class="navbar-brand" href="#" >두드린 북</a>
-      </div>
-      <a href = "newcomplain.html"><img src = "{% static 'img/newpost.png' %}" width="30" height="30"></a>
+        <a href="homepage.html"><img src="{% static 'img/back.png' %}" width="30" height="30"></a>
+        <!-- Navbar content -->
+        <div id=logo>
+            <img src="{% static 'img/buk.png' %}" width="30" height="30">
+            <a id="logotext" class="navbar-brand" href="#">두드린 북</a>
+        </div>
+        <a href="newcomplain.html"><img src="{% static 'img/newpost.png' %}" width="30" height="30"></a>
     </nav>
 
     <!-- 내용 입력 -->
-    <div id = "upload_kknocked_contents">
-      <hr>
-      <a href ="content.html">
-        <div id = "upload_contents-1">
-          <div class="media">
-            <!-- 이미지 삽입 -->
-            <img src="{% static 'img/나무.png' %}" class="mr-3" width ="70" height = "70">
-            <div class="media-body" >
-              <div id ="uploadbuk_knocked_name">산학협력관 3호관</div>
-              <div id ="content-reaction">
-                <img src ="{% static 'img/drum2.png' %}" width = "17" height = "17">
-                10
-                <img src = "{% static 'img/comment.png' %}" width = "15" height ="15">
-                3
-              </div>
-            </div>
-              <img id ="doong" src ="{% static 'img/둥.png' %}" class="mr-3" width="50" height ="50">
-          </div>
-        </div>
-      </a>
-      <hr>
-      <a href ="content.html">
-        <div id = "upload_contents-2">
-          <div class="media">
-            <!-- 이미지 삽입 -->
-            <img src="{% static 'img/1.png' %}" class="mr-3" width ="70" height = "70">
-            <div class="media-body" >
-              <div id ="uploadbuk_knocked_name">북구청 앞 사거리</div>
-              <div id ="content-reaction">
-                <img src ="{% static 'img/drum2.png' %}" width = "17" height = "17">
-                10
-                <img src = "{% static 'img/comment.png' %}" width = "15" height ="15">
-                3
-              </div>
-            </div>
+    <div id="upload_kknocked_contents">
+        <hr>
+        {% if complains %}
 
-          </div>
-        </div>
-      </a>
-      <hr>
-    </div>
+            {% for complain in complains %}
+                <a href="{{ complain.get_absolute_url }}">
+                    <div id="upload_contents-1">
+                        <div class="media">
+                            <!-- 이미지 삽입 -->
+                            <img src="{% static 'img/나무.png' %}" class="mr-3" width="70" height="70">
+                            <div class="media-body">
+                                <div id="uploadbuk_knocked_name">{{ complain.title }}</div>
+                                <div id="content-reaction">
+                                    <img height="17" src="{% static 'img/drum2.png' %}" width="17">
+                                    {{ complain.num_of_sympathies }}
+                                    <img src="{% static 'img/comment.png' %}" width="15" height="15">
+                                    {{ complain.num_of_comments }}
+                                </div>
+                            </div>
+                            {% if complain.is_complete %}
+                                <img id="doong" src="{% static 'img/둥.png' %}" class="mr-3" width="50" height="50">
+                            {% endif %}
+                        </div>
+                    </div>
+                </a>
+                <hr>
+            {% endfor %}
+        {% else %}
+            <h1>THERE"S NOTHING TO SHOW</h1>
+        {% endif %}
 {% endblock %}
