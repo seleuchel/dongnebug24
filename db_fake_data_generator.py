@@ -9,7 +9,7 @@ django.setup()
 ## FAKE POP SCRIPT
 from dongnebug.models import *
 from django.contrib.auth.models import User
-from api.models import Location
+from api.models import Locations
 from faker import Faker
 
 fake = Faker('ko_KR')
@@ -35,6 +35,7 @@ def update_Complain(N=20):
             content=fake.text(max_nb_chars=200, ext_word_list=None),
             latitude=fake.latitude(),
             longitude=fake.longitude(),
+            file=fake.file_name(),
          )
         # t.save()
 
@@ -87,15 +88,15 @@ def add_Sympathy(N=20):
 
 def add_Location(N=20):
     for entry in range(N):
-        t = Location.objects.get_or_create(
-            user_id=User.objects.all()[entry].id,
+        t = Locations.objects.get_or_create(
             latitude=fake.latitude(),
             longitude=fake.longitude(),
+            author_id=User.objects.all()[entry].id,
         )
 
 def update_Location(N=20):
     for entry in range(N):
-        Location.objects.filter(user_id=entry+1).update(
+        Locations.objects.filter(user_id=entry+1).update(
             complain_id=Complain.objects.all()[randint(0, 19)].id,
             content=fake.text(max_nb_chars=200, ext_word_list=None),)
 
@@ -103,15 +104,15 @@ def update_Location(N=20):
 if __name__ == "__main__":
     print("db_fake_data_generator.py를 열고, 함수를 하나하나씩 실행하세요. 주석을 제거해야 할겁니다.")
     print("populating script!")
-    # add_User()
-    # update_Complain()
+    add_User()
+    update_Complain()
     # add_Complain_Image()
     # update_Complain_Image()
-    # add_Comment()
+    add_Comment()
     # update_Comment()
-    # add_Favorite()
-    # add_Sympathy()
-    # add_Location()
+    add_Favorite()
+    add_Sympathy()
+    add_Location()
     print("populating complete!")
 
 #TODO : 커밋해서 현 상황 푸시하기.

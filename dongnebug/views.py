@@ -1,12 +1,12 @@
 from django.shortcuts import render
 from django.views.generic import (
     CreateView, ListView, DetailView, DeleteView,
-    TemplateView,UpdateView, FormView)
+    TemplateView, UpdateView, FormView)
 from django.contrib.auth.models import User
 from django.urls import (reverse, reverse_lazy)
 from django.utils import timezone
 from datetime import timedelta
-from dongnebug.models import Complain, Favorite, ComplainImage, Comment, Sympathy
+from dongnebug.models import Complain, Favorite, Comment, Sympathy
 from . import models
 from .forms import *
 from api.models import Locations
@@ -47,85 +47,96 @@ class ComplainListView(ListView):
         context['complains'] = complain
         return context
 
-class KnockedBukView(TemplateView):
-    template_name='knockedbuk.html'
-    def get_context_data(self, **kwargs):
-        context=super().get_context_data(**kwargs)
-        complain=list(Complain.objects.filter())
-        favorite=list(Favorite.objects.filter())
-        image=list(ComplainImage.objects.filter())
-        comment=list(Comment.objects.filter())
-        sympathy=list(Sympathy.objects.filter())
-        context['complain']=complain
-        context['comments']=comment
-        context['image']=image
-        context['favorite']=favorite
-        context['sympathy']=sympathy
-        return context
+
+class KnockedBukView(ListView):
+    model = Sympathy
+    template_name = 'knockedbuk.html'
 
 
+    def get_queryset(self):
+        sympathies = Sympathy.objects.filter(user_id__exact=self.request.user.id)
 
-class NewComplainView(TemplateView):
-    template_name='newcomplain.html'
-    def get_context_data(self, **kwargs):
-        context=super().get_context_data(**kwargs)
-        complain=list(Complain.objects.filter())
-        favorite=list(Favorite.objects.filter())
-        image=list(ComplainImage.objects.filter())
-        comment=list(Comment.objects.filter())
-        sympathy=list(Sympathy.objects.filter())
-        context['complain']=complain
-        context['comments']=comment
-        context['image']=image
-        context['favorite']=favorite
-        context['sympathy']=sympathy
-        return context
-
-class SearchView(TemplateView):
-    template_name='search.html'
-    def get_context_data(self, **kwargs):
-        context=super().get_context_data(**kwargs)
-        complain=list(Complain.objects.filter().values())
-        favorite=list(Favorite.objects.filter().values())
-        image=list(ComplainImage.objects.filter().values())
-        comment=list(Comment.objects.filter().values())
-        sympathy=list(Sympathy.objects.filter().values())
-        context['complains']=complain
-        context['comments']=comment
-        context['image']=image
-        context['favorite']=favorite
-        context['sympathy']=sympathy
-        return context
-
-
-class UploadedComplainListView(ListView):
-
-    template_name = 'uploadedbuk.html'
-    model = Complain
+        knocked_complains = []
+        for sympathy in sympathies:
+            knocked_complains.append(sympathy.complain_id)
+        print(self.request.user.id)
+        print(sympathies)
+        print(knocked_complains)
+        return Complain.objects.filter(id__in=knocked_complains)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        complains = list(Complain.objects.filter(is_complete=1))
+        complain = self.get_queryset()
+        # TODO : 현재 유저가 넣은 것만 볼수 있게 하자
+        context['complains'] = complain
+        return context
+
+
+class NewComplainView(TemplateView):
+    template_name = 'newcomplain.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        complain = list(Complain.objects.filter())
+        favorite = list(Favorite.objects.filter())
+
+        comment = list(Comment.objects.filter())
+        sympathy = list(Sympathy.objects.filter())
+        context['complain'] = complain
+        context['comments'] = comment
+
+        context['favorite'] = favorite
+        context['sympathy'] = sympathy
+        return context
+
+
+class SearchView(ComplainListView):
+
+    def get_queryset(self):
+        try:
+            complain_name = self.request.GET.get('q')
+        except:
+            complain_name = ''
+
+        if complain_name != ('' or None):
+            complains = Complain.objects.filter(title__icontains= complain_name)
+        else:
+            complains = Complain.objects.all()
+
+        return complains
+
+
+class UploadedComplainListView(ListView):
+    template_name = 'uploadedbuk.html'
+    model = Complain
+
+    def get_queryset(self):
+        return Complain.objects.filter(author_id__exact=self.request.user.id)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        complains = self.get_queryset()
         context['complains'] = complains
         return context
 
 
-
 class ShowComplainView(TemplateView):
-    template_name='showcomplain.html'
+    template_name = 'showcomplain.html'
+
     def get_context_data(self, **kwargs):
-        context=super().get_context_data(**kwargs)
-        complain=list(Complain.objects.filter())
-        favorite=list(Favorite.objects.filter())
-        image=list(ComplainImage.objects.filter())
-        comment=list(Comment.objects.filter())
-        sympathy=list(Sympathy.objects.filter())
-        context['complain']=complain
-        context['comments']=comment
-        context['image']=image
-        context['favorite']=favorite
-        context['sympathy']=sympathy
+        context = super().get_context_data(**kwargs)
+        complain = list(Complain.objects.filter())
+        favorite = list(Favorite.objects.filter())
+
+        comment = list(Comment.objects.filter())
+        sympathy = list(Sympathy.objects.filter())
+        context['complain'] = complain
+        context['comments'] = comment
+
+        context['favorite'] = favorite
+        context['sympathy'] = sympathy
         return context
+
 
 class IndexView(TemplateView):
     template_name = 'mainpage.html'
