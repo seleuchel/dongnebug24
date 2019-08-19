@@ -8,50 +8,35 @@ from django.utils import timezone
 from datetime import timedelta
 from dongnebug.models import Complain, Favorite, ComplainImage, Comment, Sympathy
 from . import models
-from . import forms
+from .forms import *
 from api.models import Locations
 import random
 from scipy.spatial import distance
 
-def getComplains():
-    near_complains = []
-    user_latitude=Locations.objects.filter(id=73).values('latitude').first()['latitude']
-    user_longitude=Locations.objects.filter(id=73).values('longitude').first()['longitude']
-    complains = Complain.objects.all()
-    for complain in complains:
-        dist = distance.euclidean((float(complain.latitude), float(complain.longitude)), (float(user_latitude), float(user_longitude)),5)
-        if dist < 0.05:
-            near_complains.append(complain)
-    return near_complains
-    
-#queryset = Complain.objects.filter(pk__in=getComplains())
 
-class NewComplainView(TemplateView):
-    template_name = 'new_complain.html'
+class ComplainDetailView(DetailView):
+    model = Complain
+    template_name = 'content.html'
 
 
-    def get_absolute_url(self):
-        return reverse('dongnebug:index')
+class ComplainCreateView(CreateView):
+    model = Complain
+    form_class = ComplainForm
+    template_name = 'complain_form.html'
 
-class ContentView(TemplateView):
-    form_class=forms.GetCommentForm
-    template_name='content.html'
-    def get_context_data(self, **kwargs):
-        context=super().get_context_data(**kwargs)
-        complain=list(Complain.objects.filter(pk=kwargs['num']).values())
-        favorite=list(Favorite.objects.filter(complain=kwargs['num']).values())
-        image=list(ComplainImage.objects.filter(complain=kwargs['num']).values())
-        comment=list(Comment.objects.filter(complain=kwargs['num']).values())
-        sympathy=list(Sympathy.objects.filter(complain=kwargs['num']).values())
-        context['complain']=complain[0]
-        context['comments']=comment
-        context['image']=image
-        context['favorite']=favorite
-        context['sympathy']=sympathy
-        return context
+    def form_valid(self, form):
+        form.instance.author_id = self.request.user.id
+        return super(ComplainCreateView, self).form_valid(form)
+
+
+class CommentCreateView(CreateView):
+    model = Comment
+    form_class = CommentForm
+    template_name = 'content.html'
+    success_url = 'index/'
+
 
 class HomepageView(TemplateView):
-    form_class=forms.HomepageForm
     template_name='homepage.html'
     def get_context_data(self, **kwargs):
         context=super().get_context_data(**kwargs)
@@ -68,7 +53,6 @@ class HomepageView(TemplateView):
         return context
 
 class KnockedBukView(TemplateView):
-    form_class=forms.KnockedBukForm
     template_name='knockedbuk.html'
     def get_context_data(self, **kwargs):
         context=super().get_context_data(**kwargs)
@@ -87,7 +71,6 @@ class KnockedBukView(TemplateView):
 
 
 class NewComplainView(TemplateView):
-    form_class=forms.NewComplainForm
     template_name='newcomplain.html'
     def get_context_data(self, **kwargs):
         context=super().get_context_data(**kwargs)
@@ -104,7 +87,6 @@ class NewComplainView(TemplateView):
         return context
 
 class SearchView(TemplateView):
-    form_class=forms.SearchForm
     template_name='search.html'
     def get_context_data(self, **kwargs):
         context=super().get_context_data(**kwargs)
@@ -121,7 +103,6 @@ class SearchView(TemplateView):
         return context
 
 class UploadBukView(TemplateView):
-    form_class=forms.UploadBukForm
     template_name='uploadbuk.html'
     def get_context_data(self, **kwargs):
         context=super().get_context_data(**kwargs)
@@ -156,13 +137,9 @@ class ShowComplainView(TemplateView):
         return context
 
 class RegisterView(CreateView):
-    form_class = forms.RegisterForm
     template_name = 'login.html'
     success_url = reverse_lazy('login')
 
 
 class IndexView(TemplateView):
-    template_name = 'index.html'
-
-class LoginView(CreateView):
-    template_name='login.html'
+    template_name = 'mainpage.html'
