@@ -5,8 +5,8 @@ from .models import Complain, Favorite, Comment, Sympathy
 
 class CommentForm(forms.ModelForm):
     class Meta:
-        model=Comment
-        fields=( 'content',)
+        model = Comment
+        fields = ('content',)
 
 
 class SearchForm(forms.ModelForm):

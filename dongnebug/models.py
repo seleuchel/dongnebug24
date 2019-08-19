@@ -62,7 +62,7 @@ class Comment(models.Model):
         return (self.author.username if self.author else "무명") + "의 댓글"
 
     def get_absolute_url(self):
-        return reverse('dongnebug:complain_detail', args=[self.id])
+        return reverse('dongnebug:complain_detail', args=[self.complain_id])
 
 
 class Sympathy(models.Model):
