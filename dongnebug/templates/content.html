@@ -1,0 +1,121 @@
+{% include 'base.html' %}
+{% load static %}
+{% block head_block %}
+    <title>content</title>
+    <script type="text/javascript">
+      var state = 0;
+      function ChangeImage(){
+        if(state == 0){
+          document.img1.src = "img/buk.png"
+          state = 1;
+        }else {
+          document.img1.src ="img/drum1.png"
+          state = 0;
+        }
+      }
+    </script>
+{% endblock %}
+
+{% block body_block %}
+
+      <!-- 제목 받아오기 -->
+      <div id = "content-title">{{ object.title }}</div>
+      <hr>
+
+      <!-- 사진이나 영상 받아오기 -->
+      <div id = "content-img"><img src = "{% static 'img/나무.png' %}" width = "100%" height = "300"></div>
+      <hr>
+
+      <!-- 사람 아이콘 받아오기 -->
+      <div id = "content-userinfo">
+        <img id = "user" src = "{% static 'img/user.png' %}" width="35" height="35">
+        <span id ="date_time">
+        8/16 18:16
+        </span>
+        <!-- 사람 닉네임 받아오기 -->
+        <span id ="content-username">{{ object.author }}</span>
+      </div>
+      <br/>
+      <!-- 글 내용 받아오기 -->
+
+      <div id = "content-text">
+        {{ object.content }}
+      </div>
+
+
+      <br/>
+      <br/>
+      <!-- 북 아이콘 & onclick() = 다른 이미지로 대체 + 북 친 갯수 plus 1-->
+      <div id = "reaction">
+        <img  src = "{% static 'img/drum1.png' %}" name = "img1" width="23" height="23" onclick ="ChangeImage()">
+        30
+        <img id = "chat" src = "{% static 'img/comment.png' %}" width = "20" height="20">
+        3
+        <img id = "share" src = "{% static 'img/share.png' %}" width ="20" heigth = "20">
+      </div>
+      <hr>
+
+      <!-- 댓글 보여주기 -->
+
+      <div id = "contents">
+        <div id = "contents-1">
+            <div class="media">
+                <!-- 이미지 삽입 -->
+              <img id ="comment-userimage" src="{% static 'img/user.png' %}" class="mr-3" width ="30" height = "30">
+              <div id ="conmment-username">
+                공대생1
+                <div id ="comment-date_time" >18:53</div>
+              </div>
+            </div>
+          <div id ="comment-content">엥 완전 심각</div>
+          <hr>
+        </div>
+        <div id = "contents-2">
+            <div class="media">
+                <!-- 이미지 삽입 -->
+              <img id ="comment-userimage" src="{% static 'img/user.png' %}" class="mr-3" width ="30" height = "30">
+              <div id ="conmment-username">
+                공대생2
+                <div id ="comment-date_time" >18:53</div>
+              </div>
+            </div>
+          <div id ="comment-content">댓글 내용 왈왈왈ㅇ뢍로아로알ㅇ 댓글 내용 왈왈왈ㅇ뢍로아로알ㅇ 댓글 내용 왈왈왈ㅇ뢍로아로알ㅇ</div>
+          <hr>
+        </div>
+        <div id = "contents-3">
+            <div class="media">
+                <!-- 이미지 삽입 -->
+              <img id ="comment-userimage" src="{% static 'img/user.png' %}" class="mr-3" width ="30" height = "30">
+              <div id ="conmment-username">
+                공대생3
+                <div id ="comment-date_time" >18:53</div>
+              </div>
+            </div>
+          <div id ="comment-content">댓글 내용 왈왈왈ㅇ뢍로아로알ㅇ 댓글 내용 왈왈왈ㅇ뢍로아로알ㅇ 댓글 내용 왈왈왈ㅇ뢍로아로알ㅇ 댓글 내용 왈왈왈ㅇ뢍로아로알ㅇ=
+          <hr>
+        </div>
+      </div>
+
+    </div>
+
+      <!-- 댓글 달기 기능 -->
+
+      <div id ="comment-window" class = "fixed-bottom">
+           <div class="input-group mb-3">
+             <input type="text" class="form-control" placeholder="댓글을 입력하세요..." aria-describedby="button-addon2">
+             <div class="input-group-append">
+               <button class="btn btn-outline-secondary" type="button" id="button-addon2">등록</button>
+             </div>
+           </div>
+      </div>
+    <form action="{% url "dongnebug:create_comment" %}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Comment" class="btn btn-outline-primary">
+    </form>
+
+      <br>
+      <br/>
+    </div>
+
+{% endblock %}

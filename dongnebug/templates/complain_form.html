@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{%  load static %}
+
+{% block style_block %}
+
+    <title>content</title>
+    <script type="text/javascript">
+      var state = 0;
+      function ChangeImage(){
+        if(state == 0){
+          document.img1.src = "img/buk.png"
+          state = 1;
+        }else {
+          document.img1.src ="img/drum1.png"
+          state = 0;
+        }
+      }
+    </script>
+
+{% endblock %}
+
+{% block body_block %}
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div id = "text">
+            {{ form.as_p }}
+            <input type="submit" value="Save"/>
+        </div>
+    </form>
+
+{% endblock %}
