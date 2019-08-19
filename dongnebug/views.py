@@ -33,7 +33,10 @@ class CommentCreateView(CreateView):
     model = Comment
     form_class = CommentForm
     template_name = 'content.html'
-    success_url = 'index/'
+
+    def form_valid(self, form):
+        form.instance.author_id = self.request.user.id
+        return super(CommentCreateView, self).form_valid(form)
 
 
 # complain list view
@@ -90,19 +93,26 @@ class NewComplainView(TemplateView):
         return context
 
 
-class SearchView(ComplainListView):
+class SearchView(ListView):
+    template_name = 'search.html'
+    model = Complain
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        complain = self.get_queryset()
+        context['complains'] = complain
+        return context
 
     def get_queryset(self):
         try:
             complain_name = self.request.GET.get('q')
         except:
             complain_name = ''
-
         if complain_name != ('' or None):
-            complains = Complain.objects.filter(title__icontains= complain_name)
+            complains = Complain.objects.filter(title__icontains=complain_name)
         else:
             complains = Complain.objects.all()
-
+        print(complains)
         return complains
 
 

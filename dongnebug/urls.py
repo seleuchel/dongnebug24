@@ -20,16 +20,16 @@ from .views import *
 app_name = 'dongnebug'
 
 urlpatterns = [
+    path('', LoginView.as_view(template_name='loegin.html'), name='login'),
+    path('search/', SearchView.as_view(), name='search'),
+    path('index/', IndexView.as_view(), name='index'),
+    path('logout/', LogoutView.as_view(), name='logout'),
     path('complain/', ComplainListView.as_view(), name='complain_list'),
     path('complain/<int:pk>/', ComplainDetailView.as_view(), name='complain_detail'),
     path('complain/new/', ComplainCreateView.as_view(), name='complain_new'),
-    path('content/<int:pk>/comment/', CommentCreateView.as_view(), name='create_comment'),
     path('knockedbuk/', KnockedBukView.as_view(), name='knockedbuk'),
     path('uploadedcomplain/', UploadedComplainListView.as_view(), name='uploadedbuk'),
+    path('complain/<int:pk>/comment/new/', CommentCreateView.as_view(), name='create_comment'),
+    path('profile/', ProfileView.as_view(), name='update_profile'),
     path('newcomplain/', NewComplainView.as_view(), name='newcomplain'),
-    path('search/', SearchView.as_view(), name='search'),
-    path('', LoginView.as_view(template_name='loegin.html'), name='login'),
-    path('index/', IndexView.as_view(), name='index'),
-    path('logout/', LogoutView.as_view(), name='logout'),
-    path('profile/', ProfileView.as_view(), name='update_profile')
-    ]
+]

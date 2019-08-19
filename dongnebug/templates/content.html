@@ -57,7 +57,6 @@
 
       <!-- 댓글 보여주기 -->
 
-
       <div id = "contents">
         <div id = "contents-1">
             <div class="media">
@@ -109,7 +108,11 @@
              </div>
            </div>
       </div>
-
+    <form action="{% url "dongnebug:create_comment" pk=object.id %}" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Comment" class="btn btn-outline-primary">
+    </form>
 
       <br>
       <br/>
