@@ -15,6 +15,7 @@ class Complain(models.Model):
     content = models.TextField()
     latitude = models.DecimalField(max_digits=20, decimal_places=17, null=True)
     longitude = models.DecimalField(max_digits=20, decimal_places=17, null=True)
+    file = models.FileField(upload_to='./')
     num_of_sympathies = models.IntegerField(default=0)
     num_of_comments = models.IntegerField(default=0)
     is_complete = models.BooleanField(default=False)
@@ -50,7 +51,7 @@ class ComplainImage(models.Model):
         Complain,
         on_delete=models.CASCADE
     )
-    image = models.ImageField(blank=True)
+
 
     def __str__(self):
     #TODO : Check for security issue which is information leak
