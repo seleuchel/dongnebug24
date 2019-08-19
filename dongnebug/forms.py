@@ -6,31 +6,10 @@ from .models import Complain, Favorite, Comment, Sympathy
 class CommentForm(forms.ModelForm):
     class Meta:
         model=Comment
-        fields=('user', 'complain', 'content', 'pub_date')
+        fields=( 'content',)
 
 
-class HomepageForm(forms.ModelForm):
-    class Meta:
-        model = Complain
-        fields = ("author", "title", "content")
-class NewComplainForm(forms.ModelForm):
-    class Meta:
-        model = Complain
-        fields = ("author", "title", "content")
 class SearchForm(forms.ModelForm):
-    class Meta:
-        model = Complain
-        fields = ("author", "title", "content")
-class UploadBukForm(forms.ModelForm):
-    class Meta:
-        model = Complain
-        fields = ("author", "title", "content")
-class KnockedBukForm(forms.ModelForm):
-    class Meta:
-        model = Complain
-        fields = ("author", "title", "content")
-
-class RegisterForm(forms.ModelForm):
     class Meta:
         model = Complain
         fields = ("author", "title", "content")
