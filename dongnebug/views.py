@@ -1,18 +1,8 @@
-from django.shortcuts import render
 from django.views.generic import (
-    CreateView, ListView, DetailView, DeleteView,
-    TemplateView, UpdateView, FormView)
-from django.contrib.auth.models import User
-from django.urls import (reverse, reverse_lazy)
-from django.utils import timezone
-from datetime import timedelta
-from dongnebug.models import Complain, Favorite, Comment, Sympathy
-from . import models
+    CreateView, ListView, DetailView,
+    TemplateView, UpdateView, RedirectView)
 from .forms import *
 from api.models import Locations
-import random
-from scipy.spatial import distance
-
 
 
 class ComplainDetailView(DetailView):
@@ -158,7 +148,7 @@ def post_like(request):
 
 #TODO : loginrequied 데코레이터에 certification 내용 추가 해서 사용할 수 있는지 확인해보기
 
-class CertificationView(CreateView):
+class CertificationCreateView(CreateView):
     model = Locations
     template_name = 'certification.html'
     form_class = CertificationForm
@@ -166,7 +156,29 @@ class CertificationView(CreateView):
 
     def form_valid(self, form):
         form.instance.author_id = self.request.user.id
-        return super(CertificationView, self).form_valid(form)
+        return super(CertificationCreateView, self).form_valid(form)
+
+
+class CertificationUpdateView(UpdateView):
+    model = Locations
+    template_name = 'certification.html'
+    form_class = CertificationForm
+    success_url = '/index'
+
+    def form_valid(self, form):
+        form.instance.author_id = self.request.user.id
+        return super(CertificationUpdateView, self).form_valid(form)
+
+class CertificationRedirectView(RedirectView):
+    is_permanent = True
+
+    def get_redirect_url(self, *args, **kwargs):
+
+        user_location = Locations.objects.filter(author_id__exact=self.request.user.id)
+        if user_location:
+            return '/certification/update/' + str(user_location.get().id)
+        else:
+            return '/certification/create/'
 
 
 # TODO : 'content.html' 초기 위치를 디비에서 가져와서 사용하기
