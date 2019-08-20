@@ -2,6 +2,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.contrib.auth.models import User
 from .models import Complain, Favorite, Comment, Sympathy
+from api.models import Locations
 
 
 class CommentForm(forms.ModelForm):
@@ -71,4 +72,9 @@ class ProfileForm(forms.ModelForm):
         }
 
 
-class
+class CertificationForm(forms.ModelForm):
+    class Meta:
+        model = Locations
+        fields = ('token', )
+
+

@@ -38,35 +38,19 @@
     </div>
       <br/>
       <br/>
-    <form>
+    <form method="post">
+    {% csrf_token %}
       <div class="ui form">
         <div class="field">
           <div class="twelve wide field">
-          <label>왼쪽 하단의 토큰 값을 입력해주세요.</label>
-          <input type="text" width ="80%"><button class="compact ui button" style="padding-left:8px; padding-right:8px;">
-          확인
-          </button>
+
+              {{ form.token }}
+          <input type="submit" width ="80%">
           </div>
         </div>
       </div>
     </form>
 
-    <br/>
-    <form>
-      <div class="ui form">
-        <div class="field">
-
-          <div class="twelve wide field">
-          <label>인증 키를 입력해주세요.</label>
-          <input type="text" width ="80%">
-          </div>
-
-          <button class="compact ui button" style="padding-left:8px; padding-right:8px;">
-          확인
-          </button>
-        </div>
-      </div>
-    </form>
     <div id ="probulpeon">
       @probulpyeonreo
     </div>
