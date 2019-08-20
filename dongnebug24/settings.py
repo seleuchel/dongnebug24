@@ -166,7 +166,7 @@ AUTHENTICATION_BACKENDS = (
 )
 
 SITE_ID = 1
-LOGIN_REDIRECT_URL = '/certification'
+LOGIN_REDIRECT_URL = '/certification/redirect/'
 LOGOUT_REDIRECT_URL = '/'
 
 CORS_ORIGIN_WHITELIST = (
