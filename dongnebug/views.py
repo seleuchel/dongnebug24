@@ -149,7 +149,7 @@ def post_like(request):
     pk = request.POST.get('pk', None)
 
 
-
+#TODO : loginrequied 데코레이터에 certification 내용 추가 해서 사용할 수 있는지 확인해보기
 class CertificationView(CreateView):
     model = Locations
     template_name = 'certification.html'
