@@ -21,13 +21,14 @@
 {% block body_block %}
     <div class="fixed-top">
         <nav id="upbar" class="navbar navbar-light" style="background-color: #D9EDFD;">
-            <a href="homepage.html"><img src="{% static 'img/back.png' %}" width="30" height="30"></a>
+            <a href="{% url 'dongnebug:index' %}"><img src="{% static 'img/back.png' %}" width="30" height="30"></a>
             <!-- Navbar content -->
             <div id=logo>
                 <img src="{% static 'img/buk.png' %}" width="30" height="30">
-                <a id="logotext" class="navbar-brand" href="#">새 민원</a>
+                <a id="logotext" class="navbar-brand">새 민원</a>
             </div>
-            <a href="#"><img src="{% static 'img/send.png' %}" width="30" height="30"></a>
+            {# TODO : submit 버튼을 어떻게 이거로 연관 시켜보기  #}
+            <a><img src="{% static 'img/send.png' %}" width="30" height="30"></a>
         </nav>
     </div>
 
@@ -49,9 +50,10 @@
                     <div class="col">
                         {{ form.latitude }}{{ form.longitude }}
                     </div>
+                    {# TODO: 지도에서 검색하거나, 마크함으로써 위치를 정하면,  위도, 경도가 자동으로 설정된 위치로 세팅된다.#}
                     <div class="col">
-                        <img id=search src="{% static 'img/search3.png' %}" width="25" height="25" href="#">
-                        <img id=placeholder src="{% static "img/placeholder2.png" %}" width="25" height="25" href="#">
+                        <img id=search src="{% static 'img/search3.png' %}" width="25" height="25" >
+                        <img id=placeholder src="{% static "img/placeholder2.png" %}" width="25" height="25" >
                     </div>
                 </div>
                 </br>
