@@ -53,6 +53,7 @@ class LocationsViewSet(viewsets.ModelViewSet):
                     instance._prefetched_objects_cache = {}
 
                 return Response(serializer.data)
+            return Response()
                 # serializer = self.get_serializer(data=request.data)
                 # serializer.is_valid(raise_exception=True)
                 # self.perform_create(serializer)
