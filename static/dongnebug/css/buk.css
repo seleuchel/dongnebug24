@@ -177,9 +177,7 @@ a:hover { color: black; text-decoration: none;}
   padding : 0px 0px 22px 0px;
 }
 
-#mlogo{
-  margin : auto;
-}
+
 
 #main-contents{
   margin:70px 20px 20px 20px;
@@ -236,4 +234,3 @@ edit-bar{
      font-family :'Nanum Gothic', sans-serif;
         font-weight : bold;
 }
-
