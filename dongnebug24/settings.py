@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'dongnebug',
     'rest_framework',
 
+    'corsheaders',
+
     #all auth
     'allauth',
     'allauth.account',
@@ -61,6 +63,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -165,3 +168,13 @@ AUTHENTICATION_BACKENDS = (
 SITE_ID = 1
 LOGIN_REDIRECT_URL = '/certification'
 LOGOUT_REDIRECT_URL = '/'
+
+CORS_ORIGIN_WHITELIST = (
+
+    'http://localhost:8000',
+
+    'http://168.131.151.162:8000',
+
+    'http://168.131.153.40:8000'
+
+)
