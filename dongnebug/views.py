@@ -90,7 +90,7 @@ class KnockedBukView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         complain = self.get_queryset()
-        # TODO : 현재 유저가 넣은 것만 볼수 있게 하자
+
         context['complains'] = complain
         return context
 
@@ -134,6 +134,7 @@ class IndexView(TemplateView):
     template_name = 'mainpage.html'
 
 
+
 class ProfileView(UpdateView):
     model = User
     form_class = ProfileForm
@@ -150,6 +151,7 @@ def post_like(request):
 
 
 #TODO : loginrequied 데코레이터에 certification 내용 추가 해서 사용할 수 있는지 확인해보기
+
 class CertificationView(CreateView):
     model = Locations
     template_name = 'certification.html'
@@ -161,3 +163,8 @@ class CertificationView(CreateView):
         return super(CertificationView, self).form_valid(form)
 
 
+# TODO : 'content.html' 초기 위치를 디비에서 가져와서 사용하기
+# TODO : 근처 민원 기능 추가
+#TODO : 이미 디비에 토큰이 저장 되어 있다면 CreateView가 아니라, UpdateView를 통해 할 수 있도록 바꾼다.
+#TODO : 공감 기능 추가
+# TODO : 댓글 기능 추가
