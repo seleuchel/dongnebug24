@@ -4,16 +4,17 @@
 
     <title>content</title>
     <script type="text/javascript">
-      var state = 0;
-     function ChangeImage(){
-       if(state == 0){
-         document.img1.src = "img/buk.png"
-         state = 1;
-       }else {
-         document.img1.src ="img/drum1.png"
-         state = 0;
-       }
-     }
+        var state = 0;
+
+        function ChangeImage() {
+            if (state == 0) {
+                document.img1.src = "img/buk.png"
+                state = 1;
+            } else {
+                document.img1.src = "img/drum1.png"
+                state = 0;
+            }
+        }
     </script>
 
 {% endblock %}
@@ -29,6 +30,7 @@
             <a href="#"><img src="{% static 'img/send.png' %}" width="30" height="30"></a>
         </nav>
     </div>
+
 
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
@@ -72,15 +74,15 @@
             <div class="input-group mb-3">
                 <div class="custom-file">
                     {{ form.file }}
-{#                    <label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">#}
-{#                        파일을 첨부하세요.</label>#}
+{#                                        <label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">#}
+{#                                            파일을 첨부하세요.</label>#}
                 </div>
                 <div class="input-group-append">
-                    <input type="submit" value="Save"/>
                 </div>
             </div>
             </br>
         </div>
+                    <input type="submit"/>
     </form>
 
 {% endblock %}
