@@ -27,7 +27,7 @@
     <a class="item">
         <img id="menu_user" src="{% static 'img/user.png' %}" width="60" height="80">
     </a>
-    <div id="menu_username">컴공의 누군가<a href="{% url 'dongnebug:update_profile' user.pk %}"><img id="menu_edit"
+    <div id="menu_username">{{ user.username }}<a href="{% url 'dongnebug:update_profile' user.pk %}"><img id="menu_edit"
                                                                                        src="{% static 'img/edit.png' %}"
                                                                                        width="15" height="15"></a></div>
     <a class="item">
