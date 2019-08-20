@@ -14,18 +14,20 @@ import random
 from scipy.spatial import distance
 
 
+
 class ComplainDetailView(DetailView):
     model = Complain
     template_name = 'content.html'
 
-    def post(self):
-        comment_form = CommentForm(self.request.POST)
-        comment_form.instance.user_id = self.request.user_id
-        comment_form.instance.complain_id = self.request.complain.id
-        if comment_form.is_valid():
-            comment_form.save()
+    def form_valid(self, form):
+        form.instance.complaine_id = self.request.complain.id
+        return super(CommentCreateView, self).form_valid(form)
 
-
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        comments = list(Comment.objects.filter(complain_id=self.object.id))
+        context['comments'] = comments
+        return context
 
 
 class ComplainCreateView(CreateView):
@@ -48,6 +50,14 @@ class CommentCreateView(CreateView):
         form.instance.complaine_id = self.request.complain.id
         return super(CommentCreateView, self).form_valid(form)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        complain = Complain.objects.filter(author_id__exact=self.request.user.id)
+        comments = list(Comment.objects.filter(complain_id=complain.id))
+        context['object'] = complain
+        context['comments'] = comments
+        print(complain, comments)
+        return context
 
 # complain list view
 class ComplainListView(ListView):
@@ -83,25 +93,6 @@ class KnockedBukView(ListView):
         # TODO : 현재 유저가 넣은 것만 볼수 있게 하자
         context['complains'] = complain
         return context
-
-
-class NewComplainView(TemplateView):
-    template_name = 'newcomplain.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        complain = list(Complain.objects.filter())
-        favorite = list(Favorite.objects.filter())
-
-        comment = list(Comment.objects.filter())
-        sympathy = list(Sympathy.objects.filter())
-        context['complain'] = complain
-        context['comments'] = comment
-
-        context['favorite'] = favorite
-        context['sympathy'] = sympathy
-        return context
-
 
 class SearchView(ListView):
     template_name = 'search.html'
@@ -139,30 +130,34 @@ class UploadedComplainListView(ListView):
         context['complains'] = complains
         return context
 
-
-class ShowComplainView(TemplateView):
-    template_name = 'showcomplain.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        complain = list(Complain.objects.filter())
-        favorite = list(Favorite.objects.filter())
-
-        comment = list(Comment.objects.filter())
-        sympathy = list(Sympathy.objects.filter())
-        context['complain'] = complain
-        context['comments'] = comment
-
-        context['favorite'] = favorite
-        context['sympathy'] = sympathy
-        return context
-
-
 class IndexView(TemplateView):
     template_name = 'mainpage.html'
 
 
 class ProfileView(UpdateView):
-    template_name = 'profile_edit.html'
-    form_class = User
+    model = User
+    form_class = ProfileForm
+    template_name = 'profile_form.html'
+    success_url = '/index'
+
+    def form_valid(self, form):
+        form.instance.user_id = self.request.user.id
+        return super(ProfileView, self).form_valid(form)
+
+
+def post_like(request):
+    pk = request.POST.get('pk', None)
+
+
+
+class CertificationView(CreateView):
+    model = Locations
+    template_name = 'certification.html'
+    form_class = CertificationForm
+    success_url = '/index'
+
+    def form_valid(self, form):
+        form.instance.author_id = self.request.user.id
+        return super(CertificationView, self).form_valid(form)
+
 

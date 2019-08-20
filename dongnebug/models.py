@@ -16,11 +16,20 @@ class Complain(models.Model):
     latitude = models.DecimalField(max_digits=20, decimal_places=17, null=True)
     longitude = models.DecimalField(max_digits=20, decimal_places=17, null=True)
     file = models.FileField(upload_to='./')
-    num_of_sympathies = models.IntegerField(default=0)
+    # like_user_set = models.ManyToManyField(
+    #     User,
+    #     blank=True,
+    #     related_name='like_user_set',
+    #     through='like'
+    # )
     num_of_comments = models.IntegerField(default=0)
+    #TODO : num_of_sympathy 구현 :: AJAX로 디비 연동까지
     is_complete = models.BooleanField(default=False)
     pub_date = models.DateTimeField(default=timezone.now)
-    #TODO : Add Video attribute
+
+    # @property
+    # def sympathy_count(self):
+    #     return self.like_user_set.count()
 
     def __str__(self):
     #TODO : Check for security issue which is information leak
