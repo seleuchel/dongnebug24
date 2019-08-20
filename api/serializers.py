@@ -18,3 +18,4 @@ class LocationsSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Locations
         fields = ['latitude', 'longitude']
+        lookup_field = 'token'
