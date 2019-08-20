@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
   },
   tokenbuttonOff:{
     position:'absolute',
-    bottom:80,
+    bottom:60,
     borderRadius:15,
     marginRight:5,
     marginLeft:5,
