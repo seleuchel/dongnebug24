@@ -19,24 +19,22 @@
 
 {% endblock %}
 {% block body_block %}
-    <div class="fixed-top">
-        <nav id="upbar" class="navbar navbar-light" style="background-color: #D9EDFD;">
-            <a href="{% url 'dongnebug:index' %}"><img src="{% static 'img/back.png' %}" width="30" height="30"></a>
-            <!-- Navbar content -->
-            <div id=logo>
-                <img src="{% static 'img/buk.png' %}" width="30" height="30">
-                <a id="logotext" class="navbar-brand">새 민원</a>
-            </div>
-            {# TODO : submit 버튼을 어떻게 이거로 연관 시켜보기  #}
-            <a><img src="{% static 'img/send.png' %}" width="30" height="30"></a>
-        </nav>
-    </div>
-
-
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
+        <div class="fixed-top">
+            <nav id="upbar" class="navbar navbar-light" style="background-color: #D9EDFD;">
+                <a href="{% url 'dongnebug:index' %}"><img src="{% static 'img/back.png' %}" width="30" height="30"></a>
+                <!-- Navbar content -->
+                <div id=logo>
+                    <img src="{% static 'img/buk.png' %}" width="30" height="30">
+                    <a id="logotext" class="navbar-brand">새 민원</a>
+                </div>
+                {# TODO : submit 버튼을 어떻게 이거로 연관 시켜보기  #}
+                <a><button type="submit" style="background-color:transparent;  border:0px transparent solid;" ><img src="{% static 'img/send.png' %}" width="30" height="30"> </button></a>
+            </nav>
+        </div>
 
-        <div class="text">
+        <div class="text" style="margin : 20px;">
             </br></br></br>
             <label id='logotext'>글 제목</label>
             </br>
@@ -52,8 +50,8 @@
                     </div>
                     {# TODO: 지도에서 검색하거나, 마크함으로써 위치를 정하면,  위도, 경도가 자동으로 설정된 위치로 세팅된다.#}
                     <div class="col">
-                        <img id=search src="{% static 'img/search3.png' %}" width="25" height="25" >
-                        <img id=placeholder src="{% static "img/placeholder2.png" %}" width="25" height="25" >
+                        <img id=search src="{% static 'img/search3.png' %}" width="25" height="25">
+                        <img id=placeholder src="{% static "img/placeholder2.png" %}" width="25" height="25">
                     </div>
                 </div>
                 </br>
@@ -76,15 +74,15 @@
             <div class="input-group mb-3">
                 <div class="custom-file">
                     {{ form.file }}
-{#                                        <label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">#}
-{#                                            파일을 첨부하세요.</label>#}
+                    {#                                        <label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">#}
+                    {#                                            파일을 첨부하세요.</label>#}
                 </div>
                 <div class="input-group-append">
                 </div>
             </div>
             </br>
         </div>
-                    <input type="submit"/>
+        <input type="submit"/>
     </form>
 
 {% endblock %}
