@@ -1,9 +1,18 @@
 {% include "base.html" %}
 {% load static %}
 {% block head_block %}
-    <title>search</title>
+    <title>Main</title>
 {% endblock %}
 {% block body_block %}
+
+    <style>
+        /* Set the size of the div element that contains the map */
+        #map {
+            height: 300px; /* The height is 400 pixels */
+            width: 100%; /* The width is the width of the web page */
+        }
+    </style>
+
     <div class="fixed-top">
         <nav class="navbar navbar-light" style="background-color: #D9EDFD;">
             <!-- Navbar content -->
@@ -24,9 +33,10 @@
         <a class="item">
             <img id="menu_user" src="{% static 'img/user.png' %}" width="60" height="80">
         </a>
-        <div id="menu_username">{{ user.username }}<a href="{% url 'dongnebug:update_profile' user.pk %}"><img id="menu_edit"
-                                                                                           src="{% static 'img/edit.png' %}"
-                                                                                           width="15" height="15"></a>
+        <div id="menu_username">{{ user.username }}<a href="{% url 'dongnebug:update_profile' user.pk %}"><img
+                id="menu_edit"
+                src="{% static 'img/edit.png' %}"
+                width="15" height="15"></a>
         </div>
         <a class="item">
             <hr>
@@ -78,10 +88,10 @@
 
         <hr>
 
+
         <!-- 지도 들어갈 자리 -->
-        <p id="maps" align="middle">
-            <iframe src="https://map.kakao.com" width="100%" height="250" frameborder=0 framespacing=0 marginheight=0
-                    marginwidth=0 scrolling=no vspace=0></iframe>
+        <p id="maps" align="middle" width="100%">
+        <div id="map" width="100%"></div>
         </p>
         <hr>
         <div id="main-icon">
@@ -108,9 +118,112 @@
 
     </div>
     <script>
-      $('#menu').click(function(){
-          $('.ui.sidebar').sidebar('setting', 'transition', 'overlay').sidebar('toggle');
-      })
+        $('#menu').click(function () {
+            $('.ui.sidebar').sidebar('setting', 'transition', 'overlay').sidebar('toggle');
+        })
     </script>
+
+    <!-- Google map Edit by sumin -->
+    <script>
+        {# user.id 가 아니라,  #}
+        let url = 'http://168.131.151.162:8000/api/locations/' + "{{user.id}}";
+        let bukurl = 'https://storage.googleapis.com/maps-devrel/google.json';
+        var leti = '';
+        var loni = '';
+        var M = []; //box marker
+        var user = ''; //user marker
+        //첫 메인 화면은 한국
+        var initcenter = {lat: 36.386966, lng: 127.991686};
+        var buks = [];
+
+        // Initialize and add the map
+        async function initMap() {
+            // The location of Uluru
+            var map = new google.maps.Map(
+                document.getElementById('map'), {zoom: 6, center: initcenter});
+            setInterval(async function () {
+                deleteMarkers();
+                //!
+                fetch(url, { // URL인자값 더하기
+                    method: 'GET'
+                }).then(
+                    function (response) {
+                        if (response.status !== 200) {
+                            console.log('Looks like there was a problem. Status Code: ' +
+                                response.status);
+                            return;
+                        }
+                        // Examine the text in the response
+                        response.json().then(function (data) {
+                            lati = parseFloat(data.latitude);
+                            lngi = parseFloat(data.longitude);
+                            var pos = {lat: lati, lng: lngi};
+                            console.log(pos);
+                            user = new google.maps.Marker({
+                                position: pos,
+                                map: map,
+                                icon: "{% static './img/me.png' %}"
+                            });
+                            M.push(user);
+                            map.setCenter(pos);
+                            map.setZoom(17);
+                        });
+                    }
+                )
+                    .catch(function (err) {
+                        console.log('Fetch Error :-S', err);
+                    });
+                //// bukss
+                fetch(bukurl, { // URL인자값 더하기
+                    method: 'GET'
+                }).then(
+                    function (response) {
+                        if (response.status !== 200) {
+                            console.log('Looks like there was a problem. Status Code: ' +
+                                response.status);
+                            return;
+                        }
+                        // Examine the text in the response
+                        response.json().then(function (data) {
+                            console.log(data.features[0].geometry.coordinates[0]);
+                            buks = data.features[0].geometry.coordinates[0];
+                            var num = buks.length;
+                            for (var i = 0; i < num; i++) {
+                                var lats = parseFloat(buks[i][1]);
+                                var lngs = parseFloat(buks[i][0]);
+                                var bukpos = {lat: lats, lng: lngs};
+                                //console.log('thisis ',bukpos);
+                                console.log('here', buks[0][i]);
+                                var bukmark = new google.maps.Marker({
+                                    position: bukpos,
+                                    map: map,
+                                    icon: "{% static './img/buk_2.png' %}"
+                                });
+                                M.push(bukmark);
+                            }
+                        });
+                    }
+                )
+                    .catch(function (err) {
+                        console.log('Fetch Error :-S', err);
+                    });
+            }, 5000);
+        }
+
+        function clearMarkers() {
+            setMapOnAll(null);
+        }
+
+        function deleteMarkers() {
+            for (var i = 0; i < M.length; i++) {
+                M[i].setMap(null);
+            }
+            M = [];
+        }
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDA43UhrvuE1LtRYbHYwbfoBJ3UPLLPbGc&callback=initMap">
+    </script>
+    <!-- Edit by sumin -->
 {% endblock %}
 
