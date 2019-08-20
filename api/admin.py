@@ -1,6 +1,6 @@
 from django.contrib import admin
-from api.models import Locations, PushToken
+from api.models import Locations
 
 admin.site.register(Locations)
-admin.site.register(PushToken)
+
 # Register your models here.

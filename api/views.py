@@ -1,9 +1,8 @@
-from api.models import Locations, PushToken
+from api.models import Locations
 from dongnebug.models import Complain
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
-from api.serializers import UserSerializer, GroupSerializer, LocationsSerializer, PushTokenSerializer
-
+from api.serializers import UserSerializer, GroupSerializer, LocationsSerializer
 # Create your views here.
 
 
@@ -41,6 +40,4 @@ class LocationsViewSet(viewsets.ModelViewSet):
     queryset=Locations.objects.all()
     serializer_class = LocationsSerializer
 
-class PushTokenViewSet(viewsets.ModelViewSet):
-    queryset = PushToken.objects.all()
-    serializer_class = PushTokenSerializer
+

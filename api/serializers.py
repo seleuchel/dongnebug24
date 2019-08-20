@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User, Group
-from api.models import Locations, PushToken
+from api.models import Locations
 from dongnebug.models import Complain
 from rest_framework import serializers
 # from scipy.spatial import distance
@@ -18,8 +18,3 @@ class LocationsSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Locations
         fields = ['latitude', 'longitude']
-
-class PushTokenSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = PushToken
-        fields = ['token']
