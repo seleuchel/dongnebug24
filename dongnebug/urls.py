@@ -30,6 +30,6 @@ urlpatterns = [
     path('knockedbuk/', KnockedBukView.as_view(), name='knockedbuk'),
     path('uploadedcomplain/', UploadedComplainListView.as_view(), name='uploadedbuk'),
     path('complain/<int:pk>/comment/new/', CommentCreateView.as_view(), name='create_comment'),
-    path('profile/', ProfileView.as_view(), name='update_profile'),
-    path('newcomplain/', NewComplainView.as_view(), name='newcomplain'),
+    path('profile/<int:pk>/', ProfileView.as_view(), name='update_profile'),
+    path('certification/', CertificationView.as_view(), name='certification' ),
 ]
