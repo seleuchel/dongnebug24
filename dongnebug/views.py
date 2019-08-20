@@ -133,6 +133,12 @@ class UploadedComplainListView(ListView):
 class IndexView(TemplateView):
     template_name = 'mainpage.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user_location = Locations.objects.filter(author_id__exact=self.request.user.id)
+        context['user_location'] = user_location.get()
+        print(context['user_location'].id)
+        return context
 
 
 class ProfileView(UpdateView):
