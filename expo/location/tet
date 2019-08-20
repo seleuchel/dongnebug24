@@ -1,6 +1,0 @@
-  <TouchableOpacity style={{backgroundColor:'#D9EDFD',padding:5}} onPress={() => this._panel.hide()}>
-
-
-
-  </TouchableOpacity>
-onPress={() => this._panel.hide()}
