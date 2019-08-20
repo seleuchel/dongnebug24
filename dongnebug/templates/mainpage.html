@@ -16,7 +16,7 @@
     <div class="fixed-top">
         <nav class="navbar navbar-light" style="background-color: #D9EDFD;">
             <!-- Navbar content -->
-            <div id=mainpage-logo>
+            <div id="mainpage-logo" style = "margin : auto; padding-left : 30px;">
                 <img src="{% static 'img/buk.png' %}" width="30" height="30">
                 <a id="logotext" class="navbar-brand" href="{% url 'dongnebug:index' %}">동네북24</a>
             </div>
@@ -125,15 +125,15 @@
 
     <!-- Google map Edit by sumin -->
     <script>
-        {# user.id 가 아니라,  #}
-        let url = 'http://168.131.151.162:8000/api/locations/' + "{{user.id}}";
+        {# TODO:  user.id 가 아니라,  #}
+        let url = 'http://168.131.151.162:8000/api/locations/' + '{{user_location.id}}';
         let bukurl = 'https://storage.googleapis.com/maps-devrel/google.json';
         var leti = '';
         var loni = '';
         var M = []; //box marker
         var user = ''; //user marker
         //첫 메인 화면은 한국
-        var initcenter = {lat: 36.386966, lng: 127.991686};
+        var initcenter = {lat: {{user_location.latitude}}, lng: {{user_location.longitude}}};
         var buks = [];
 
         // Initialize and add the map
