@@ -24,7 +24,6 @@ var vi = {
     }
   ]
 };
-var uri = "http://naver.com";
 
 TaskManager.defineTask(LOCATION_TASK_NAME, async ({ data, error }) => {
   if (error) {
@@ -102,7 +101,7 @@ _getLocationAsync = async () => {
       this.setState({
         token : token
       });
-      console.log('is token', this.state.token);
+      console.log('[DEBUG] get token : ', this.state.token);
 
   //init Create Location #이거는 그냥 DB에 장고가 생성하게 할 수도 있음
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
@@ -147,17 +146,6 @@ onNavigationStateChange(navState){
   }
 
 
-  // //귀주 : readLocation
-  // ReadLocation(){
-  //     return fetch('http://168.131.153.40:8000/location/7/', {
-  //     method: 'GET'
-  //     })
-  //     .then((response) => response.json())
-  //     .catch((error) => {
-  //        console.error(error);
-  //     });
-  // }
-
   render() {
     let text = 'Waiting..';
     let lat = "";
@@ -176,9 +164,9 @@ onNavigationStateChange(navState){
 
       //SEND : here - sendPacket
       //#CREATE
-      //CreateLocation(lat,lon);
+      CreateLocation(this.state.token,lat,lon);
       //#UPDATE
-      UpdateLocation(this.state.token,lat,lon);
+      //UpdateLocation(this.state.token,lat,lon);
       //#READ
       //console.log('readLocation',ReadLocation());
 
@@ -194,7 +182,7 @@ onNavigationStateChange(navState){
         style={styles.web}
         onNavigationStateChange=
         {this.onNavigationStateChange.bind(this)}
-        source = {{uri: 'http://168.131.153.40:8000/homepage/'}}/>
+        source = {{uri: 'http://168.131.151.162:8000/complain/1/'}}/>
 
         <TouchableOpacity  style={styles.tokenbuttonOff} onPress={() => this._panel.show()}>
           <Image
@@ -217,8 +205,6 @@ onNavigationStateChange(navState){
   }
 }
 
-
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -231,11 +217,11 @@ const styles = StyleSheet.create({
   },
   image:{
     width : 40,
-    height: 40
+    height: 40,
   },
   tokenbuttonOff:{
     position:'absolute',
-    bottom:5,
+    bottom:80,
     borderRadius:15,
     marginRight:5,
     marginLeft:5,
@@ -266,4 +252,3 @@ const styles = StyleSheet.create({
   backgroundColor: '#ccc'
 }
 });
-//
