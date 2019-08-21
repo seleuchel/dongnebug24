@@ -16,14 +16,23 @@ Including another URLconf
 
 from django.urls import path
 from django.contrib.auth.views import LoginView, LogoutView
-from .views import RegisterView, IndexView, CreateComplainView
-
+from .views import *
 app_name = 'dongnebug'
 
 urlpatterns = [
-    path('', LoginView.as_view(template_name='login.html'), name='login'),
+    path('', LoginView.as_view(template_name='loegin.html'), name='login'),
+    path('search/', SearchView.as_view(), name='search'),
     path('index/', IndexView.as_view(), name='index'),
-    path('signup/', RegisterView.as_view(), name='signup'),
     path('logout/', LogoutView.as_view(), name='logout'),
-    path('create/', CreateComplainView.as_view(), name='create_complain'),
+    path('complain/', ComplainListView.as_view(), name='complain_list'),
+    path('complain/<int:pk>/', ComplainDetailView.as_view(), name='complain_detail'),
+    path('complain/<int:pk>/sympathy/', complain_sympathy, name='complain_sympathy'),
+    path('complain/new/', ComplainCreateView.as_view(), name='complain_new'),
+    path('knockedbuk/', KnockedBukView.as_view(), name='knockedbuk'),
+    path('uploadedcomplain/', UploadedComplainListView.as_view(), name='uploadedbuk'),
+    path('complain/<int:pk>/comment/new/', CommentCreateView.as_view(), name='create_comment'),
+    path('profile/<int:pk>/', ProfileView.as_view(), name='update_profile'),
+    path('certification/redirect/', CertificationRedirectView.as_view(), name='certification' ),
+    path('certification/create/', CertificationCreateView.as_view(), name='certification' ),
+    path('certification/update/<int:pk>/', CertificationUpdateView.as_view(), name='certification' ),
 ]

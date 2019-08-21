@@ -23,7 +23,8 @@ from django.contrib.auth.views import LoginView
 router = routers.DefaultRouter()
 router.register(r'users', api_views.UserViewSet)
 router.register(r'groups', api_views.GroupViewSet)
-router.register(r'locations', api_views.LocationViewSet)
+router.register(r'locations', api_views.LocationsViewSet)
+
 
 urlpatterns = [
     # path('', dongnebug_views.LoginView.as_view(), name='login'),

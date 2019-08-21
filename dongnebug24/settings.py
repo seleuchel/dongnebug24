@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'dongnebug',
     'rest_framework',
 
+    'corsheaders',
+
     #all auth
     'allauth',
     'allauth.account',
@@ -61,6 +63,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -75,8 +78,7 @@ ROOT_URLCONF = 'dongnebug24.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
-        ,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -142,12 +144,11 @@ USE_L10N = True
 
 USE_TZ = False
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.2/howto/static-files/
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = False 
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static/dongnebug/')]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -157,6 +158,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 #     'PAGE_SIZE': 10
 # }
 
+LOGIN_REDIRECT_URL = '/index'
 
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
@@ -164,4 +166,15 @@ AUTHENTICATION_BACKENDS = (
 )
 
 SITE_ID = 1
-LOGIN_REDIRECT_URL = '/index'
+LOGIN_REDIRECT_URL = '/certification/redirect/'
+LOGOUT_REDIRECT_URL = '/'
+
+CORS_ORIGIN_WHITELIST = (
+
+    'http://localhost:8000',
+
+    'http://168.131.151.162:8000',
+
+    'http://168.131.153.40:8000'
+
+)
