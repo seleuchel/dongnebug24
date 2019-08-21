@@ -6,6 +6,7 @@ from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from api.serializers import UserSerializer, GroupSerializer, LocationsSerializer
 from django.shortcuts import get_object_or_404
+from scipy.spatial import distance
 # Create your views here.
 
 
@@ -54,46 +55,24 @@ class LocationsViewSet(viewsets.ModelViewSet):
 
                 return Response(serializer.data)
             return Response()
-                # serializer = self.get_serializer(data=request.data)
-                # serializer.is_valid(raise_exception=True)
-                # self.perform_create(serializer)
-                # headers = self.get_success_headers(serializer.data)
-                # return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
 
+
+# class NearByComplainsViewSet(viewsets.ModelViewSet):
 #
-    #         # 없으면 무시
-    #
-
-    # def perform_create(self, serializer):
-    #     # serializer.save()
-    #     # 받은 토큰 값이 디비에 이미 있다면,
-    #
-    #     for key, value in self.kwargs.items():
-    #         print(key, value)
-    #
-    #     print("-----")
-    #
-    #     for arg in self.args:
-    #         print(arg)
-
-        # for any in self.request.data:
-        #     print(any)
-        # self.request.data에 받는 모든 데이터가 들어있다.
-        # for location in locations:
-        #     if locations.token == self.request.data['token']:
-        #         self.partial_update()
-
-
-
-    # def create(self, request, *args, **kwargs):
-    #     serializer = self.get_serializer(data=request.data)
-    #     serializer.is_valid(raise_exception=True)
-    #     self.perform_create(serializer)
-    #     headers = self.get_success_headers(serializer.data)
-    #     return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-    #
-
-
-
+#     def getComplains(self):
+#         near_complains = []
+#         locations = Locations.objects.filter(author_id__exact=self.request.id)
+#         user_latitude=locations.values('latitude').first()['latitude']
+#         user_longitude=locations.values('longitude').first()['longitude']
+#         complains = Complain.objects.all()
+#         for complain in complains:
+#             dist = distance.euclidean((float(complain.latitude), float(complain.longitude)), (float(user_latitude), float(user_longitude)),5)
+#             if dist < 0.05:
+#                 self.near_complains.append(complain)
+#             return near_complains
+#
+#     queryset = Complain.objects.filter(pk__in=getComplains())
+# #    queryset = Locations.objects.all()
+#     serializer_class = NearByComplainsSerializer
 
 
