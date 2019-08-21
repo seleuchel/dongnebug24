@@ -26,6 +26,7 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout'),
     path('complain/', ComplainListView.as_view(), name='complain_list'),
     path('complain/<int:pk>/', ComplainDetailView.as_view(), name='complain_detail'),
+    path('complain/<int:pk>/sympathy/', complain_sympathy, name='complain_sympathy'),
     path('complain/new/', ComplainCreateView.as_view(), name='complain_new'),
     path('knockedbuk/', KnockedBukView.as_view(), name='knockedbuk'),
     path('uploadedcomplain/', UploadedComplainListView.as_view(), name='uploadedbuk'),

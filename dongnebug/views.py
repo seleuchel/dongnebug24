@@ -1,8 +1,11 @@
 from django.views.generic import (
-    CreateView, ListView, DetailView,
+    CreateView, ListView, DetailView, View,
     TemplateView, UpdateView, RedirectView)
 from .forms import *
 from api.models import Locations
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponse
+import json
 
 
 class ComplainDetailView(DetailView):
@@ -15,6 +18,14 @@ class ComplainDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        try:
+            sympathy = Sympathy.objects.filter(
+                complain_id__exact=self.object.id,
+                user_id__exact=self.request.user.id
+            ).get()
+            context['sympathy'] = sympathy
+        except Exception:
+            pass
         comments = list(Comment.objects.filter(complain_id=self.object.id))
         context['comments'] = comments
         return context
@@ -49,6 +60,7 @@ class CommentCreateView(CreateView):
         print(complain, comments)
         return context
 
+
 # complain list view
 class ComplainListView(ListView):
     template_name = 'homepage.html'
@@ -61,10 +73,24 @@ class ComplainListView(ListView):
         return context
 
 
+def complain_sympathy(request, pk):
+    complain = get_object_or_404(Complain, pk=pk)
+    complain_sympathy, created = Sympathy.objects.get_or_create(
+        user_id=request.user.id,
+        complain_id=complain.id
+    )
+    if not created:
+        complain_sympathy.delete()
+
+    context = {
+        'sympathy_count': complain.sympathy_count,
+    }
+    return HttpResponse(json.dumps(context), content_type="application/json")
+
+
 class KnockedBukView(ListView):
     model = Sympathy
     template_name = 'knockedbuk.html'
-
 
     def get_queryset(self):
         sympathies = Sympathy.objects.filter(user_id__exact=self.request.user.id)
@@ -83,6 +109,7 @@ class KnockedBukView(ListView):
 
         context['complains'] = complain
         return context
+
 
 class SearchView(ListView):
     template_name = 'search.html'
@@ -120,6 +147,7 @@ class UploadedComplainListView(ListView):
         context['complains'] = complains
         return context
 
+
 class IndexView(TemplateView):
     template_name = 'mainpage.html'
 
@@ -146,7 +174,7 @@ def post_like(request):
     pk = request.POST.get('pk', None)
 
 
-#TODO : loginrequied 데코레이터에 certification 내용 추가 해서 사용할 수 있는지 확인해보기
+# TODO : loginrequied 데코레이터에 certification 내용 추가 해서 사용할 수 있는지 확인해보기
 
 class CertificationCreateView(CreateView):
     model = Locations
@@ -169,6 +197,7 @@ class CertificationUpdateView(UpdateView):
         form.instance.author_id = self.request.user.id
         return super(CertificationUpdateView, self).form_valid(form)
 
+
 class CertificationRedirectView(RedirectView):
     is_permanent = True
 
@@ -180,9 +209,8 @@ class CertificationRedirectView(RedirectView):
         else:
             return '/certification/create/'
 
-
 # TODO : 'content.html' 초기 위치를 디비에서 가져와서 사용하기
 # TODO : 근처 민원 기능 추가
-#TODO : 이미 디비에 토큰이 저장 되어 있다면 CreateView가 아니라, UpdateView를 통해 할 수 있도록 바꾼다.
-#TODO : 공감 기능 추가
+# TODO : 이미 디비에 토큰이 저장 되어 있다면 CreateView가 아니라, UpdateView를 통해 할 수 있도록 바꾼다.
+# TODO : 공감 기능 추가
 # TODO : 댓글 기능 추가

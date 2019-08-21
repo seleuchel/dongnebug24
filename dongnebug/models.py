@@ -27,9 +27,9 @@ class Complain(models.Model):
     is_complete = models.BooleanField(default=False)
     pub_date = models.DateTimeField(default=timezone.now)
 
-    # @property
-    # def sympathy_count(self):
-    #     return self.like_user_set.count()
+    @property
+    def sympathy_count(self):
+        return Sympathy.objects.filter(complain_id__exact=self.id).__len__()
 
     def __str__(self):
     #TODO : Check for security issue which is information leak
@@ -75,6 +75,7 @@ class Comment(models.Model):
 
 
 class Sympathy(models.Model):
+
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,

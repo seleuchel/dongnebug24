@@ -2,19 +2,7 @@
 {% load static %}
 {% block head_block %}
     <title>content</title>
-    <script type="text/javascript">
-        var state = 0;
 
-        function ChangeImage() {
-            if (state == 0) {
-                document.img1.src = "{% static 'img/buk.png' %}"
-                state = 1;
-            } else {
-                document.img1.src = "{% static 'img/drum1.png' %}"
-                state = 0;
-            }
-        }
-    </script>
 {% endblock %}
 
 {% block body_block %}
@@ -84,64 +72,112 @@
         </a>
     </div>
     <div style="margin : 20px;">
-    <!-- 제목 받아오기 -->
-    <div id="content-title">{{ complain.title }}</div>
-    <hr>
+        <!-- 제목 받아오기 -->
+        <div id="content-title">{{ complain.title }}</div>
+        <hr>
 
-    <!-- 사진이나 영상 받아오기 -->
-    <div id="content-img"><img src="{% static 'img/나무.png' %}" width="100%" height="300"></div>
-    <hr>
+        <!-- 사진이나 영상 받아오기 -->
+        <div id="content-img"><img src="{% static 'img/나무.png' %}" width="100%" height="300"></div>
+        <hr>
 
-    <!-- 사람 아이콘 받아오기 -->
-    <div id="content-userinfo">
-        <img id="user" src="{% static 'img/user.png' %}" width="35" height="35">
-        <span id="date_time">
+        <!-- 사람 아이콘 받아오기 -->
+        <div id="content-userinfo">
+            <img id="user" src="{% static 'img/user.png' %}" width="35" height="35">
+            <span id="date_time">
         {{ complain.pub_date }}
         </span>
-        <!-- 사람 닉네임 받아오기 -->
-        <span id="content-username">{{ complain.author }}</span>
-    </div>
-    <br/>
-    <!-- 글 내용 받아오기 -->
+            <!-- 사람 닉네임 받아오기 -->
+            <span id="content-username">{{ complain.author }}</span>
+        </div>
+        <br/>
+        <!-- 글 내용 받아오기 -->
 
-    <div id="content-text">
-        {{ complain.content }}
-    </div>
-
-
-    <br/>
-    <br/>
-    <!-- 북 아이콘 & onclick() = 다른 이미지로 대체 + 북 친 갯수 plus 1-->
-    <div id="reaction">
-        <img src="{% static 'img/drum1.png' %}" name="img1" width="23" height="23" onclick="ChangeImage()">
-        {{ complain.num_of_comments }}
-        <img id="chat" src="{% static 'img/comment.png' %}" width="20" height="20">
-        {{ complain.num_of_sympathies }}
-        <img id="share" src="{% static 'img/share.png' %}" width="20" heigth="20">
-    </div>
-    <hr>
-
-    <!-- 댓글 보여주기 -->
+        <div id="content-text">
+            {{ complain.content }}
+        </div>
 
 
-    <div id="contents">
-        {% for comment in comments %}
-            <div class="media">
-                <!-- 이미지 삽입 -->
-                <img id="comment-userimage" src="{% static 'img/user.png' %}" class="mr-3" width="30" height="30">
-                <div id="conmment-username">
-                    {{ comment.user }}
-                    <div id="comment-date_time">{{ comment.pub_date }}</div>
+        <br/>
+        <br/>
+        <!-- 북 아이콘 & onclick() = 다른 이미지로 대체 + 북 친 갯수 plus 1-->
+        <div id="reaction">
+
+            {% if sympathy %}
+                <img src="{% static 'img/buk.png' %}" id="sympathy" name="{{ complain.id }}" width="23" height="23"
+                />
+            {% else %}
+                <img src="{% static 'img/drum1.png' %}" id="sympathy" name="{{ complain.id }}" width="23" height="23"
+                />
+            {% endif %}
+
+            <p id="count-{{ complain.id }}">{{ complain.sympathy_count }}</p>
+            <img id="count-{{ complain.id }}" src="{% static 'img/comment.png' %}" width="20" height="20">
+            <img id="count-{{ complain.id }}" src="{% static 'img/share.png' %}" width="20" heigth="20">
+        </div>
+        <hr>
+        <script type="text/javascript">
+
+            var state = 0;
+            if (document.getElementById("sympathy").src == "http://127.0.0.1:8000/static/img/buk.png") {
+                state = 1
+            } else {
+                state = 0
+            }
+
+            $("#sympathy").click(function () {
+                var pk = $(this).attr('name')
+                $.ajax({
+                    type: "POST",
+                    url: "{% url 'dongnebug:complain_sympathy' complain.id %}",
+                    data: {'pk': pk, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
+                    datatype: "json",
+                    success: function (response) {
+                        $("#count-" + pk).html(response.sympathy_count)
+                        if (state == 1) {
+                            document.getElementById("sympathy").src = "{% static 'img/drum1.png' %}"
+                            state = 0
+                        } else {
+                            document.getElementById("sympathy").src = "{% static 'img/buk.png' %}"
+                            state = 1
+                        }
+
+                    },
+                    error: function (request, status, error) {
+                        window.location.replace('')
+                    }
+                })
+            })
+        </script>
+
+        {#        <script type="text/javascript">#}
+        {#        var state = 0;#}
+        {##}
+        {#        function ChangeImage() {#}
+        {##}
+        {#        }#}
+        {#    </script>#}
+
+        <!-- 댓글 보여주기 -->
+
+
+        <div id="contents">
+            {% for comment in comments %}
+                <div class="media">
+                    <!-- 이미지 삽입 -->
+                    <img id="comment-userimage" src="{% static 'img/user.png' %}" class="mr-3" width="30" height="30">
+                    <div id="conmment-username">
+                        {{ comment.user }}
+                        <div id="comment-date_time">{{ comment.pub_date }}</div>
+                    </div>
                 </div>
-            </div>
-            <div id="comment-content">{{ comment.content }}</div>
-            <hr>
-        {% endfor %}
-        <div id="contents-1">
+                <div id="comment-content">{{ comment.content }}</div>
+                <hr>
+            {% endfor %}
+            <div id="contents-1">
 
+            </div>
         </div>
     </div>
-</div>
     <!-- 댓글 달기 기능 -->
     <div id="comment-window" class="fixed-bottom">
         <div class="input-group mb-3">
