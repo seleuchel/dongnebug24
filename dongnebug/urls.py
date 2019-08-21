@@ -26,5 +26,4 @@ urlpatterns = [
     path('signup/', RegisterView.as_view(), name='signup'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('create/', CreateComplainView.as_view(), name='create_complain'),
-
 ]
