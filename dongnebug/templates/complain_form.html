@@ -3,22 +3,16 @@
 {% block head_block %}
 
     <title>content</title>
-    <script type="text/javascript">
-        var state = 0;
-
-        function ChangeImage() {
-            if (state == 0) {
-                document.img1.src = "img/buk.png"
-                state = 1;
-            } else {
-                document.img1.src = "img/drum1.png"
-                state = 0;
-            }
-        }
-    </script>
 
 {% endblock %}
 {% block body_block %}
+    <!-- Edit by sumin -->
+    <style>
+        #map {
+            height: 300px; /* The height is 400 pixels */
+            width: 100%; /* The width is the width of the web page */
+        }
+    </style>
     <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="fixed-top">
@@ -30,7 +24,10 @@
                     <a id="logotext" class="navbar-brand">새 민원</a>
                 </div>
                 {# TODO : submit 버튼을 어떻게 이거로 연관 시켜보기  #}
-                <a><button type="submit" style="background-color:transparent;  border:0px transparent solid;" ><img src="{% static 'img/send.png' %}" width="30" height="30"> </button></a>
+                <a>
+                    <button type="submit" style="background-color:transparent;  border:0px transparent solid;"><img
+                            src="{% static 'img/send.png' %}" width="30" height="30"></button>
+                </a>
             </nav>
         </div>
 
@@ -48,7 +45,7 @@
                     <div class="col">
                         {{ form.latitude }}{{ form.longitude }}
                     </div>
-                    {# TODO: 지도에서 검색하거나, 마크함으로써 위치를 정하면,  위도, 경도가 자동으로 설정된 위치로 세팅된다.#}
+                    {# 새로 고침하면 유저의 현재 위치로 자동 세팅 #}
                     <div class="col">
                         <img id=search src="{% static 'img/search3.png' %}" width="25" height="25">
                         <img id=placeholder src="{% static "img/placeholder2.png" %}" width="25" height="25">
@@ -57,7 +54,7 @@
                 </br>
                 <!-- 지도 -->
                 <p align="middle">
-                    <iframe src="https://map.kakao.com" width="100%" height="300"></iframe>
+                <div id="map"></div>
                 </p>
             </div>
             </br>
@@ -84,5 +81,60 @@
         </div>
         <input type="submit"/>
     </form>
+    <!-- Edit by sumin -->
+    <script>
+        var map;
+        var markers = [];
+
+        function initMap() {
+            //사용자의 현재위치로 값을 바꿔주세요
+            var initlocation = {lat: {{ user_location.latitude }}, lng: {{ user_location.longitude }}};
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 17,
+                center: initlocation,
+            });
+            // This event listener will call addMarker() when the map is clicked.
+            map.addListener('click', function (event) {
+                addMarker(event.latLng);
+            });
+            // Adds a marker at the center of the map.
+            addMarker(initlocation);
+
+        }
+
+        // Adds a marker to the map and push to the array.
+        function addMarker(location) {
+            deleteMarkers();
+            var marker = new google.maps.Marker({
+                position: location,
+                map: map
+            });
+            var lat = marker.getPosition().lat();
+            var lng = marker.getPosition().lng();
+            markers.push(marker);
+            document.getElementById('latitude').value = lat;
+            document.getElementById('longitude').value = lng;
+            console.log('lat :', lat, 'lng :', lng);
+        }
+
+        // Sets the map on all markers in the array.
+        function setMapOnAll(map) {
+            for (var i = 0; i < markers.length; i++) {
+                markers[i].setMap(map);
+            }
+        }
+
+        function clearMarkers() {
+            setMapOnAll(null);
+        }
+
+        function deleteMarkers() {
+            clearMarkers();
+            markers = [];
+        }
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDA43UhrvuE1LtRYbHYwbfoBJ3UPLLPbGc&callback=initMap">
+    </script>
 
 {% endblock %}

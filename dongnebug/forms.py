@@ -46,13 +46,15 @@ class ComplainForm(forms.ModelForm):
             'latitude': forms.NumberInput(
                 attrs={
                     'class': 'form-control',
-                    'placeholder': "위도"
+                    'placeholder': "위도",
+                    'id': 'latitude',
                 }
             ),
             'longitude': forms.NumberInput(
                 attrs={
                     'class': 'form-control',
-                    'placeholder': "경도"
+                    'placeholder': "경도",
+                    'id': 'longitude'
                 }
             ),
         }

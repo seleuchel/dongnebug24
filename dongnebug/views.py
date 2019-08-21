@@ -40,6 +40,13 @@ class ComplainCreateView(CreateView):
         form.instance.author_id = self.request.user.id
         return super(ComplainCreateView, self).form_valid(form)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user_location = Locations.objects.filter(author_id__exact=self.request.user.id)
+        context['user_location'] = user_location.get()
+        print(context['user_location'].id, context['user_location'].token, context['user_location'].author_id, context['user_location'].latitude, context['user_location'].longitude, )
+        return context
+
 
 class CommentCreateView(CreateView):
     model = Comment
