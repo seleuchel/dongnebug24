@@ -110,7 +110,9 @@ class NearComplainViewSet(generics.ListAPIView):
     def get_queryset(self):
         near_complains = []
         # print("get_queryset() " + str(self.request.user.id))
+
         locations = Locations.objects.filter(author_id__exact=self.request.user.id)
+
         user_latitude = locations.values('latitude').first()['latitude']
         user_longitude = locations.values('longitude').first()['longitude']
         complains = Complain.objects.all()
