@@ -6,6 +6,7 @@ from api.models import Locations
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
 import json
+from scipy.spatial import distance
 
 
 class ComplainDetailView(DetailView):
@@ -73,9 +74,22 @@ class ComplainListView(ListView):
     template_name = 'homepage.html'
     model = Complain
 
+    def get_queryset(self):
+        near_complains = []
+        locations = Locations.objects.filter(author_id__exact=self.request.user.id)
+        user_latitude = locations.values('latitude').first()['latitude']
+        user_longitude = locations.values('longitude').first()['longitude']
+        complains = Complain.objects.all()
+        for complain in complains:
+            dist = distance.euclidean((float(complain.latitude), float(complain.longitude)),
+                                      (float(user_latitude), float(user_longitude)), 5)
+            if dist < 0.05:
+                self.near_complains.append(complain)
+            return near_complains
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        complain = list(Complain.objects.all())
+        complain = self.get_queryset()
         context['complains'] = complain
         return context
 
