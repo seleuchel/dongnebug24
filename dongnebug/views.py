@@ -76,7 +76,10 @@ class ComplainListView(ListView):
 
     def get_queryset(self):
         near_complains = []
+        # print("get_queryset() " + str(self.request.user.id))
+
         locations = Locations.objects.filter(author_id__exact=self.request.user.id)
+
         user_latitude = locations.values('latitude').first()['latitude']
         user_longitude = locations.values('longitude').first()['longitude']
         complains = Complain.objects.all()
@@ -84,8 +87,8 @@ class ComplainListView(ListView):
             dist = distance.euclidean((float(complain.latitude), float(complain.longitude)),
                                       (float(user_latitude), float(user_longitude)), 5)
             if dist < 0.05:
-                self.near_complains.append(complain)
-            return near_complains
+                near_complains.append(complain.id)
+        return Complain.objects.filter(id__in=near_complains)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
