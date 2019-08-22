@@ -77,7 +77,7 @@
                 <div id="upload_contents-1">
                     <div class="media">
                         <!-- 이미지 삽입 -->
-                        <img src="{% static 'img/나무.png' %}" class="mr-3" width="70" height="70">
+                        <img src="{{ complain.file.url }}" class="mr-3" width="70" height="70">
                         <div class="media-body">
                             <div id="uploadbuk_knocked_name">{{ complain.title }}</div>
                             <div id="content-reaction">

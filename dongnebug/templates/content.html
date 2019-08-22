@@ -77,7 +77,7 @@
         <hr>
 
         <!-- 사진이나 영상 받아오기 -->
-        <div id="content-img"><img src="{% static 'img/나무.png' %}" width="100%" height="300"></div>
+        <div id="content-img"><img src="{{ complain.file.url }}" width="100%" height="300"></div>
         <hr>
 
         <!-- 사람 아이콘 받아오기 -->
@@ -192,10 +192,11 @@
         <input type="text" name="content" placeholder="Write your comments">
         <input type="submit" value="Comment" value="Write">
     </form>
-
-
-    <br>
-    <br/>
     </div>
+    <script>
+        $('#menu').click(function () {
+            $('.ui.sidebar').sidebar('setting', 'transition', 'overlay').sidebar('toggle');
+        })
+    </script>
 
 {% endblock %}
