@@ -6,6 +6,14 @@ from rest_framework import viewsets, views, generics
 from api.serializers import UserSerializer, GroupSerializer, LocationsSerializer, ComplainSerializer
 from django.shortcuts import get_object_or_404
 from scipy.spatial import distance
+
+from exponent_server_sdk import DeviceNotRegisteredError
+from exponent_server_sdk import PushClient
+from exponent_server_sdk import PushMessage
+from exponent_server_sdk import PushResponseError
+from exponent_server_sdk import PushServerError
+from requests.exceptions import ConnectionError
+from requests.exceptions import HTTPError
 # Create your views here.
 
 
@@ -56,6 +64,45 @@ class LocationsViewSet(viewsets.ModelViewSet):
             return Response()
 
 
+def send_push_message(token, message, extra=None):
+    try:
+        response = PushClient().publish(
+            PushMessage(to=token,
+                        body=message,
+                        data=extra))
+    except PushServerError as exc:
+        # Encountered some likely formatting/validation error.
+        print(
+            extra_data={
+                'token': token,
+                'message': message,
+                'extra': extra,
+                'errors': exc.errors,
+                'response_data': exc.response_data,
+            })
+
+    except (ConnectionError, HTTPError) as exc:
+        # Encountered some Connection or HTTP error - retry a few times in
+        # case it is transient.
+        print({'token': token, 'message': message, 'extra': extra})
+
+
+    try:
+        # We got a response back, but we don't know whether it's an error yet.
+        # This call raises errors so we can handle them with normal exception
+        # flows.
+        response.validate_response()
+    except DeviceNotRegisteredError:
+        print(DeviceNotRegisteredError)
+    except PushResponseError as exc:
+        # Encountered some other per-notification error.
+        print({
+                'token': token,
+                'message': message,
+                'extra': extra,
+                'push_response': exc.push_response._asdict(),
+            })
+
 class NearComplainViewSet(generics.ListAPIView):
 
     serializer_class = ComplainSerializer
@@ -72,75 +119,12 @@ class NearComplainViewSet(generics.ListAPIView):
                                       (float(user_latitude), float(user_longitude)), 5)
             if dist < 0.05:
                 near_complains.append(complain.id)
+
+        # TODO : 푸시 알람 발송 조건 수정 가능 :: 현재는 단순히 주변 민원들이 있으면 발송
+        if near_complains:
+            send_push_message('ExponentPushToken[p9co3AC5Y4MG4j5Ia-Y6d9]', '내 주변에 동네북이 발견되었습니다!')
+        # TODO : 사용자의 푸시 토큰으로 바꿔서 사용하기 저기 적혀있는 하드코딩된 토큰 값은 테스트용이다.
         return Complain.objects.filter(id__in=near_complains)
 
-    # def get_object(self, pk):
-    #     near_complains = []
-    #     print("get_object" + str(pk))
-    #     locations = Locations.objects.filter(author_id__exact=self.request.user.id)
-    #     user_latitude = locations.values('latitude').first()['latitude']
-    #     user_longitude = locations.values('longitude').first()['longitude']
-    #     complains = Complain.objects.all()
-    #     for complain in complains:
-    #         dist = distance.euclidean((float(complain.latitude), float(complain.longitude)),
-    #                                   (float(user_latitude), float(user_longitude)), 5)
-    #         if dist < 0.05:
-    #             self.near_complains.append(complain)
-    #         return near_complains
-    #
-    # def list(self, request, pk):
-    #     print(pk)
-    #     complains = self.get_object(pk)
-    #     serializer = ComplainSerializer(complains[0])
-    #     return Response(serializer.data)
-    #
-    # def post(self, request, format=None):
-    #     serializer = ComplainSerializer(data=request.data)
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         return Response(serializer.data)
-    #     return Response(serializer.errors)
-
-
-
-
-    # def get_object(self):
-    #     near_complains = []
-    #     locations = Locations.objects.filter(author_id__exact=self.request.user.id)
-    #     user_latitude = locations.values('latitude').first()['latitude']
-    #     user_longitude = locations.values('longitude').first()['longitude']
-    #     complains = Complain.objects.all()
-    #     for complain in complains:
-    #         dist = distance.euclidean((float(complain.latitude), float(complain.longitude)),
-    #                                   (float(user_latitude), float(user_longitude)), 5)
-    #         if dist < 0.05:
-    #             self.near_complains.append(complain)
-    #         return near_complains
-    #
-    # # queryset = get_query_set()
-    #
-    # def detail(self, pk):
-    #     serializer = ComplainSerializer
-    #     return Response(serializer.data)
-
-
-
-# class NearByComplainsViewSet(viewsets.ModelViewSet):
-#
-    # def getComplains(self):
-    #     near_complains = []
-    #     locations = Locations.objects.filter(author_id__exact=self.request.id)
-    #     user_latitude=locations.values('latitude').first()['latitude']
-    #     user_longitude=locations.values('longitude').first()['longitude']
-    #     complains = Complain.objects.all()
-    #     for complain in complains:
-    #         dist = distance.euclidean((float(complain.latitude), float(complain.longitude)), (float(user_latitude), float(user_longitude)),5)
-    #         if dist < 0.05:
-    #             self.near_complains.append(complain)
-    #         return near_complains
-#
-#     queryset = Complain.objects.filter(pk__in=getComplains())
-# #    queryset = Locations.objects.all()
-#     serializer_class = NearByComplainsSerializer
 
 
