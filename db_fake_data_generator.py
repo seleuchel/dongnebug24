@@ -19,7 +19,7 @@ from faker import Faker
 fake = Faker('ko_KR')
 
 def add_User(N=20):
-    for entry in range(N):
+    for entry in range(3, N):
         t = User.objects.get_or_create(
             id=entry+1,
             username=fake.user_name(),
@@ -120,7 +120,7 @@ if __name__ == "__main__":
     print("db_fake_data_generator.py를 열고, 함수를 하나하나씩 실행하세요. 주석을 제거해야 할겁니다.")
     print("populating script!")
     # add_User()
-    # add_Complain()
+    add_Complain()
     # update_Complain()
     # add_Comment()
     # update_Comment()
