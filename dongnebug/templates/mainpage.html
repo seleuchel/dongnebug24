@@ -16,7 +16,7 @@
     <div class="fixed-top">
         <nav class="navbar navbar-light" style="background-color: #D9EDFD;">
             <!-- Navbar content -->
-            <div id="mainpage-logo" style = "margin : auto; padding-left : 30px;">
+            <div id="mainpage-logo" style="margin : auto; padding-left : 30px;">
                 <img src="{% static 'img/buk.png' %}" width="30" height="30">
                 <a id="logotext" class="navbar-brand" href="{% url 'dongnebug:index' %}">동네북24</a>
             </div>
@@ -43,32 +43,32 @@
         </a>
         <a class="item" href="{% url 'dongnebug:search' %}">
             <div id="menu_contents" style="font-weight : bold; font-size: small;color : #566573;">
-              <img id="menu_edit" src="{% static 'img/search.png' %}" width="20" height="20">
-              <div id ="menu_name" style ="float: right; margin-right : 145px; margin-top :4px;">북 검색</div>
+                <img id="menu_edit" src="{% static 'img/search.png' %}" width="20" height="20">
+                <div id="menu_name" style="float: right; margin-right : 145px; margin-top :4px;">북 검색</div>
             </div>
         </a>
         <a class="item" href="{% url 'dongnebug:complain_list' %}">
             <div id="menu_contents" style="font-weight : bold; font-size: small;color : #566573;">
-              <img id="menu_edit" src="{% static 'img/gpsbukcolor.png' %}" width="22" height="22">
-              <div id ="menu_name" style ="float: right; margin-right : 145px; margin-top :7px;">주변 북</div>
+                <img id="menu_edit" src="{% static 'img/gpsbukcolor.png' %}" width="22" height="22">
+                <div id="menu_name" style="float: right; margin-right : 145px; margin-top :7px;">주변 북</div>
             </div>
         </a>
         <a class="item" href="{% url 'dongnebug:uploadedbuk' %}">
             <div id="menu_contents" style="font-weight : bold; font-size: small;color : #566573;">
-              <img id="menu_edit" src="{% static 'img/buk.png' %}" width="20" height="20">
-              <div id ="menu_name" style ="float: right; margin-right : 145px; margin-top :5px">올린 북</div>
+                <img id="menu_edit" src="{% static 'img/buk.png' %}" width="20" height="20">
+                <div id="menu_name" style="float: right; margin-right : 145px; margin-top :5px">올린 북</div>
             </div>
         </a>
         <a class="item" href="{% url 'dongnebug:knockedbuk' %}">
             <div id="menu_contents" style="font-weight : bold; font-size: small;color : #566573;">
-              <img id="menu_edit" src="{% static 'img/bukk.png' %}" width="23" height="23">
-              <div id ="menu_name" style ="float: right; margin-right : 133px; margin-top :7px">두드린 북</div>
+                <img id="menu_edit" src="{% static 'img/bukk.png' %}" width="23" height="23">
+                <div id="menu_name" style="float: right; margin-right : 133px; margin-top :7px">두드린 북</div>
             </div>
         </a>
         <a class="item" href="{% url 'dongnebug:logout' %}">
             <div id="menu_contents" style="font-weight : bold; font-size: small;color : #566573;">
-              <img id="menu_edit" src="{% static 'img/logout.png' %}" width="20" height="20">
-              <div id ="menu_name" style ="float: right; margin-right : 136px; margin-top :3px">로그아웃</div>
+                <img id="menu_edit" src="{% static 'img/logout.png' %}" width="20" height="20">
+                <div id="menu_name" style="float: right; margin-right : 136px; margin-top :3px">로그아웃</div>
             </div>
         </a>
     </div>
@@ -92,7 +92,7 @@
         <hr>
         <div id="main-icon">
             <a href="{% url 'dongnebug:complain_list' %}">
-                <div id="main-gpsbuk" style ="padding-right : 30px">
+                <div id="main-gpsbuk" style="padding-right : 30px">
                     <img src="{% static 'img/gpsbuk.png' %}" width="50" height="50"><br/><br/>
                     주변 북
                 </div>
@@ -104,7 +104,7 @@
                 </div>
             </a>
             <a href="{% url 'dongnebug:complain_new' %}">
-                <div id="main-newbuk" style ="padding-left : 30px">
+                <div id="main-newbuk" style="padding-left : 30px">
                     <img src="{% static 'img/newbuk.png' %}" width="50" height="50"><br/><br/>
                     북 추가
                 </div>
@@ -122,8 +122,8 @@
     <!-- Google map Edit by sumin -->
     <script>
         {# TODO:  user.id 가 아니라,  #}
-        let url = 'http://168.131.151.162:8000/api/locations/' + '{{user_location.id}}';
-        let bukurl = 'https://storage.googleapis.com/maps-devrel/google.json';
+        let url = 'http://168.131.151.162/api/locations/' + '{{user_location.id}}';//Edit by sumin
+        let bukurl = 'http://168.131.151.162/api/complains/near/' + '{{request.user.id}}'; //Edit by sumin
         var leti = '';
         var loni = '';
         var M = []; //box marker
@@ -181,15 +181,14 @@
                         }
                         // Examine the text in the response
                         response.json().then(function (data) {
-                            console.log(data.features[0].geometry.coordinates[0]);
-                            buks = data.features[0].geometry.coordinates[0];
-                            var num = buks.length;
-                            for (var i = 0; i < num; i++) {
-                                var lats = parseFloat(buks[i][1]);
-                                var lngs = parseFloat(buks[i][0]);
+                            buks = data; //Edit by sumin
+                            var num = buks.length;//Edit by sumin
+                            for (var i = 0; i < num; i++) { //Edit by sumin
+                                var nearlist = buks[i]; //Edit by sumin
+                                var lats = parseFloat(nearlist["latitude"]);//Edit by sumin
+                                var lngs = parseFloat(nearlist["longitude"]);//Edit by sumin
                                 var bukpos = {lat: lats, lng: lngs};
-                                //console.log('thisis ',bukpos);
-                                console.log('here', buks[0][i]);
+                                console.log('[DEBUG]thisis ',bukpos); //Edit by sumin
                                 var bukmark = new google.maps.Marker({
                                     position: bukpos,
                                     map: map,
