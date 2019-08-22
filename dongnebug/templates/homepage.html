@@ -12,7 +12,7 @@
             <!-- Navbar content -->
             <a href="{% url 'dongnebug:index' %}"><img src="{% static 'img/back.png' %}" width="30" height="30"></a>
             <div id=logo>
-                <img src="{% static 'img/gpsbukcolor.png' %}" width="30" height="30">
+                <img src="{% static 'img/gpsbukcolor.png' %}" width="30" height="30" style ="margin-bottom:10px;">
                 <a id="logotext" class="navbar-brand" href="{% url 'dongnebug:index' %}">주변 북</a>
             </div>
             <img id="menu" src="{% static 'img/menu.png' %}" width="30" height="30">
@@ -85,7 +85,7 @@
                     <div id="contents-1">
                         <div class="media">
                             <!-- 이미지 삽입 -->
-                            <img src="{{ complain.file.url }}" class="mr-3" width="70" height="70">
+                            <img class="rounded" src="{{ complain.file.url }}" class="mr-3" width="70" height="70">
                             <div class="media-body">
                                 <!-- 글 제목 -->
                                 <h4 id="homepage-content_name">{{ complain.title }}</h4>
@@ -95,9 +95,9 @@
                         </div>
                         <!-- 공감 부분 보이기  -->
                         <div id="content-reaction">
-                            <img src="{% static 'img/buk.png' %}" width="17" height="17">
+                            <img src="{% static 'img/buk.png' %}" width="17" height="17" style ="margin-left : 2px;">
                             {{ complain.sympathy_count }}
-                            <img src="{% static 'img/comment.png' %}" width="15" height="15">
+                            <img src="{% static 'img/comment.png' %}" width="15" height="15" style ="margin-left : 5px;">
                             {{ complain.num_of_comments }}
                             <div id="homepage-content-date_time">{{ complain.pub_date }}</div>
                         </div>
