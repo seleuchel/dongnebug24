@@ -45,11 +45,9 @@ class LocationsViewSet(viewsets.ModelViewSet):
         def get_object():
             obj = get_object_or_404(Locations, token=self.request.data['token'])
             return obj
-
         for location in locations:
             if location.token == self.request.data['token' ]:
                 # update 넣기
-
                 instance = get_object()
                 serializer = self.get_serializer(instance, data=request.data, partial=True)
                 serializer.is_valid(raise_exception=True)
@@ -61,7 +59,6 @@ class LocationsViewSet(viewsets.ModelViewSet):
                     instance._prefetched_objects_cache = {}
 
                 return Response(serializer.data)
-            return Response()
 
 
 def send_push_message(token, message, extra=None):
