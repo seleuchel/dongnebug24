@@ -112,7 +112,7 @@ class NearComplainViewSet(generics.ListAPIView):
 
         user_latitude = locations.values('latitude').first()['latitude']
         user_longitude = locations.values('longitude').first()['longitude']
-        complains = Complain.objects.all()
+        complains = Complain.objects.all().filter(is_complete=0)
         for complain in complains:
             dist = distance.euclidean((float(complain.latitude), float(complain.longitude)),
                                       (float(user_latitude), float(user_longitude)), 5)
