@@ -1,47 +1,49 @@
 {% include "base.html" %}
 {% load static %}
 {% block head_block %}
-    <title>동네북24</title>
+    <title>프로필</title>
 {% endblock %}
 {% block body_block %}
-    <div id="edit-bar" class="fixed-top">
-        <nav class="navbar navbar-light" style="background-color: #D9EDFD;">
-            <!-- Navbar content -->
-            <a href="{% url 'dongnebug:index' %}">
-                <button class=" mini teal ui button">취소</button>
-            </a>
-            <div id="logo">
-                <a id="logotext" class="navbar-brand" href="">내 정보 수정</a>
-            </div>
-            <button class=" mini ui button">완료</button> <!-- db에 닉네임 업데이트-->
-        </nav>
-    </div>
-
-
-    <div id="text" style="padding-top : 100px">
-        <div id="userimage">
-
-            <br/>
-            <img src="{% static 'img/user.png' %}" width="60" height="60">
+    <form method='post'>
+        {% csrf_token %}
+        <div id="edit-bar" class="fixed-top">
+            <nav class="navbar navbar-light" style="background-color: #D9EDFD;">
+                <!-- Navbar content -->
+                <a href="{% url 'dongnebug:index' %}">
+                    <button class=" mini teal ui button">취소</button>
+                </a>
+                <div id="logo">
+                    <a id="logotext" class="navbar-brand" href="">내 정보 수정</a>
+                </div>
+                <button type="submit" class=" mini ui button">완료</button>
+            </nav>
         </div>
-        <br/>
-        <div id="currentID" style="font-family: 'Nanum Gothic', sans-serif; font-weight : bold;">{{ user.username }}</div>
-        <br/>
-        <hr>
-        <br/>
-        <div>
-            <form method='post'>
-                {% csrf_token %}
-                <div class="ui form" style="font-family :'Nanum Gothic', sans-serif;">
+
+
+        <div id="text" style="padding-top : 100px">
+            <div id="userimage">
+
+                <br/>
+                <img src="{% static 'img/user.png' %}" width="60" height="60">
+            </div>
+            <br/>
+            <div id="currentID"
+                 style="font-family: 'Nanum Gothic', sans-serif; font-weight : bold;">{{ user.username }}</div>
+            <br/>
+            <hr>
+            <br/>
+
+
+            <div class="ui form" style="font-family :'Nanum Gothic', sans-serif;">
                 <div class="field">
                     <label>닉네임 변경</label>
                     {{ form }}
                 </div>
-                <input type="submit" value="Save"/>
+
             </div>
 
-            </form>
-            
         </div>
-    </div>
+
+
+    </form>
 {% endblock %}
