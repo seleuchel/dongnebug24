@@ -81,10 +81,8 @@
                                 <div id="knockedbuk-content_name">{{ complain.title }}</div>
                                 <div id="content-reaction-up-knocked">
                                     <img height="17" src="{% static 'img/drum2.png' %}" width="17">
-                                    {{ complain.num_of_sympathies }}
-                                    <img src="{% static 'img/comment.png' %}" width="15" height="15">
-                                    {{ complain.num_of_comments }}
-                                </div>
+                                    {{ complain.sympathy_count }}
+                                    </div>
                             </div>
                             {% if complain.is_complete %}
                                 <img id="doong" src="{% static 'img/둥.png' %}" class="mr-3" width="50" height="50">

@@ -19,13 +19,13 @@
         </nav>
     </div>
     <!-- side bar -->
-        <div class="ui right sidebar inverted vertical menu">
+    <div class="ui right sidebar inverted vertical menu">
         <a id="sidebar-up" class="item">
             <div id="menu_up">MENU</div>
         </a>
         <a class="item"><br/></a>
         <a class="item">
-            <img id="menu_user"  src="{% static 'img/user.png' %}" width="60" height="80">
+            <img id="menu_user" src="{% static 'img/user.png' %}" width="60" height="80">
         </a>
         <div id="menu_username">{{ user.username }}<a href="{% url 'dongnebug:update_profile' user.pk %}"><img
                 id="profile_edit_button"
@@ -37,42 +37,54 @@
         </a>
         <a class="item" href="{% url 'dongnebug:search' %}">
             <div id="menu_contents" style="font-weight : bold; font-size: small;color : #566573;">
-              <img id="menu_edit" src="{% static 'img/search.png' %}" width="20" height="20">
-              <div id ="menu_name" style ="float: right; margin-right : 145px; margin-top :4px;">북 검색</div>
+                <img id="menu_edit" src="{% static 'img/search.png' %}" width="20" height="20">
+                <div id="menu_name" style="float: right; margin-right : 145px; margin-top :4px;">북 검색</div>
             </div>
         </a>
         <a class="item" href="{% url 'dongnebug:complain_list' %}">
             <div id="menu_contents" style="font-weight : bold; font-size: small;color : #566573;">
-              <img id="menu_edit" src="{% static 'img/gpsbukcolor.png' %}" width="22" height="22">
-              <div id ="menu_name" style ="float: right; margin-right : 145px; margin-top :7px;">주변 북</div>
+                <img id="menu_edit" src="{% static 'img/gpsbukcolor.png' %}" width="22" height="22">
+                <div id="menu_name" style="float: right; margin-right : 145px; margin-top :7px;">주변 북</div>
             </div>
         </a>
         <a class="item" href="{% url 'dongnebug:uploadedbuk' %}">
             <div id="menu_contents" style="font-weight : bold; font-size: small;color : #566573;">
-              <img id="menu_edit" src="{% static 'img/buk.png' %}" width="20" height="20">
-              <div id ="menu_name" style ="float: right; margin-right : 145px; margin-top :5px">올린 북</div>
+                <img id="menu_edit" src="{% static 'img/buk.png' %}" width="20" height="20">
+                <div id="menu_name" style="float: right; margin-right : 145px; margin-top :5px">올린 북</div>
             </div>
         </a>
         <a class="item" href="{% url 'dongnebug:knockedbuk' %}">
             <div id="menu_contents" style="font-weight : bold; font-size: small;color : #566573;">
-              <img id="menu_edit" src="{% static 'img/bukk.png' %}" width="23" height="23">
-              <div id ="menu_name" style ="float: right; margin-right : 133px; margin-top :7px">두드린 북</div>
+                <img id="menu_edit" src="{% static 'img/bukk.png' %}" width="23" height="23">
+                <div id="menu_name" style="float: right; margin-right : 133px; margin-top :7px">두드린 북</div>
             </div>
         </a>
         <a class="item" href="{% url 'dongnebug:logout' %}">
             <div id="menu_contents" style="font-weight : bold; font-size: small;color : #566573;">
-              <img id="menu_edit" src="{% static 'img/logout.png' %}" width="20" height="20">
-              <div id ="menu_name" style ="float: right; margin-right : 136px; margin-top :3px">로그아웃</div>
+                <img id="menu_edit" src="{% static 'img/logout.png' %}" width="20" height="20">
+                <div id="menu_name" style="float: right; margin-right : 136px; margin-top :3px">로그아웃</div>
             </div>
         </a>
     </div>
-    <div id = "content-content" style="margin : 20px;">
+    <div id="content-content" style="margin : 20px;">
         <!-- 제목 받아오기 -->
         <div id="content-title">{{ complain.title }}</div>
         <hr>
 
         <!-- 사진이나 영상 받아오기 -->
-        <div id="content-img"><img class ="rounded" src="{{ complain.file.url }}" width="100%" height="300"></div>
+
+        {% if extension == 'png' or extension == 'jpg' %}
+            <div id="content-img">
+                <img class="rounded" src="{{ complain.file.url }}" width="100%" height="300">
+            </div>
+        {% elif extension == 'mp4' %}
+            <video oncontextmenu="return false;" class="rounded" width="100%" height="300" controls autoplay>
+
+                <source src="{{ complain.file.url }}" type="video/mp4">
+
+            </video>
+        {% endif %}
+
         <hr>
 
         <!-- 사람 아이콘 받아오기 -->
@@ -106,8 +118,8 @@
             {% endif %}
 
             <span id="count-{{ complain.id }}">{{ complain.sympathy_count }}</span>
-            <img class ="chat" id="count-{{ complain.id }}" src="{% static 'img/comment.png' %}" width="20" height="20">
-            <img class ="share" id="count-{{ complain.id }}" src="{% static 'img/share.png' %}" width="20" heigth="20">
+        <button type="button" onclick=getURL()><img class="share" id="count-{{ complain.id }}" src="{% static 'img/share.png' %}" width="20" heigth="20"></button>
+
         </div>
         <hr>
         <script type="text/javascript">
@@ -123,7 +135,7 @@
                 var pk = $(this).attr('name')
                 $.ajax({
                     type: "POST",
-                    url: "{% url 'dongnebug:complain_sympathy' complain.id %}",
+                    url: "{% url 'dongnebug:complain_sympathy' pk=request.user.id %}",
                     data: {'pk': pk, 'csrfmiddlewaretoken': '{{ csrf_token }}'},
                     datatype: "json",
                     success: function (response) {
@@ -144,54 +156,23 @@
             })
         </script>
 
-        {#        <script type="text/javascript">#}
-        {#        var state = 0;#}
-        {##}
-        {#        function ChangeImage() {#}
-        {##}
-        {#        }#}
-        {#    </script>#}
 
-        <!-- 댓글 보여주기 -->
-
-
-        <div id="contents">
-            {% for comment in comments %}
-                <div class="media">
-                    <!-- 이미지 삽입 -->
-                    <img id="comment-userimage" src="{% static 'img/user.png' %}" class="mr-3" width="30" height="30">
-                    <div id="conmment-username">
-                        {{ comment.user }}
-                        <div id="comment-date_time">{{ comment.pub_date }}</div>
-                    </div>
-                </div>
-                <div id="comment-content">{{ comment.content }}</div>
-                <hr>
-            {% endfor %}
-            <div id="contents-1">
-
-            </div>
-        </div>
-    </div>
-    <!-- 댓글 달기 기능 -->
-    <div id="comment-window" class="fixed-bottom">
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="댓글을 입력하세요..." aria-describedby="button-addon2">
-            <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button" id="button-addon2">등록</button>
-            </div>
-        </div>
-    </div>
-    <form action="{% url "dongnebug:complain_detail" pk=complain.pk %}" method="post">
-        {% csrf_token %}
-        <input type="text" name="content" placeholder="Write your comments">
-        <input type="submit" value="Comment" value="Write">
-    </form>
     </div>
     <script>
         $('#menu').click(function () {
             $('.ui.sidebar').sidebar('setting', 'transition', 'overlay').sidebar('toggle');
         })
+    </script>
+    <script>
+        function getURL() {
+            var dummy = document.createElement("textarea");
+            document.body.appendChild(dummy);
+            dummy.value = location.href;
+            dummy.select();
+            document.execCommand("copy");
+            document.body.removeChild(dummy);
+            alert('클립보드에 복사되었습니다.')
+        };
     </script>
 
 {% endblock %}
