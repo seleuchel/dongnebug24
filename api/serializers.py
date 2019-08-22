@@ -19,3 +19,8 @@ class LocationsSerializer(serializers.HyperlinkedModelSerializer):
         model = Locations
         fields = ['latitude', 'longitude']
         lookup_field = 'token'
+
+class ComplainSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Complain
+        fields = ['title', 'latitude', 'longitude']
