@@ -3,19 +3,17 @@ from django.views.generic import (
     TemplateView, UpdateView, RedirectView)
 from .forms import *
 from api.models import Locations
-from django.shortcuts import get_object_or_404
-from django.http import HttpResponse
+from django.shortcuts import get_object_or_404, render
+from django.http import HttpResponse, HttpResponseRedirect
 import json
 from scipy.spatial import distance
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
-class ComplainDetailView(DetailView):
+class ComplainDetailView(LoginRequiredMixin, DetailView):
     model = Complain
     template_name = 'content.html'
-
-    def form_valid(self, form):
-        form.instance.complaine_id = self.request.complain.id
-        return super(CommentCreateView, self).form_valid(form)
+    login_url = '/'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -27,15 +25,30 @@ class ComplainDetailView(DetailView):
             context['sympathy'] = sympathy
         except Exception:
             pass
+        file = str(Complain.objects.filter(id=self.object.id).get().file)
+        context['extension'] = file[file.rfind('.')+1:]
         comments = list(Comment.objects.filter(complain_id=self.object.id))
         context['comments'] = comments
         return context
 
 
-class ComplainCreateView(CreateView):
+def CommentCreateView(request, pk):
+    form = CommentForm(request.POST or None)
+
+    if form.is_valid() and pk:
+        form.instance.author = request.user
+        form.instance.request = Complain.objects.get(id=pk)
+        form.save()
+        return HttpResponseRedirect('/complain/' + str(request.object.pk))
+    return HttpResponseRedirect('/complain/' + str(request.object.pk))
+
+
+
+class ComplainCreateView(LoginRequiredMixin, CreateView):
     model = Complain
     form_class = ComplainForm
     template_name = 'complain_form.html'
+    login_url = '/'
 
     def form_valid(self, form):
         form.instance.author_id = self.request.user.id
@@ -49,10 +62,12 @@ class ComplainCreateView(CreateView):
         return context
 
 
-class CommentCreateView(CreateView):
+# mixin 테스트
+class CommentCreateView(LoginRequiredMixin, CreateView):
     model = Comment
     form_class = CommentForm
     template_name = 'content.html'
+    login_url = '/'
 
     def form_valid(self, form):
         form.instance.user_id = self.request.user.id
@@ -69,20 +84,18 @@ class CommentCreateView(CreateView):
         return context
 
 
-# complain list view
-class ComplainListView(ListView):
+class ComplainListView(LoginRequiredMixin, ListView):
     template_name = 'homepage.html'
     model = Complain
+    login_url = '/'
 
     def get_queryset(self):
         near_complains = []
-        # print("get_queryset() " + str(self.request.user.id))
-
         locations = Locations.objects.filter(author_id__exact=self.request.user.id)
-
         user_latitude = locations.values('latitude').first()['latitude']
         user_longitude = locations.values('longitude').first()['longitude']
-        complains = Complain.objects.all()
+        complains = Complain.objects.all().filter(is_complete=0)
+        print(complains)
         for complain in complains:
             dist = distance.euclidean((float(complain.latitude), float(complain.longitude)),
                                       (float(user_latitude), float(user_longitude)), 5)
@@ -112,9 +125,10 @@ def complain_sympathy(request, pk):
     return HttpResponse(json.dumps(context), content_type="application/json")
 
 
-class KnockedBukView(ListView):
+class KnockedBukView(LoginRequiredMixin, ListView):
     model = Sympathy
     template_name = 'knockedbuk.html'
+    login_url = '/'
 
     def get_queryset(self):
         sympathies = Sympathy.objects.filter(user_id__exact=self.request.user.id)
@@ -135,9 +149,10 @@ class KnockedBukView(ListView):
         return context
 
 
-class SearchView(ListView):
+class SearchView(LoginRequiredMixin, ListView):
     template_name = 'search.html'
     model = Complain
+    login_url = '/'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -158,9 +173,10 @@ class SearchView(ListView):
         return complains
 
 
-class UploadedComplainListView(ListView):
+class UploadedComplainListView(LoginRequiredMixin, ListView):
     template_name = 'uploadedbuk.html'
     model = Complain
+    login_url = '/'
 
     def get_queryset(self):
         return Complain.objects.filter(author_id__exact=self.request.user.id)
@@ -172,8 +188,9 @@ class UploadedComplainListView(ListView):
         return context
 
 
-class IndexView(TemplateView):
+class IndexView(LoginRequiredMixin, TemplateView):
     template_name = 'mainpage.html'
+    login_url = '/'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -183,11 +200,12 @@ class IndexView(TemplateView):
         return context
 
 
-class ProfileView(UpdateView):
+class ProfileView(LoginRequiredMixin, UpdateView):
     model = User
     form_class = ProfileForm
     template_name = 'profile_form.html'
     success_url = '/index'
+    login_url = '/'
 
     def form_valid(self, form):
         form.instance.user_id = self.request.user.id
@@ -200,30 +218,33 @@ def post_like(request):
 
 # TODO : loginrequied 데코레이터에 certification 내용 추가 해서 사용할 수 있는지 확인해보기
 
-class CertificationCreateView(CreateView):
+class CertificationCreateView(LoginRequiredMixin, CreateView):
     model = Locations
     template_name = 'certification.html'
     form_class = CertificationForm
     success_url = '/index'
+    login_url = '/'
 
     def form_valid(self, form):
         form.instance.author_id = self.request.user.id
         return super(CertificationCreateView, self).form_valid(form)
 
 
-class CertificationUpdateView(UpdateView):
+class CertificationUpdateView(LoginRequiredMixin, UpdateView):
     model = Locations
     template_name = 'certification.html'
     form_class = CertificationForm
     success_url = '/index'
+    login_url = '/'
 
     def form_valid(self, form):
         form.instance.author_id = self.request.user.id
         return super(CertificationUpdateView, self).form_valid(form)
 
 
-class CertificationRedirectView(RedirectView):
+class CertificationRedirectView(LoginRequiredMixin, RedirectView):
     is_permanent = True
+    login_url = '/'
 
     def get_redirect_url(self, *args, **kwargs):
 

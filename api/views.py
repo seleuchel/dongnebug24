@@ -47,7 +47,7 @@ class LocationsViewSet(viewsets.ModelViewSet):
             return obj
 
         for location in locations:
-            if location.token == self.request.data['token' ]:
+            if location.token == self.request.data['token']:
                 # update 넣기
 
                 instance = get_object()
@@ -59,10 +59,7 @@ class LocationsViewSet(viewsets.ModelViewSet):
                     # If 'prefetch_related' has been applied to a queryset, we need to
                     # forcibly invalidate the prefetch cache on the instance.
                     instance._prefetched_objects_cache = {}
-
                 return Response(serializer.data)
-            return Response()
-
 
 def send_push_message(token, message, extra=None):
     try:
@@ -115,7 +112,7 @@ class NearComplainViewSet(generics.ListAPIView):
 
         user_latitude = locations.values('latitude').first()['latitude']
         user_longitude = locations.values('longitude').first()['longitude']
-        complains = Complain.objects.all()
+        complains = Complain.objects.all().filter(is_complete=0)
         for complain in complains:
             dist = distance.euclidean((float(complain.latitude), float(complain.longitude)),
                                       (float(user_latitude), float(user_longitude)), 5)
