@@ -16,8 +16,8 @@
     <div class="fixed-top">
         <nav class="navbar navbar-light" style="background-color: #D9EDFD;">
             <!-- Navbar content -->
-            <div id="mainpage-logo" style="margin : auto; padding-left : 30px;">
-                <img src="{% static 'img/buk.png' %}" width="30" height="30">
+            <div id="mainpage-logo" style = "margin : auto; padding-left : 30px;">
+                <img src="{% static 'img/bug.png' %}" width="30" height="30" style="margin-bottom:7px;">
                 <a id="logotext" class="navbar-brand" href="{% url 'dongnebug:index' %}">동네북24</a>
             </div>
             <img id="menu" src="{% static 'img/menu.png' %}" width="30" height="30">
@@ -42,33 +42,33 @@
             <hr>
         </a>
         <a class="item" href="{% url 'dongnebug:search' %}">
-            <div id="menu_contents" style="font-weight : bold; font-size: small;color : #566573;">
-                <img id="menu_edit" src="{% static 'img/search.png' %}" width="20" height="20">
-                <div id="menu_name" style="float: right; margin-right : 145px; margin-top :4px;">북 검색</div>
+            <div id="menu_contents" style="font-weight : bold; font-size: small;color : #292929;">
+              <img id="menu_edit" src="{% static 'img/sidebar_search.png' %}" width="20" height="20">
+              <div id ="menu_name" style ="float: right; margin-right : 145px; margin-top :4px;">북 검색</div>
             </div>
         </a>
         <a class="item" href="{% url 'dongnebug:complain_list' %}">
-            <div id="menu_contents" style="font-weight : bold; font-size: small;color : #566573;">
-                <img id="menu_edit" src="{% static 'img/gpsbukcolor.png' %}" width="22" height="22">
-                <div id="menu_name" style="float: right; margin-right : 145px; margin-top :7px;">주변 북</div>
+            <div id="menu_contents" style="font-weight : bold; font-size: small;color : #292929;">
+              <img id="menu_edit" src="{% static 'img/gpsbug_color.png' %}" width="22" height="22">
+              <div id ="menu_name" style ="float: right; margin-right : 145px; margin-top :7px;">주변 북</div>
             </div>
         </a>
         <a class="item" href="{% url 'dongnebug:uploadedbuk' %}">
-            <div id="menu_contents" style="font-weight : bold; font-size: small;color : #566573;">
-                <img id="menu_edit" src="{% static 'img/buk.png' %}" width="20" height="20">
-                <div id="menu_name" style="float: right; margin-right : 145px; margin-top :5px">올린 북</div>
+            <div id="menu_contents" style="font-weight : bold; font-size: small;color : #292929;">
+              <img id="menu_edit" src="{% static 'img/bug.png' %}" width="20" height="20">
+              <div id ="menu_name" style ="float: right; margin-right : 145px; margin-top :5px">올린 북</div>
             </div>
         </a>
         <a class="item" href="{% url 'dongnebug:knockedbuk' %}">
-            <div id="menu_contents" style="font-weight : bold; font-size: small;color : #566573;">
-                <img id="menu_edit" src="{% static 'img/bukk.png' %}" width="23" height="23">
-                <div id="menu_name" style="float: right; margin-right : 133px; margin-top :7px">두드린 북</div>
+            <div id="menu_contents" style="font-weight : bold; font-size: small;color : #292929;">
+              <img id="menu_edit" src="{% static 'img/knockedbug_color.png' %}" width="23" height="23">
+              <div id ="menu_name" style ="float: right; margin-right : 133px; margin-top :7px">두드린 북</div>
             </div>
         </a>
         <a class="item" href="{% url 'dongnebug:logout' %}">
-            <div id="menu_contents" style="font-weight : bold; font-size: small;color : #566573;">
-                <img id="menu_edit" src="{% static 'img/logout.png' %}" width="20" height="20">
-                <div id="menu_name" style="float: right; margin-right : 136px; margin-top :3px">로그아웃</div>
+            <div id="menu_contents" style="font-weight : bold; font-size: small;color : #292929;">
+              <img id="menu_edit" src="{% static 'img/logout.png' %}" width="20" height="20">
+              <div id ="menu_name" style ="float: right; margin-right : 136px; margin-top :3px">로그아웃</div>
             </div>
         </a>
     </div>
@@ -92,20 +92,20 @@
         <hr>
         <div id="main-icon">
             <a href="{% url 'dongnebug:complain_list' %}">
-                <div id="main-gpsbuk" style="padding-right : 30px">
-                    <img src="{% static 'img/gpsbuk.png' %}" width="50" height="50"><br/><br/>
+                <div id="main-gpsbuk">
+                    <img src="{% static 'img/gpsbug.png' %}" width="65" height="65"><br/><br/>
                     주변 북
                 </div>
             </a>
             <a href="{% url 'dongnebug:search' %}">
                 <div id="main-search">
-                    <img src="{% static 'img/searchbug.png' %}" width="50" height="50"><br/><br/>
+                    <img src="{% static 'img/searchbug.png' %}" width="65" height="65"><br/><br/>
                     북 검색
                 </div>
             </a>
             <a href="{% url 'dongnebug:complain_new' %}">
-                <div id="main-newbuk" style="padding-left : 30px">
-                    <img src="{% static 'img/newbuk.png' %}" width="50" height="50"><br/><br/>
+                <div id="main-newbuk">
+                    <img src="{% static 'img/newbug.png' %}" width="65" height="65"><br/><br/>
                     북 추가
                 </div>
             </a>

@@ -4569,12 +4569,7 @@ $.fn.dropdown = function(parameters) {
           }
         },
 
-        create: {
-          id: function() {
-            id = (Math.random().toString(16) + '000000000').substr(2, 8);
-            elementNamespace = '.' + id;
-            module.verbose('Creating unique id for element', id);
-          },
+
           userChoice: function(values) {
             var
               $userChoices,
@@ -9178,12 +9173,7 @@ $.fn.modal = function(parameters) {
             }
             $dimmer = $dimmable.dimmer('get dimmer');
           },
-          id: function() {
-            id = (Math.random().toString(16) + '000000000').substr(2, 8);
-            elementEventNamespace = '.' + id;
-            module.verbose('Creating unique id for element', id);
-          }
-        },
+
 
         destroy: function() {
           module.verbose('Destroying previous modal');
@@ -9270,11 +9260,6 @@ $.fn.modal = function(parameters) {
           }
         },
 
-        get: {
-          id: function() {
-            return (Math.random().toString(16) + '000000000').substr(2, 8);
-          }
-        },
 
         event: {
           approve: function() {
@@ -10890,12 +10875,6 @@ $.fn.popup = function(parameters) {
           }
         },
 
-        createID: function() {
-          id = (Math.random().toString(16) + '000000000').substr(2, 8);
-          elementNamespace = '.' + id;
-          module.verbose('Creating unique id for element', id);
-        },
-
         // determines popup state
         toggle: function() {
           module.debug('Toggling pop-up');
@@ -12396,10 +12375,7 @@ $.fn.progress = function(parameters) {
             return settings.updateInterval;
           },
 
-          randomValue: function() {
-            module.debug('Generating random increment percentage');
-            return Math.floor((Math.random() * settings.random.max) + settings.random.min);
-          },
+
 
           numericValue: function(value) {
             return (typeof value === 'string')
@@ -16105,13 +16081,7 @@ $.fn.sidebar = function(parameters) {
           ;
         },
 
-        create: {
-          id: function() {
-            id = (Math.random().toString(16) + '000000000').substr(2,8);
-            elementNamespace = '.' + id;
-            module.verbose('Creating unique id for element', id);
-          }
-        },
+
 
         destroy: function() {
           module.verbose('Destroying previous module for', $module);
@@ -20165,7 +20135,7 @@ $.api = $.fn.api = function(parameters) {
                response = JSON.parse(response);
               }
               catch(e) {
-                // isnt json string
+                console.log("err");
               }
             }
             return response;

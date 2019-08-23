@@ -2,6 +2,23 @@
 {% load static %}
 {% block head_block %}
     <title>동네북24</title>
+    <style>
+      .btn_submit{
+          background-position:  0px 0px;
+          background-repeat: no-repeat;
+          width: 60px;
+          height: 29px;
+          border: 0px;
+       cursor:pointer;
+       outline: 0;
+      }
+      .input_search{
+        width: 250px;
+        height : 29px;
+
+      }
+
+    </style>
 {% endblock %}
 {% block body_block %}
     <div class="fixed-top">
@@ -9,7 +26,7 @@
             <!-- Navbar content -->
             <a href="{% url 'dongnebug:index' %}"><img src="{% static 'img/back.png' %}" width="30" height="30"></a>
             <div id=logo>
-                <img src="{% static 'img/searchbuk.png' %}" width="32" height="30" style="margin-bottom : 7px;">
+                <img src="{% static 'img/searchbug_color.png' %}" width="33" height="30" style="margin-bottom : 10px;">
                 <a id="logotext" class="navbar-brand" href="{% url 'dongnebug:index' %}">북 검색</a>
             </div>
             <img id="menu" src="{% static 'img/menu.png' %}" width="30" height="30">
@@ -33,31 +50,31 @@
             <hr>
         </a>
         <a class="item" href="{% url 'dongnebug:search' %}">
-            <div id="menu_contents" style="font-weight : bold; font-size: small;color : #566573;">
-              <img id="menu_edit" src="{% static 'img/search.png' %}" width="20" height="20">
+            <div id="menu_contents" style="font-weight : bold; font-size: small;color : #292929;">
+              <img id="menu_edit" src="{% static 'img/sidebar_search.png' %}" width="20" height="20">
               <div id ="menu_name" style ="float: right; margin-right : 145px; margin-top :4px;">북 검색</div>
             </div>
         </a>
         <a class="item" href="{% url 'dongnebug:complain_list' %}">
-            <div id="menu_contents" style="font-weight : bold; font-size: small;color : #566573;">
-              <img id="menu_edit" src="{% static 'img/gpsbukcolor.png' %}" width="22" height="22">
+            <div id="menu_contents" style="font-weight : bold; font-size: small;color : #292929;">
+              <img id="menu_edit" src="{% static 'img/gpsbug_color.png' %}" width="22" height="22">
               <div id ="menu_name" style ="float: right; margin-right : 145px; margin-top :7px;">주변 북</div>
             </div>
         </a>
         <a class="item" href="{% url 'dongnebug:uploadedbuk' %}">
-            <div id="menu_contents" style="font-weight : bold; font-size: small;color : #566573;">
-              <img id="menu_edit" src="{% static 'img/buk.png' %}" width="20" height="20">
+            <div id="menu_contents" style="font-weight : bold; font-size: small;color : #292929;">
+              <img id="menu_edit" src="{% static 'img/bug.png' %}" width="20" height="20">
               <div id ="menu_name" style ="float: right; margin-right : 145px; margin-top :5px">올린 북</div>
             </div>
         </a>
         <a class="item" href="{% url 'dongnebug:knockedbuk' %}">
-            <div id="menu_contents" style="font-weight : bold; font-size: small;color : #566573;">
-              <img id="menu_edit" src="{% static 'img/bukk.png' %}" width="23" height="23">
+            <div id="menu_contents" style="font-weight : bold; font-size: small;color : #292929;">
+              <img id="menu_edit" src="{% static 'img/knockedbug_color.png' %}" width="23" height="23">
               <div id ="menu_name" style ="float: right; margin-right : 133px; margin-top :7px">두드린 북</div>
             </div>
         </a>
         <a class="item" href="{% url 'dongnebug:logout' %}">
-            <div id="menu_contents" style="font-weight : bold; font-size: small;color : #566573;">
+            <div id="menu_contents" style="font-weight : bold; font-size: small;color : #292929;">
               <img id="menu_edit" src="{% static 'img/logout.png' %}" width="20" height="20">
               <div id ="menu_name" style ="float: right; margin-right : 136px; margin-top :3px">로그아웃</div>
             </div>
@@ -66,12 +83,12 @@
 
         <div id="search-contents">
             <div id="text">
-                <div id="search_window" class="ui icon input">
+                <div id="search_window" class="ui input">
                     <form action="" method="get">
-                        <input type="text" placeholder="검색어를 입력하세요..." name="q" value="{{ q }}">
-                        <input type="submit" value="검색">
+                      <div class="ui input">
+                        <input type="text" class="input_search" placeholder="검색어를 입력하세요..." name="q" value="{{ q }}"></div>
+                        <input  type="submit" class="btn_submit rounded" value="검색">
                     </form>
-
                 </div>
             </div>
             <hr>
@@ -86,10 +103,8 @@
                             <div class="media-body">
                                 <div id="search_name">{{ complain.title }}</div>
                                 <div id="search-content-reaction" style ="margin-top:7px;">
-                                    <img src="{% static 'img/buk.png' %}" width="17" height="17">
+                                    <img src="{% static 'img/bug.png' %}" width="17" height="17">
                                     {{ complain.num_of_sympathies }}
-                                    <img src="{% static 'img/comment.png' %}" width="15" height="15">
-                                    {{ complain.num_of_comments }}
                                 </div>
                             </div>
                         </div>

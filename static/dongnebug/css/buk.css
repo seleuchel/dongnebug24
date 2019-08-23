@@ -18,11 +18,23 @@ a:hover { color: black; text-decoration: none;}
   margin-top : 3px;
   margin-right : 0px;
 }
+#profile_edit_name {
+
+  font-family: 'Do Hyeon', sans-serif;
+  font-size: large;
+  margin-top : 3px;
+  margin-right : 0px;
+}
 *html #text {
   height: 100%;
 }
 #text {
   font-family :'Nanum Gothic', sans-serif;
+}
+#newbug_text{
+  font-family :'Nanum Gothic', sans-serif;
+  font-weight: bold;
+
 }
 #search{
   margin : 0px 0px 0px 10px;
@@ -159,30 +171,6 @@ a:hover { color: black; text-decoration: none;}
   color : black;
   font-weight: bold;
 }
-#uploadedbuk-content_name {
-  font-family : 'Nanum Gothic', sans-serif;
-  font-weight: bold;
-  display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  width: 230.15px;
-  margin-left: 5px;
-  height: 19.2px;
-  color : black;
-}
-#knockedbuk-content_name {
-  font-family : 'Nanum Gothic', sans-serif;
-  margin-left: 3px;
-  display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  width: 230.15px;
-  height: 19.2px;
-  color : black;
-  font-weight: bold;
-}
 
 #index_content{
   color : #7D7D80;
@@ -191,14 +179,39 @@ a:hover { color: black; text-decoration: none;}
   text-overflow: ellipsis;
   white-space: nowrap;
   width: 230.15px;
-  magin-left:5px;
+  magin-left:7px;
   height: 35.2px;
 }
 #homepage-content-date_time{
   float : right;
   margin-right: 7px;
 }
-
+#knocked_name{
+  font-family :'Nanum Gothic', sans-serif;
+  font-weight: bold;
+  padding : 0px 0px 13px 0px;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 210px;
+  height: 19.2px;
+  color : black;
+  margin-left: 10px;
+}
+#uploaded_name{
+  font-family :'Nanum Gothic', sans-serif;
+  font-weight: bold;
+  padding : 0px 0px 13px 0px;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 210px;
+  height: 19.2px;
+  color : black;
+  margin-left: 10px;
+}
 #search-contents {
   margin:20px;
   font-family :'Nanum Gothic', sans-serif;
@@ -214,7 +227,7 @@ a:hover { color: black; text-decoration: none;}
   width: 230.15px;
   height: 19.2px;
   color : black;
-  margin-left: 5px;
+  margin-left: 10px;
 }
 #search_form{
   float: right;
@@ -222,9 +235,11 @@ a:hover { color: black; text-decoration: none;}
 #search_window{
   width : 100%;
   margin-top : 20px;
+  margin: auto;
+  margin-left: 2px;
 }
 #search-content-reaction{
-  margin-left: 5px;
+  margin-left: 10px;
   color : #7D7D80;
 
   font-size: small;
@@ -232,12 +247,19 @@ a:hover { color: black; text-decoration: none;}
 #knocked_contents {
   margin:20px;
 }
+#knocked-content-reaction{
+  margin-left: 10px;
+  color : #7D7D80;
+}
+#uploaded-content-reaction{
+  margin-left: 10px;
+  color : #7D7D80;
+}
 #uploaded_contents {
   margin:70px 20px 20px 20px;
 }
 #doong {
   float : right;
-  margin : 14px 0px 0px 0px;
 }
 #uploadbuk_knocked_name{
   font-family :'Nanum Gothic', sans-serif;
@@ -268,8 +290,8 @@ a:hover { color: black; text-decoration: none;}
   border-right-style: solid;
   border-width: thin;
   border-color: #dadbdb;
-  padding-right: 25px;
-  padding-left: 25px;
+  padding-left:20px;
+  padding-right: 20px;
   font-size: small;
 }
 #main-gpsbuk{
@@ -279,7 +301,7 @@ a:hover { color: black; text-decoration: none;}
   border-right-style: solid;
   border-width: thin;
   border-color: #dadbdb;
-  padding-right: 30px;
+  padding-right: 15px;
   font-size: small;
 }
 #main-newbuk{
@@ -287,7 +309,7 @@ a:hover { color: black; text-decoration: none;}
     font-size: small;
   display : inline-block;
   text-align: center;
-  padding-left: 30px;
+  padding-left:15px;
 }
 
 #userimage{
