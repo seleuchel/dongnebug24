@@ -11,7 +11,7 @@
         <!-- Navbar content -->
         <a href="{% url 'dongnebug:index' %}"><img src="{% static 'img/back.png' %}" width="30" height="30"></a>
         <div id=logo>
-            <img src="{% static 'img/buk.png' %}" width="30" height="30" style="margin-bottom:7px;">
+            <img src="{% static 'img/bug.png' %}" width="30" height="30" style="margin-bottom:7px;">
             <a id="logotext" class="navbar-brand">올린 북</a>
         </div>
         <img id="menu" src="{% static 'img/menu.png' %}" width="30" height="30">
@@ -36,31 +36,31 @@
             <hr>
         </a>
         <a class="item" href="{% url 'dongnebug:search' %}">
-            <div id="menu_contents" style="font-weight : bold; font-size: small;color : #566573;">
-              <img id="menu_edit" src="{% static 'img/search.png' %}" width="20" height="20">
+            <div id="menu_contents" style="font-weight : bold; font-size: small;color : #292929;">
+              <img id="menu_edit" src="{% static 'img/sidebar_search.png' %}" width="20" height="20">
               <div id ="menu_name" style ="float: right; margin-right : 145px; margin-top :4px;">북 검색</div>
             </div>
         </a>
         <a class="item" href="{% url 'dongnebug:complain_list' %}">
-            <div id="menu_contents" style="font-weight : bold; font-size: small;color : #566573;">
-              <img id="menu_edit" src="{% static 'img/gpsbukcolor.png' %}" width="22" height="22">
+            <div id="menu_contents" style="font-weight : bold; font-size: small;color : #292929;">
+              <img id="menu_edit" src="{% static 'img/gpsbug_color.png' %}" width="22" height="22">
               <div id ="menu_name" style ="float: right; margin-right : 145px; margin-top :7px;">주변 북</div>
             </div>
         </a>
         <a class="item" href="{% url 'dongnebug:uploadedbuk' %}">
-            <div id="menu_contents" style="font-weight : bold; font-size: small;color : #566573;">
-              <img id="menu_edit" src="{% static 'img/buk.png' %}" width="20" height="20">
+            <div id="menu_contents" style="font-weight : bold; font-size: small;color : #292929;">
+              <img id="menu_edit" src="{% static 'img/bug.png' %}" width="20" height="20">
               <div id ="menu_name" style ="float: right; margin-right : 145px; margin-top :5px">올린 북</div>
             </div>
         </a>
         <a class="item" href="{% url 'dongnebug:knockedbuk' %}">
-            <div id="menu_contents" style="font-weight : bold; font-size: small;color : #566573;">
-              <img id="menu_edit" src="{% static 'img/bukk.png' %}" width="23" height="23">
+            <div id="menu_contents" style="font-weight : bold; font-size: small;color : #292929;">
+              <img id="menu_edit" src="{% static 'img/knockedbug_color.png' %}" width="23" height="23">
               <div id ="menu_name" style ="float: right; margin-right : 133px; margin-top :7px">두드린 북</div>
             </div>
         </a>
         <a class="item" href="{% url 'dongnebug:logout' %}">
-            <div id="menu_contents" style="font-weight : bold; font-size: small;color : #566573;">
+            <div id="menu_contents" style="font-weight : bold; font-size: small;color : #292929;">
               <img id="menu_edit" src="{% static 'img/logout.png' %}" width="20" height="20">
               <div id ="menu_name" style ="float: right; margin-right : 136px; margin-top :3px">로그아웃</div>
             </div>
@@ -74,18 +74,16 @@
                 <div id="upload_contents-1">
                     <div class="media">
                         <!-- 이미지 삽입 -->
-                        <img class ="rounded"src="{{ complain.file.url }}" class="mr-3" width="70" height="70">
+                        <img class ="rounded"src="{{ complain.file.url }}" class="mr-3" width="50" height="50">
                         <div class="media-body">
-                            <div id="uploadedbuk-content_name">{{ complain.title }}</div>
-                            <div id="content-reaction-up-knocked">
-                                <img src="{% static 'img/drum2.png' %}" width="17" height="17">
-                                {{ complain.num_of_sympathies }}
-                                <img src="{% static 'img/comment.png' %}" width="15" height="15">
-                                {{ complain.num_of_comments }}
-                            </div>
+                          <div id="uploaded_name">{{ complain.title }}</div>
+                          <div id="uploaded-content-reaction" style ="margin-top : 7px;">
+                              <img height="17" src="{% static 'img/bug.png' %}" width="17">
+                              {{ complain.sympathy_count }}
+                          </div>
                         </div>
                         {% if complain.is_complete %}
-                            <img id="doong" src="{% static 'img/둥.png' %}" class="mr-3" width="50" height="50">
+                            <img id="doong" src="{% static 'img/doong.png' %}" class="mr-3" width="50" height="50">
                         {% endif %}
                     </div>
                 </div>

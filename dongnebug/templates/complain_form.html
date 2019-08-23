@@ -26,60 +26,61 @@
                 {# TODO : submit 버튼을 어떻게 이거로 연관 시켜보기  #}
                 <a>
                     <button type="submit" style="background-color:transparent;  border:0px transparent solid;"><img
-                            src="{% static 'img/send.png' %}" width="30" height="30"></button>
+                            src="{% static 'img/newbug_send.png' %}" width="30" height="30"></button>
                 </a>
             </nav>
         </div>
 
-        <div class="text" style="margin : 20px;">
-            </br></br></br>
-            <label id='logotext'>글 제목</label>
-            </br>
-            {{ form.title }}
-            </br></br>
+        <div class="text" style="margin :20px; padding-top : 40px;">
 
-            <div>
-                <label id='logotext'>현 위치</label>
-                </br>
+            <div id ="newbug_title" style="margin-bottom:20px;">
+              <label id="newbug_text">글 제목</label>
+
+              {{ form.title }}
+
+            </div>
+            <div id ="newbug_gps">
+                <label id='newbug_text'>현 위치</label>
+
                 <div class="form-row">
-                    <div class="col">
+                  <div class="col">
                         {{ form.latitude }}{{ form.longitude }}
-                    </div>
+                  </div>
                     {# 새로 고침하면 유저의 현재 위치로 자동 세팅 #}
-                    <div class="col">
-                        <img id=search src="{% static 'img/search3.png' %}" width="25" height="25">
-                        <img id=placeholder src="{% static "img/placeholder2.png" %}" width="25" height="25">
-                    </div>
+
+
+              -
                 </div>
-                </br>
                 <!-- 지도 -->
                 <p align="middle">
                 <div id="map"></div>
                 </p>
             </div>
-            </br>
 
-            <label id='logotext'>글 내용</label>
-            </br>
-            <div class="input-group">
-                {{ form.content }}
-            </div>
-            </br>
+            <br/>
+            <div id ="newbug_content" style ="margin-bottom: 20px;">
+              <label id='newbug_text'>글 내용</label>
 
-            <label id='logotext'>첨부파일</label>
-            </br>
-            <div class="input-group mb-3">
-                <div class="custom-file">
-                    {{ form.file }}
-                    {#                                        <label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">#}
-                    {#                                            파일을 첨부하세요.</label>#}
-                </div>
-                <div class="input-group-append">
-                </div>
+              <div class="input-group">
+                  {{ form.content }}
+              </div>
             </div>
-            </br>
+
+            <div id ="newbug_title">
+            <label id='newbug_text'>첨부파일</label>
+              <div class="input-group mb-3">
+                  <div class="custom-file">
+                      {{ form.file }}
+                      {#                                        <label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">#}
+                      {#                                            파일을 첨부하세요.</label>#}
+                  </div>
+                  <div class="input-group-append">
+                  </div>
+              </div>
+
+            </div>
+
         </div>
-        <input type="submit"/>
     </form>
     <!-- Edit by sumin -->
     <script>

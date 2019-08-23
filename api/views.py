@@ -46,7 +46,7 @@ class LocationsViewSet(viewsets.ModelViewSet):
             obj = get_object_or_404(Locations, token=self.request.data['token'])
             return obj
         for location in locations:
-            if location.token == self.request.data['token' ]:
+            if location.token == self.request.data['token']:
                 # update 넣기
                 instance = get_object()
                 serializer = self.get_serializer(instance, data=request.data, partial=True)
@@ -57,9 +57,7 @@ class LocationsViewSet(viewsets.ModelViewSet):
                     # If 'prefetch_related' has been applied to a queryset, we need to
                     # forcibly invalidate the prefetch cache on the instance.
                     instance._prefetched_objects_cache = {}
-
                 return Response(serializer.data)
-
 
 def send_push_message(token, message, extra=None):
     try:
