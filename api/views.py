@@ -121,7 +121,8 @@ class NearComplainViewSet(generics.ListAPIView):
 
         location_push_token = locations.get().token
         # TODO : 푸시토큰 암호화 및 유효성 검사 할 것! :: exponent로 감싸져있는지랑, 중간에 - 있는지
-        if near_complains and location_push_token:
+        print(location_push_token, near_complains)
+        if near_complains.__len__() > 0 and location_push_token:
             send_push_message(location_push_token, '내 주변에 동네북이 발견되었습니다!')
         # TODO : 사용자의 푸시 토큰으로 바꿔서 사용하기 저기 적혀있는 하드코딩된 토큰 값은 테스트용이다.
         return Complain.objects.filter(id__in=near_complains)
