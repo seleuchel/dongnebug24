@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block head_block %}
+{# TODO: 암호화된 토큰이 유저 당 한개가 아니라 계속 올라간다. #}
+    <title>동네북24</title>
+    <style media="screen">
+      body{
+        background : #D9EDFD;
+        font-family :'Nanum Gothic', sans-serif;
+        margin : 20px;
+      }
+      #certificate-logo{
+        text-align : center;
+        font-family :'Do Hyeon', sans-serif;
+        font-size : x-large;
+        font-weight : bold;
+        padding-top : 100px;
+        margin-bottom : 60px;
+      }
+      #loginbutton{
+        text-align : center;
+      }
+      #probulpeon{
+        text-align : center;
+        font-family :'Nanum Gothic', sans-serif;
+        font-size : small;
+        padding-top : 60px;
+      }
+      .btn_submit{
+          background-position:  0px 0px;
+          background-repeat: no-repeat;
+          width: 60px;
+          height: 29px;
+          border: 0px;
+       cursor:pointer;
+       outline: 0;
+      }
+    </style>
+
+{% endblock %}
+
+
+{% block body_block %}
+    <div id ="certificate-logo">
+      <img src ="{% static 'img/bug.png' %}" width ="100" heigth ="100"><br/>
+      동네북24
+    </div>
+      <br/>
+      <br/>
+      <div class="ui form">
+        <div class="field">
+          <div class="twelve wide field">
+            <form method="post">
+              <div class ="ui input" style="margin-left:50px;">
+            {% csrf_token %}
+              {{ form.token }}</div>
+              <input type="submit" class ="btn_submit rounded" value="제출" style="margin-left:160px; margin-top:10px;">
+            </form>
+          </div>
+        </div>
+      </div>
+
+    <div id ="probulpeon">
+      @probulpyeonreo
+    </div>
+
+{% endblock %}

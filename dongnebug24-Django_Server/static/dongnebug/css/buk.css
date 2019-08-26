@@ -1,0 +1,335 @@
+a:link { color: black; text-decoration: none;}
+a:visited { color: black; text-decoration: none;}
+a:hover { color: black; text-decoration: none;}
+
+#upbar{
+  position: relative;
+  z-index: 1;
+  background-color: #D9EDFD
+}
+.form_text{
+    font-family :'Nanum Gothic', sans-serif;
+    font-weight: bold;
+}
+#logotext {
+
+  font-family: 'Do Hyeon', sans-serif;
+  font-size: x-large;
+  margin-top : 3px;
+  margin-right : 0px;
+}
+#profile_edit_name {
+
+  font-family: 'Do Hyeon', sans-serif;
+  font-size: large;
+  margin-top : 3px;
+  margin-right : 0px;
+}
+*html #text {
+  height: 100%;
+}
+#text {
+  font-family :'Nanum Gothic', sans-serif;
+}
+#newbug_text{
+  font-family :'Nanum Gothic', sans-serif;
+  font-weight: bold;
+
+}
+#search{
+  margin : 0px 0px 0px 10px;
+  float : left;
+}
+#submit{
+  float : right;
+  margin: 0px 0px 20px 0px
+}
+#placeholder{
+  float : left;
+  margin : 0px 0px 5px 5px;
+}
+#content-title{
+  font-size : large;
+  font-weight : bold;
+}
+#content-userinfo{
+  font-weight : bold;
+}
+#user{
+  margin : 0px 5px 0px 0px;
+}
+.chat{
+  margin : 0px 0px 0px 5px;
+}
+
+.share {
+  float : right;
+}
+
+#date_time{
+  color : #7D7D80;
+  font-size: small;
+  float : right;
+  font-weight : normal;
+  margin-top : 4px;
+
+}
+
+.fixed-bottom{
+  padding: 10px 5px 0px 5px;
+  text-align: center;
+  background-color: #D9EDFD;
+}
+
+
+#comment-date_time{
+  color : #7D7D80;
+  font-size: x-small;
+  padding-top : 0px;
+}
+#comment-userimage{
+  margin-left:7px;
+  margin-top :3px;
+}
+#comment-username{
+  font-size : small;
+  font-weight : bold;
+}
+
+#comment-content{
+  margin-left:7px;
+  font-size : small;
+  margin-top:5px;
+}
+#comment-window{
+  font-family : 'Nanum Gothic', sans-serif;
+}
+#conmment-content {
+  display : table-cell;
+  vertical-align : middle;
+}
+
+
+#homepage-contents {
+  margin:20px 20px 20px 20px;
+  font-family :'Nanum Gothic', sans-serif;
+}
+#menu {
+  float : right;
+}
+#menu_item{
+  float : right;
+}
+#sidebar-up {
+  background-color : #D9EDFD;
+}
+#menu_up{
+  font-family: 'Nanum Gothic', sans-serif;
+  font-weight: bold;
+  color : #000000;
+}
+#menu_user{
+  margin : auto;
+}
+#menu_username{
+  font-family: 'Nanum Gothic', sans-serif;
+  font-weight: bold;
+  color : #000000;
+  text-align: center;
+}
+#menu_edit{
+  margin-left: 5px;
+  margin-right: 8px;
+}
+#profile_edit_button{
+  margin-left: 5px;
+}
+#menu_contents{
+  font-family : 'Nanum Gothic', sans-serif;
+  color: #000000;
+}
+#content-reaction{
+  margin : 5px 0px 0px 2px;
+  color : #7D7D80;
+  font-size: small;
+}
+#content-reaction-up-knocked{
+  margin : 32px 0px 0px 2px;
+  margin-left: 5px;
+  color : #7D7D80;
+  font-size: small;
+}
+#homepage-content_name {
+  font-family : 'Nanum Gothic', sans-serif;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 230.15px;
+  margin-left:5px;
+  height: 19.2px;
+  color : black;
+  font-weight: bold;
+}
+
+#index_content{
+  color : #7D7D80;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 230.15px;
+  magin-left:7px;
+  height: 35.2px;
+}
+#homepage-content-date_time{
+  float : right;
+  margin-right: 7px;
+}
+#knocked_name{
+  font-family :'Nanum Gothic', sans-serif;
+  font-weight: bold;
+  padding : 0px 0px 13px 0px;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 210px;
+  height: 19.2px;
+  color : black;
+  margin-left: 10px;
+}
+#uploaded_name{
+  font-family :'Nanum Gothic', sans-serif;
+  font-weight: bold;
+  padding : 0px 0px 13px 0px;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 210px;
+  height: 19.2px;
+  color : black;
+  margin-left: 10px;
+}
+#search-contents {
+  margin:20px;
+  font-family :'Nanum Gothic', sans-serif;
+}
+#search_name{
+  font-family :'Nanum Gothic', sans-serif;
+  font-weight: bold;
+  padding : 0px 0px 13px 0px;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 230.15px;
+  height: 19.2px;
+  color : black;
+  margin-left: 10px;
+}
+#search_form{
+  float: right;
+}
+#search_window{
+  width : 100%;
+  margin-top : 20px;
+  margin: auto;
+  margin-left: 2px;
+}
+#search-content-reaction{
+  margin-left: 10px;
+  color : #7D7D80;
+
+  font-size: small;
+}
+#knocked_contents {
+  margin:20px;
+}
+#knocked-content-reaction{
+  margin-left: 10px;
+  color : #7D7D80;
+}
+#uploaded-content-reaction{
+  margin-left: 10px;
+  color : #7D7D80;
+}
+#uploaded_contents {
+  margin:70px 20px 20px 20px;
+}
+#doong {
+  float : right;
+}
+#uploadbuk_knocked_name{
+  font-family :'Nanum Gothic', sans-serif;
+  font-weight : bold;
+  padding : 0px 0px 22px 0px;
+}
+
+
+
+#main-contents{
+  margin:60px 20px 20px 20px;
+  font-family :'Nanum Gothic', sans-serif;
+}
+#main-text{
+  text-align : center;
+  font-weight : bold;
+  margin:20px;
+  font-family :'Nanum Gothic', sans-serif;
+}
+#main-icon{
+  text-align: center;
+}
+
+#main-search{
+  display : inline-block;
+  text-align: center;
+  font-weight : bold;
+  border-right-style: solid;
+  border-width: thin;
+  border-color: #dadbdb;
+  padding-left:20px;
+  padding-right: 20px;
+  font-size: small;
+}
+#main-gpsbuk{
+  display : inline-block;
+  text-align: center;
+  font-weight : bold;
+  border-right-style: solid;
+  border-width: thin;
+  border-color: #dadbdb;
+  padding-right: 15px;
+  font-size: small;
+}
+#main-newbuk{
+  font-weight : bold;
+    font-size: small;
+  display : inline-block;
+  text-align: center;
+  padding-left:15px;
+}
+
+#userimage{
+  text-align :center;
+}
+#currentID{
+  text-align : center;
+  font-size : large;
+  font-weight : bold;
+}
+#edit-bar{
+     font-family :'Nanum Gothic', sans-serif;
+     font-weight : bold;
+}
+
+#content-content{
+  margin : 60px 20px 20px 20px;
+  font-family :'Nanum Gothic', sans-serif;
+}
+
+#profile_edit{
+  margin : 20px;
+}

@@ -1,0 +1,224 @@
+{% include "base.html" %}
+{% load static %}
+{% block head_block %}
+    <title>Main</title>
+{% endblock %}
+{% block body_block %}
+
+    <style>
+        /* Set the size of the div element that contains the map */
+        #map {
+            height: 300px; /* The height is 400 pixels */
+            width: 100%; /* The width is the width of the web page */
+        }
+    </style>
+
+    <div class="fixed-top">
+        <nav class="navbar navbar-light" style="background-color: #D9EDFD;">
+            <!-- Navbar content -->
+            <div id="mainpage-logo" style = "margin : auto; padding-left : 30px;">
+                <img src="{% static 'img/bug.png' %}" width="30" height="30" style="margin-bottom:7px;">
+                <a id="logotext" class="navbar-brand" href="{% url 'dongnebug:index' %}">동네북24</a>
+            </div>
+            <img id="menu" src="{% static 'img/menu.png' %}" width="30" height="30">
+
+        </nav>
+    </div>
+    <!-- side bar -->
+    <div class="ui right sidebar inverted vertical menu">
+        <a id="sidebar-up" class="item">
+            <div id="menu_up">MENU</div>
+        </a>
+        <a class="item"><br/></a>
+        <a class="item">
+            <img id="menu_user" src="{% static 'img/user.png' %}" width="60" height="80">
+        </a>
+        <div id="menu_username">{{ user.username }}<a href="{% url 'dongnebug:update_profile' user.pk %}"><img
+                id="profile_edit_button"
+                src="{% static 'img/edit.png' %}"
+                width="15" height="15"></a>
+        </div>
+        <a class="item">
+            <hr>
+        </a>
+        <a class="item" href="{% url 'dongnebug:search' %}">
+            <div id="menu_contents" style="font-weight : bold; font-size: small;color : #292929;">
+              <img id="menu_edit" src="{% static 'img/sidebar_search.png' %}" width="20" height="20">
+              <div id ="menu_name" style ="float: right; margin-right : 145px; margin-top :4px;">북 검색</div>
+            </div>
+        </a>
+        <a class="item" href="{% url 'dongnebug:complain_list' %}">
+            <div id="menu_contents" style="font-weight : bold; font-size: small;color : #292929;">
+              <img id="menu_edit" src="{% static 'img/gpsbug_color.png' %}" width="22" height="22">
+              <div id ="menu_name" style ="float: right; margin-right : 145px; margin-top :7px;">주변 북</div>
+            </div>
+        </a>
+        <a class="item" href="{% url 'dongnebug:uploadedbuk' %}">
+            <div id="menu_contents" style="font-weight : bold; font-size: small;color : #292929;">
+              <img id="menu_edit" src="{% static 'img/bug.png' %}" width="20" height="20">
+              <div id ="menu_name" style ="float: right; margin-right : 145px; margin-top :5px">올린 북</div>
+            </div>
+        </a>
+        <a class="item" href="{% url 'dongnebug:knockedbuk' %}">
+            <div id="menu_contents" style="font-weight : bold; font-size: small;color : #292929;">
+              <img id="menu_edit" src="{% static 'img/knockedbug_color.png' %}" width="23" height="23">
+              <div id ="menu_name" style ="float: right; margin-right : 133px; margin-top :7px">두드린 북</div>
+            </div>
+        </a>
+        <a class="item" href="{% url 'dongnebug:logout' %}">
+            <div id="menu_contents" style="font-weight : bold; font-size: small;color : #292929;">
+              <img id="menu_edit" src="{% static 'img/logout.png' %}" width="20" height="20">
+              <div id ="menu_name" style ="float: right; margin-right : 136px; margin-top :3px">로그아웃</div>
+            </div>
+        </a>
+    </div>
+
+
+    <!-- 내용 입력 -->
+    <div id="main-contents">
+        <div class="ui small message">
+            <div id="main-text">
+                내 주변의 민원을 확인하고, 공감하고, <br/>새로운 북을 올려보세요!
+            </div>
+        </div>
+
+        <hr>
+
+
+        <!-- 지도 들어갈 자리 -->
+        <p id="maps" align="middle" width="100%">
+        <div id="map" width="100%"></div>
+        </p>
+        <hr>
+        <div id="main-icon">
+            <a href="{% url 'dongnebug:complain_list' %}">
+                <div id="main-gpsbuk">
+                    <img src="{% static 'img/gpsbug.png' %}" width="70" height="70"><br/><br/>
+                    주변 북
+                </div>
+            </a>
+            <a href="{% url 'dongnebug:search' %}">
+                <div id="main-search">
+                    <img src="{% static 'img/searchbug.png' %}" width="70" height="70"><br/><br/>
+                    북 검색
+                </div>
+            </a>
+            <a href="{% url 'dongnebug:complain_new' %}">
+                <div id="main-newbuk">
+                    <img src="{% static 'img/newbug.png' %}" width="70" height="70"><br/><br/>
+                    북 추가
+                </div>
+            </a>
+
+        </div>
+
+    </div>
+    <script>
+        $('#menu').click(function () {
+            $('.ui.sidebar').sidebar('setting', 'transition', 'overlay').sidebar('toggle');
+        })
+    </script>
+
+    <!-- Google map Edit by sumin -->
+    <script>
+        {# TODO:  user.id 가 아니라,  #}
+        let url = 'http://168.131.151.162/api/locations/' + '{{user_location.id}}';//Edit by sumin
+        let bukurl = 'http://168.131.151.162/api/complains/near/' + '{{request.user.id}}'; //Edit by sumin
+        var leti = '';
+        var loni = '';
+        var M = []; //box marker
+        var user = ''; //user marker
+        //첫 메인 화면은 한국
+        var initcenter = {lat: {{user_location.latitude}}, lng: {{user_location.longitude}}};
+        var buks = [];
+
+        // Initialize and add the map
+        async function initMap() {
+            // The location of Uluru
+            var map = new google.maps.Map(
+                document.getElementById('map'), {zoom: 6, center: initcenter});
+            setInterval(async function () {
+                deleteMarkers();
+                //!
+                fetch(url, { // URL인자값 더하기
+                    method: 'GET'
+                }).then(
+                    function (response) {
+                        if (response.status !== 200) {
+                            console.log('Looks like there was a problem. Status Code: ' +
+                                response.status);
+                            return;
+                        }
+                        // Examine the text in the response
+                        response.json().then(function (data) {
+                            lati = parseFloat(data.latitude);
+                            lngi = parseFloat(data.longitude);
+                            var pos = {lat: lati, lng: lngi};
+                            console.log(pos);
+                            user = new google.maps.Marker({
+                                position: pos,
+                                map: map,
+                                icon: "{% static './img/me.png' %}"
+                            });
+                            M.push(user);
+                            map.setCenter(pos);
+                            map.setZoom(17);
+                        });
+                    }
+                )
+                    .catch(function (err) {
+                        console.log('Fetch Error :-S', err);
+                    });
+                //// bukss
+                fetch(bukurl, { // URL인자값 더하기
+                    method: 'GET'
+                }).then(
+                    function (response) {
+                        if (response.status !== 200) {
+                            console.log('Looks like there was a problem. Status Code: ' +
+                                response.status);
+                            return;
+                        }
+                        // Examine the text in the response
+                        response.json().then(function (data) {
+                            buks = data; //Edit by sumin
+                            var num = buks.length;//Edit by sumin
+                            for (var i = 0; i < num; i++) { //Edit by sumin
+                                var nearlist = buks[i]; //Edit by sumin
+                                var lats = parseFloat(nearlist["latitude"]);//Edit by sumin
+                                var lngs = parseFloat(nearlist["longitude"]);//Edit by sumin
+                                var bukpos = {lat: lats, lng: lngs};
+                                console.log('[DEBUG]thisis ',bukpos); //Edit by sumin
+                                var bukmark = new google.maps.Marker({
+                                    position: bukpos,
+                                    map: map,
+                                    icon: "{% static './img/buk_2.png' %}"
+                                });
+                                M.push(bukmark);
+                            }
+                        });
+                    }
+                )
+                    .catch(function (err) {
+                        console.log('Fetch Error :-S', err);
+                    });
+            }, 5000);
+        }
+
+        function clearMarkers() {
+            setMapOnAll(null);
+        }
+
+        function deleteMarkers() {
+            for (var i = 0; i < M.length; i++) {
+                M[i].setMap(null);
+            }
+            M = [];
+        }
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDA43UhrvuE1LtRYbHYwbfoBJ3UPLLPbGc&callback=initMap">
+    </script>
+    <!-- Edit by sumin -->
+{% endblock %}
+
