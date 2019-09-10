@@ -2,15 +2,7 @@
 전문 불편러들이 치는 동네북24
 
 ## for test
-requiremetns.txt 를 확인하게요
-
-## superuser information for test
-
-email : admin@example.com
-
-username : admin
-
-password : dongnebug24
+requiremetns.txt 를 확인하요
 
 ## directory usage
 - api : restful api
