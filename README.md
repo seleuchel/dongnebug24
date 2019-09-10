@@ -4,14 +4,6 @@
 ## for test
 requiremetns.txt 를 확인하게요
 
-## superuser information for test
-
-email : admin@example.com
-
-username : admin
-
-password : dongnebug24
-
 ## directory usage
 - api : restful api
 - dongnebug24 : master directory to manage whole stuff
